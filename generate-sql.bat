@@ -1,0 +1,1 @@
+java -classpath lib\* org.jooq.codegen.GenerationTool cnf\jooq-config.xml

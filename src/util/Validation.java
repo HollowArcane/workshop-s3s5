@@ -6,11 +6,17 @@ import org.jooq.Record1;
 import org.jooq.TableField;
 
 import database.DB;
-import model.tables.records.ComponentCategoryRecord;
 
 public class Validation
 {
-    public static <T> boolean unique(T value, TableField<ComponentCategoryRecord, T> field)
+    public static void check(boolean result, String errorMessage)
+        throws IllegalArgumentException
+    {
+        if(!result)
+        { throw new IllegalArgumentException(errorMessage); }
+    }
+
+    public static <T> boolean unique(T value, TableField<?, T> field)
     {
         Record1<T> result;
         try
@@ -18,6 +24,7 @@ public class Validation
             result = DB.handle(ctx ->
                 ctx.select(field)
                     .from(field.getTable())
+                    .where(field.eq(value))
                     .fetchOne()
             );
         }
@@ -26,7 +33,7 @@ public class Validation
         return result == null;
     }
 
-    public static <T> boolean exists(T value, TableField<ComponentCategoryRecord, T> field)
+    public static <T> boolean exists(T value, TableField<?, T> field)
     {
         Record1<T> result;
         try
@@ -34,6 +41,7 @@ public class Validation
             result = DB.handle(ctx ->
                 ctx.select(field)
                     .from(field.getTable())
+                    .where(field.eq(value))
                     .fetchOne()
             );
         }

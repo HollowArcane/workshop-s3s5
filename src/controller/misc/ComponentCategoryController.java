@@ -2,25 +2,25 @@ package controller.misc;
 
 import database.DB;
 import io.javalin.http.Context;
+import model.dto.ComponentCategoryDTO;
 import model.tables.records.ComponentCategoryRecord;
 import toolkit.util.Pagination;
 import util.APIResponse;
 import util.Renderer;
-import util.Validation;
 
 import static model.Tables.*;
+import static util.Validation.*;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
-
-import org.jooq.Result;
 
 public class ComponentCategoryController
 {
     public static void page(Context context)
     {   
         Renderer.usingDefault()
-                .render("component-category/index")
+                .render("misc/component-category/index")
                 .with(context, Map.of("active", "/misc/component-category"));
     }
     
@@ -28,8 +28,12 @@ public class ComponentCategoryController
         throws ClassNotFoundException,
                SQLException
     {
-        Integer page = context.queryParamAsClass("page", Integer.class).get();
-        Result<ComponentCategoryRecord> categories = DB.handle(ctx -> ctx.fetch(COMPONENT_CATEGORY));
+        Integer page = context.queryParamAsClass("page", Integer.class).getOrDefault(1);
+
+        List<ComponentCategoryDTO> categories = DB.handle(ctx -> {
+            return ctx.fetch(COMPONENT_CATEGORY)
+                        .map(ComponentCategoryDTO::new);
+        });
 
         APIResponse.success(context, 200, new Pagination<>(categories, 10).set(page));
     }
@@ -39,26 +43,26 @@ public class ComponentCategoryController
                SQLException
     {
         Integer id = context.pathParamAsClass("id", Integer.class).get();
-        ComponentCategoryRecord category = DB.handle(ctx -> 
-            ctx.fetchOne(COMPONENT_CATEGORY, COMPONENT_CATEGORY.ID.eq(id))
-        );
+        ComponentCategoryDTO category = DB.handle(ctx -> {
+            ComponentCategoryRecord record = ctx.fetchOne(COMPONENT_CATEGORY, COMPONENT_CATEGORY.ID.eq(id));
+            return new ComponentCategoryDTO(record);
+        });
         APIResponse.success(context, 200, category);
     }
 
-    public static void create(Context context)
+    public static void store(Context context)
         throws ClassNotFoundException,
                SQLException
     {
-        ComponentCategoryRecord category = context.bodyValidator(ComponentCategoryRecord.class)
-            // .check("label", obj -> Validation.notBlank(obj.getLabel()), "Label is required")
-            // .check("label", obj -> Validation.unique(obj.getLabel(), COMPONENT_CATEGORY.LABEL), "Label already exists")
+        ComponentCategoryDTO model = context.bodyValidator(ComponentCategoryDTO.class)
+            .check("label", m -> notBlank(m.getLabel()), "Label is required")
+            .check("label", m -> unique(m.getLabel(), COMPONENT_CATEGORY.LABEL), "Label already exists")
             .get();
 
-        DB.handle(ctx ->
-            ctx.insertInto(COMPONENT_CATEGORY)
-                .set(category)
-                .execute()
-        );
+        DB.handle(ctx -> {
+            return model.toRecord(ctx).store();
+        });
+        APIResponse.success(context, 201, Map.of("message", "Component Category created successfuly"));
     }
 
     public static void update(Context context)
@@ -66,18 +70,17 @@ public class ComponentCategoryController
                SQLException
     {
         Integer id = context.pathParamAsClass("id", Integer.class).get();
-        ComponentCategoryRecord category = context.bodyValidator(ComponentCategoryRecord.class)
-            // .check("label", obj -> Validation.notBlank(obj.getLabel()), "Label is required")
-            // .check("label", obj -> Validation.unique(obj.getLabel(), COMPONENT_CATEGORY.LABEL), "Label already exists")
-            .get();
-        category.setId(id);
 
-        DB.handle(ctx ->
-            ctx.update(COMPONENT_CATEGORY)
-                .set(category)
-                .where(COMPONENT_CATEGORY.ID.eq(id))
-                .execute()
-        );
+        ComponentCategoryDTO model = context.bodyValidator(ComponentCategoryDTO.class)
+            .check("label", m -> notBlank(m.getLabel()), "Label is required")
+            .check("label", m -> unique(m.getLabel(), COMPONENT_CATEGORY.LABEL), "Label already exists")
+            .get();
+        model.setId(id);
+
+        DB.handle(ctx -> {
+            return model.toRecord(ctx).store();
+        });
+        APIResponse.success(context, 201, Map.of("message", "Component Category updated successfuly"));
     }
 
     public static void delete(Context context)
@@ -89,5 +92,6 @@ public class ComponentCategoryController
             ctx.fetchOne(COMPONENT_CATEGORY, COMPONENT_CATEGORY.ID.eq(id))
                .delete()
         );
+        APIResponse.success(context, 201, Map.of("message", "Component Category updated successfuly"));
     }
 }

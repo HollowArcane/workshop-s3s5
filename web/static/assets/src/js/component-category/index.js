@@ -25,37 +25,25 @@ class Page extends CRUDPage
         {
             tbody.append(tag('tr', {}, [
                 tag('td', {'class': 'd-flex gap-1'}, [
-                    tag('button',
-                        {
-                            'class': 'btn btn-secondary text-info',
-                            'data-mdb-ripple-init': true,
-                            'data-mdb-modal-init': true,
-                            'data-mdb-target': '#modal',
-                            'onclick': () => {
-                                heading.textContent = 'Modification Catégorie de Pièce';
-                                this.form.load({
-                                    'label': row.label,
-                                });
-                                this.form.onsubmit(this.update.bind(this, row.id));
-                            }
-                        },
-                        [icon({}, ['fa', 'fa-pencil'])]
-                    ),
-                    tag('button', {'class': 'btn btn-secondary text-danger','onclick': this.delete.bind(this, row.id)}, [icon({}, ['fa', 'fa-trash'])]),
+                    BtnUpdate(() => {
+                        heading.textContent = 'Modification Catégorie de Pièce';
+                        this.form.load({
+                            'label': row.label,
+                        });
+                        this.form.onsubmit(this.update.bind(this, row.id));
+                    }),
+                    BtnDelete(this.delete.bind(this, row.id)),
                 ]),
                 tag('td', {}, [text(row.label)]),
             ]));
         }
         
-        const pagination = new Pagination(
+        new Pagination(
             document.querySelector('.pagination'),
-            tag('li', {'class': 'page-item'}, [
-                tag('a', {'href': '#', 'class': 'slot page-link'}, [])
-            ]),
+            PaginationPage(),
             data.count,
             this.read.bind(this)
-        );
-        pagination.init();
+        ).init();
     }
 }
 

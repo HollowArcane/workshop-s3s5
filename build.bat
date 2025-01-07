@@ -22,14 +22,9 @@ echo D | xcopy /q/s/y "%web-dir%" "%target-name%"
 echo D | xcopy /q/s/y "%cnf-dir%" "%target-name%"
 
 @REM COPY SOURCE FILE TO temp-src
-echo D | xcopy /q/s/y "%src-dir%\controller\misc" "temp-src"
-echo D | xcopy /q/s/y "%src-dir%\model\tables\records" "temp-src"
-echo D | xcopy /q/s/y "%src-dir%\model\tables" "temp-src"
-echo D | xcopy /q/s/y "%src-dir%\model" "temp-src"
-echo D | xcopy /q/s/y "%src-dir%\util" "temp-src"
-echo D | xcopy /q/s/y "%src-dir%\config" "temp-src"
-echo D | xcopy /q/s/y "%src-dir%\database" "temp-src"
-echo D | xcopy /q/s/y "%src-dir%" "temp-src"
+for /r "%src-dir%" %%F in (*) do (
+    echo D | xcopy /q/y "%%~F" "temp-src\"
+)
 
 @REM  COMPITLE JAVA CODE
 javac -parameters -d "%target-name%" -cp "%lib-dir%/*" temp-src/*.java

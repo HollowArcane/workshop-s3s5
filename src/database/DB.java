@@ -7,17 +7,22 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
+import toolkit.exception.ValidationException;
 import toolkit.util.Debug;
 
 public class DB
 {
+    public static interface ThrowingFunction<T, L, E extends Exception>
+    {
+        public L apply(T arg) throws E;
+    } 
+
     private static Properties config = null;
     private static String url = null;
     private static String user = null;
@@ -57,9 +62,11 @@ public class DB
         { e.printStackTrace(); }
     }
 
-    public static <T> T execute(Function<Connection, T> consumer)
+    public static <T, E extends Exception> T execute(ThrowingFunction<Connection, T, E> consumer)
         throws SQLException,
-               ClassNotFoundException
+               ClassNotFoundException,
+               ValidationException,
+               E
     {
         Objects.requireNonNull(consumer);
         if(config == null)
@@ -78,9 +85,10 @@ public class DB
         return result;
     }
 
-    public static <T> T handle(Function<DSLContext, T> consumer)
+    public static <T, E extends Exception> T handle(ThrowingFunction<DSLContext, T, E> consumer)
         throws SQLException,
-               ClassNotFoundException
+               ClassNotFoundException,
+               E
     {
         Objects.requireNonNull(consumer);
         if(config == null)

@@ -10,7 +10,6 @@ import model.Keys;
 import model.Public;
 import model.tables.Component.ComponentPath;
 import model.tables.Model.ModelPath;
-import model.tables.ReparationDetail.ReparationDetailPath;
 import model.tables.records.ModelCategoryRecord;
 
 import org.jooq.Condition;
@@ -167,19 +166,6 @@ public class ModelCategory extends TableImpl<ModelCategoryRecord> {
             _model = new ModelPath(this, null, Keys.MODEL__MODEL_ID_MODEL_CATEGORY_FKEY.getInverseKey());
 
         return _model;
-    }
-
-    private transient ReparationDetailPath _reparationDetail;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.reparation_detail</code> table
-     */
-    public ReparationDetailPath reparationDetail() {
-        if (_reparationDetail == null)
-            _reparationDetail = new ReparationDetailPath(this, null, Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_MODEL_CATEGORY_FKEY.getInverseKey());
-
-        return _reparationDetail;
     }
 
     @Override

@@ -9,6 +9,6 @@ CREATE TABLE reparation(
 CREATE TABLE reparation_detail(
    id SERIAL PRIMARY KEY,
     id_reparation INT NOT NULL REFERENCES reparation(id) ON DELETE CASCADE,
-    id_model_category INT NOT NULL REFERENCES model_category(id) ON DELETE CASCADE
+    id_component_category INT NOT NULL REFERENCES component_category(id) ON DELETE CASCADE
 );
 

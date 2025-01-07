@@ -10,7 +10,7 @@ import java.util.List;
 
 import model.Keys;
 import model.Public;
-import model.tables.ModelCategory.ModelCategoryPath;
+import model.tables.ComponentCategory.ComponentCategoryPath;
 import model.tables.Reparation.ReparationPath;
 import model.tables.records.ReparationDetailRecord;
 
@@ -69,9 +69,9 @@ public class ReparationDetail extends TableImpl<ReparationDetailRecord> {
     public final TableField<ReparationDetailRecord, Integer> ID_REPARATION = createField(DSL.name("id_reparation"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.reparation_detail.id_model_category</code>.
+     * The column <code>public.reparation_detail.id_component_category</code>.
      */
-    public final TableField<ReparationDetailRecord, Integer> ID_MODEL_CATEGORY = createField(DSL.name("id_model_category"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ReparationDetailRecord, Integer> ID_COMPONENT_CATEGORY = createField(DSL.name("id_component_category"), SQLDataType.INTEGER.nullable(false), this, "");
 
     private ReparationDetail(Name alias, Table<ReparationDetailRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -152,20 +152,20 @@ public class ReparationDetail extends TableImpl<ReparationDetailRecord> {
 
     @Override
     public List<ForeignKey<ReparationDetailRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_MODEL_CATEGORY_FKEY, Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_REPARATION_FKEY);
+        return Arrays.asList(Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_COMPONENT_CATEGORY_FKEY, Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_REPARATION_FKEY);
     }
 
-    private transient ModelCategoryPath _modelCategory;
+    private transient ComponentCategoryPath _componentCategory;
 
     /**
-     * Get the implicit join path to the <code>public.model_category</code>
+     * Get the implicit join path to the <code>public.component_category</code>
      * table.
      */
-    public ModelCategoryPath modelCategory() {
-        if (_modelCategory == null)
-            _modelCategory = new ModelCategoryPath(this, Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_MODEL_CATEGORY_FKEY, null);
+    public ComponentCategoryPath componentCategory() {
+        if (_componentCategory == null)
+            _componentCategory = new ComponentCategoryPath(this, Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_COMPONENT_CATEGORY_FKEY, null);
 
-        return _modelCategory;
+        return _componentCategory;
     }
 
     private transient ReparationPath _reparation;

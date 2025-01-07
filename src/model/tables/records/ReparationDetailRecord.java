@@ -47,16 +47,16 @@ public class ReparationDetailRecord extends UpdatableRecordImpl<ReparationDetail
     }
 
     /**
-     * Setter for <code>public.reparation_detail.id_model_category</code>.
+     * Setter for <code>public.reparation_detail.id_component_category</code>.
      */
-    public void setIdModelCategory(Integer value) {
+    public void setIdComponentCategory(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.reparation_detail.id_model_category</code>.
+     * Getter for <code>public.reparation_detail.id_component_category</code>.
      */
-    public Integer getIdModelCategory() {
+    public Integer getIdComponentCategory() {
         return (Integer) get(2);
     }
 
@@ -83,12 +83,12 @@ public class ReparationDetailRecord extends UpdatableRecordImpl<ReparationDetail
     /**
      * Create a detached, initialised ReparationDetailRecord
      */
-    public ReparationDetailRecord(Integer id, Integer idReparation, Integer idModelCategory) {
+    public ReparationDetailRecord(Integer id, Integer idReparation, Integer idComponentCategory) {
         super(ReparationDetail.REPARATION_DETAIL);
 
         setId(id);
         setIdReparation(idReparation);
-        setIdModelCategory(idModelCategory);
+        setIdComponentCategory(idComponentCategory);
         resetChangedOnNotNull();
     }
 }

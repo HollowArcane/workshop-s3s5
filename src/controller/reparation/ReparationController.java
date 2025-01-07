@@ -6,6 +6,7 @@ import java.util.Map;
 
 import database.DB;
 import io.javalin.http.Context;
+import model.Tables;
 import model.dto.ReparationDTO;
 
 public class ReparationController {
@@ -15,16 +16,18 @@ public class ReparationController {
                 SQLException, 
                 RuntimeException{
 
-        Integer idModelCategory = context.queryParamAsClass("idModelCategory", Integer.class).getOrDefault(null);
+        Integer idComponentCategory = context.queryParamAsClass("idComponentCategory", Integer.class).getOrDefault(null);
         
-        List<ReparationDTO> data = DB.handle(ctx -> {
-            return ReparationDTO.fetchByModelCategory(ctx, idModelCategory);
+        DB.handle(ctx -> {
+            List<ReparationDTO> data = ReparationDTO.fetchByComponentCategory(ctx, idComponentCategory);
+            context.render("/layouts/main", Map.ofEntries(
+                Map.entry("page", "/pages/reparation/reparation/index"),
+                Map.entry("data", data),
+                Map.entry("selectValues", ctx.fetch(Tables.COMPONENT_CATEGORY))
+            ));
+            return null;
         });
 
-        context.render("/layouts/main", Map.ofEntries(
-            Map.entry("page", "/pages/reparation/reparation/index"),
-            Map.entry("data", data)
-        ));
     }
     
 }

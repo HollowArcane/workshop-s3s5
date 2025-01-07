@@ -70,12 +70,13 @@ public class ReparationDTO {
     }
 
 
-    public static List<ReparationDTO> fetchByModelCategory(DSLContext context, Integer idModelCategory){
+    public static List<ReparationDTO> fetchByComponentCategory(DSLContext context, Integer idComponentCategory){
         
-        if( idModelCategory != null ){
+        if( idComponentCategory != null ){
             return context.select(Tables.REPARATION)
                 .from(Tables.REPARATION)
-                .where(Tables.REPARATION.reparationDetail().ID_MODEL_CATEGORY.eq(idModelCategory))
+                .join(Tables.REPARATION_DETAIL)
+                .on(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(idComponentCategory))
                 .fetch(rec -> new ReparationDTO(rec.value1()));
         }
 

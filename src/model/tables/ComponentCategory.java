@@ -9,6 +9,7 @@ import java.util.Collection;
 import model.Keys;
 import model.Public;
 import model.tables.Component.ComponentPath;
+import model.tables.ReparationDetail.ReparationDetailPath;
 import model.tables.records.ComponentCategoryRecord;
 
 import org.jooq.Condition;
@@ -153,6 +154,19 @@ public class ComponentCategory extends TableImpl<ComponentCategoryRecord> {
             _component = new ComponentPath(this, null, Keys.COMPONENT__COMPONENT_ID_COMPONENT_CATEGORY_FKEY.getInverseKey());
 
         return _component;
+    }
+
+    private transient ReparationDetailPath _reparationDetail;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.reparation_detail</code> table
+     */
+    public ReparationDetailPath reparationDetail() {
+        if (_reparationDetail == null)
+            _reparationDetail = new ReparationDetailPath(this, null, Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_COMPONENT_CATEGORY_FKEY.getInverseKey());
+
+        return _reparationDetail;
     }
 
     @Override

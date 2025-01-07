@@ -9,6 +9,8 @@ import model.tables.Component;
 import model.tables.ComponentCategory;
 import model.tables.Model;
 import model.tables.ModelCategory;
+import model.tables.Reparation;
+import model.tables.ReparationDetail;
 import model.tables.VLabelComponent;
 import model.tables.VLabelModel;
 
@@ -43,6 +45,16 @@ public class Tables {
      * The table <code>public.model_category</code>.
      */
     public static final ModelCategory MODEL_CATEGORY = ModelCategory.MODEL_CATEGORY;
+
+    /**
+     * The table <code>public.reparation</code>.
+     */
+    public static final Reparation REPARATION = Reparation.REPARATION;
+
+    /**
+     * The table <code>public.reparation_detail</code>.
+     */
+    public static final ReparationDetail REPARATION_DETAIL = ReparationDetail.REPARATION_DETAIL;
 
     /**
      * The table <code>public.v_label_component</code>.

@@ -1,9 +1,17 @@
 package model.dto;
 
 import model.Tables;
-
+import model.tables.records.ModelRecord;
 import model.tables.records.ReparationRecord;
+
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
+import org.jooq.Record1;
+import org.jooq.Record3;
+import org.jooq.Result;
+import org.jooq.impl.DSL;
+
+import static model.Tables.REPARATION_DETAIL;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -70,19 +78,41 @@ public class ReparationDTO {
     }
 
 
-    public static List<ReparationDTO> fetchByComponentCategory(DSLContext context, Integer idComponentCategory){
+    public static Result<Record3<ReparationRecord, ModelRecord, String>> fetchByComponentCategory(DSLContext context, Integer idComponentCategory){
         
-        if( idComponentCategory != null ){
-            return context.select(Tables.REPARATION)
+        if( idComponentCategory != null )
+        {
+            return context.select(
+                    Tables.REPARATION,
+                    Tables.MODEL,
+                    DSL.listAgg(Tables.COMPONENT_CATEGORY.LABEL).withinGroupOrderBy(Tables.COMPONENT_CATEGORY.LABEL)
+                )
                 .from(Tables.REPARATION)
+                .join(Tables.MODEL)
+                    .on(Tables.MODEL.ID.eq(Tables.REPARATION.ID_MODEL))
                 .join(Tables.REPARATION_DETAIL)
-                .on(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(idComponentCategory))
-                .fetch(rec -> new ReparationDTO(rec.value1()));
+                    .on(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(idComponentCategory)
+                        .and(Tables.REPARATION.ID.eq(Tables.REPARATION_DETAIL.ID_REPARATION)))
+                .join(Tables.COMPONENT_CATEGORY)
+                    .on(Tables.COMPONENT_CATEGORY.ID.eq(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY))
+                .groupBy(Tables.REPARATION, Tables.MODEL)
+                .fetch();
         }
 
-        return context.select(Tables.REPARATION)
+        return context.select(
+                Tables.REPARATION,
+                Tables.MODEL,
+                DSL.listAgg(Tables.COMPONENT_CATEGORY.LABEL).withinGroupOrderBy(Tables.COMPONENT_CATEGORY.LABEL)
+            )
             .from(Tables.REPARATION)
-            .fetch(rec -> new ReparationDTO(rec.value1()));
+            .join(Tables.MODEL)
+                .on(Tables.MODEL.ID.eq(Tables.REPARATION.ID_MODEL))
+            .join(Tables.REPARATION_DETAIL)
+                .on(Tables.REPARATION.ID.eq(Tables.REPARATION_DETAIL.ID_REPARATION))
+            .join(Tables.COMPONENT_CATEGORY)
+                .on(Tables.COMPONENT_CATEGORY.ID.eq(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY))
+            .groupBy(Tables.REPARATION, Tables.MODEL)
+            .fetch();
         
     }
 }

@@ -5,7 +5,6 @@ import static model.Tables.BRAND;
 import org.jooq.DSLContext;
 
 import model.tables.records.BrandRecord;
-import model.tables.records.ComponentCategoryRecord;
 
 public class BrandDTO
 {

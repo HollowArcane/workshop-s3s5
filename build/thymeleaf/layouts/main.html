@@ -25,7 +25,7 @@
 <body>
     <div id="container">
         <aside th:insert="~{/components/sidenav :: sidenav(${active})}"></aside>
-        <main th:insert="~{${page} :: content}"></main>
+        <main style="height: 100dvh; overflow-y: scroll;" th:insert="~{${page} :: content}"></main>
     </div>
 </body>
 </html>

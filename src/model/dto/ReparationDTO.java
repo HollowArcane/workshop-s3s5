@@ -6,6 +6,7 @@ import model.tables.records.ReparationRecord;
 import org.jooq.DSLContext;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ReparationDTO {
 
@@ -69,8 +70,18 @@ public class ReparationDTO {
     }
 
 
-    public void fetchByModelCategory(DSLContext context, Integer idModelCategory){
-        context
-                .select(REPARATION)
+    public static List<ReparationDTO> fetchByModelCategory(DSLContext context, Integer idModelCategory){
+        
+        if( idModelCategory != null ){
+            return context.select(Tables.REPARATION)
+                .from(Tables.REPARATION)
+                .where(Tables.REPARATION.reparationDetail().ID_MODEL_CATEGORY.eq(idModelCategory))
+                .fetch(rec -> new ReparationDTO(rec.value1()));
+        }
+
+        return context.select(Tables.REPARATION)
+            .from(Tables.REPARATION)
+            .fetch(rec -> new ReparationDTO(rec.value1()));
+        
     }
 }

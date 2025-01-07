@@ -1,0 +1,18 @@
+<div th:fragment="content">
+    <table class="table table-striped table-hover">
+        <thead>
+            <th> Date de réparation </th>
+            <th> Modèle </th>
+            <th> Prix </th>
+            <th>  </th>
+        </thead>
+        <tbody>
+            <tr th:each="reparation : ${data}">
+                <td th:text="${reparation.date}"></td>
+                <td th:text="${reparation.idModel}"></td>
+                <td th:text="${reparation.price}"></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

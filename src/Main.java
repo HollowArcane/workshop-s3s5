@@ -11,6 +11,7 @@ import controller.misc.BrandController;
 import controller.misc.ComponentCategoryController;
 import controller.misc.ComponentController;
 import controller.misc.ModelCategoryController;
+import controller.reparation.ReparationController;
 
 
 public class Main
@@ -24,6 +25,8 @@ public class Main
 
             config.router.apiBuilder(() -> {
                 get("/",  ctx -> ctx.redirect("/misc/component"));
+
+                get("/reparation/reparation", ReparationController::index);
                 
                 get("/misc/component-category", ComponentCategoryController::page);
 

@@ -12,3 +12,9 @@ CREATE TABLE reparation_detail(
     id_component_category INT NOT NULL REFERENCES component_category(id) ON DELETE CASCADE
 );
 
+CREATE TABLE reparation_feedback(
+    id SERIAL PRIMARY KEY,
+    date DATE NOT NULL,
+    id_reparation INT NOT NULL UNIQUE REFERENCES reparation(id) ON DELETE CASCADE  
+);
+

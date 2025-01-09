@@ -16,9 +16,7 @@
             debug="true" 
             classpathref="classpath" 
             includeantruntime="false" 
-            encoding="ISO-8859-1"
-            source="8"
-            target="8">
+            encoding="ISO-8859-1">
         </javac>
         <echo message="Compilation completed."/>
 
@@ -27,12 +25,7 @@
         
         <!-- Copy static resources -->
         <copy todir="../build">
-            <fileset dir="../web/static" />
-        </copy>
-        
-        <!-- Copy Thymeleaf templates -->
-        <copy todir="../build">
-            <fileset dir="../web/thymeleaf" />
+            <fileset dir="../web" />
         </copy>
 
         <!-- Copy configuration files -->

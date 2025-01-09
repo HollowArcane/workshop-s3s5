@@ -21,8 +21,12 @@ public class ReparationFeedbackController {
         throws ClassNotFoundException,
                 SQLException,
                 RuntimeException{
+
+            Integer idModelCategory = context.queryParamAsClass("idModelCategory", Integer.class).getOrDefault(null);
+            Integer idComponentCategory = context.queryParamAsClass("idComponentCategory", Integer.class).getOrDefault(null);
+            
             List<ReparationDetailInfo> listReparationDetailInfos = DB.handle(ctx -> {
-                return ReparationFeedbackDTO.fetchByIdModelCategoryAndReparationDetail(ctx, null, null);
+                return ReparationFeedbackDTO.fetchByIdModelCategoryAndReparationDetail(ctx, idModelCategory,idComponentCategory);
             });
 
             Result<ModelCategoryRecord> selectValues1 = DB.handle(ctx -> {

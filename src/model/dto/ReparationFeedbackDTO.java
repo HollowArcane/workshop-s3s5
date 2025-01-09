@@ -61,7 +61,8 @@ public class ReparationFeedbackDTO {
     }
 
     public static List<ReparationDetailInfo> fetchByIdModelCategoryAndReparationDetail(DSLContext ctx, Integer idModelCategory, Integer reparationDetailIDComponentCategory) {
-        return ctx.select(
+        if( idModelCategory != null && reparationDetailIDComponentCategory != null ){
+            return ctx.select(
                 Tables.COMPONENT.SERIAL_NUMBER,
                 Tables.MODEL_CATEGORY.LABEL.as("model_category_label"),
                 Tables.COMPONENT_CATEGORY.LABEL.as("component_category_label"),
@@ -76,26 +77,28 @@ public class ReparationFeedbackDTO {
             .join(Tables.COMPONENT_CATEGORY).on(Tables.COMPONENT.ID_COMPONENT_CATEGORY.eq(Tables.COMPONENT_CATEGORY.ID))
             .join(Tables.REPARATION_FEEDBACK).on(Tables.REPARATION.ID.eq(Tables.REPARATION_FEEDBACK.ID_REPARATION))
             .fetchInto(ReparationDetailInfo.class);
+        } 
+
+        return ctx.select(
+                Tables.COMPONENT.SERIAL_NUMBER,
+                Tables.MODEL_CATEGORY.LABEL.as("model_category_label"),
+                Tables.COMPONENT_CATEGORY.LABEL.as("component_category_label"),
+                Tables.REPARATION.PRICE,
+                Tables.REPARATION_FEEDBACK.DATE.as("feedback_date")
+            )
+            .from(Tables.REPARATION)
+            .join(Tables.REPARATION_DETAIL).on(Tables.REPARATION.ID.eq(Tables.REPARATION_DETAIL.ID_REPARATION))
+            .join(Tables.COMPONENT).on(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(Tables.COMPONENT.ID_COMPONENT_CATEGORY))
+            .join(Tables.MODEL).on(Tables.COMPONENT.ID_MODEL_CATEGORY.eq(Tables.MODEL.ID_MODEL_CATEGORY))
+            .join(Tables.MODEL_CATEGORY).on(Tables.MODEL.ID_MODEL_CATEGORY.eq(Tables.MODEL_CATEGORY.ID))
+            .join(Tables.COMPONENT_CATEGORY).on(Tables.COMPONENT.ID_COMPONENT_CATEGORY.eq(Tables.COMPONENT_CATEGORY.ID))
+            .join(Tables.REPARATION_FEEDBACK).on(Tables.REPARATION.ID.eq(Tables.REPARATION_FEEDBACK.ID_REPARATION))
+            .where(Tables.MODEL.ID_MODEL_CATEGORY.eq(idModelCategory))
+            .and(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(reparationDetailIDComponentCategory))
+            .fetchInto(ReparationDetailInfo.class);
     }
 
     // public static List<ReparationDetailInfo> fetchByIdModelCategoryAndReparationDetail(DSLContext ctx, Integer idModelCategory, Integer reparationDetailIDComponentCategory) {
-    //     return ctx.select(
-    //             Tables.COMPONENT.SERIAL_NUMBER,
-    //             Tables.MODEL_CATEGORY.LABEL.as("model_category_label"),
-    //             Tables.COMPONENT_CATEGORY.LABEL.as("component_category_label"),
-    //             Tables.REPARATION.PRICE,
-    //             Tables.REPARATION_FEEDBACK.DATE.as("feedback_date")
-    //         )
-    //         .from(Tables.REPARATION)
-    //         .join(Tables.REPARATION_DETAIL).on(Tables.REPARATION.ID.eq(Tables.REPARATION_DETAIL.ID_REPARATION))
-    //         .join(Tables.COMPONENT).on(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(Tables.COMPONENT.ID_COMPONENT_CATEGORY))
-    //         .join(Tables.MODEL).on(Tables.COMPONENT.ID_MODEL_CATEGORY.eq(Tables.MODEL.ID_MODEL_CATEGORY))
-    //         .join(Tables.MODEL_CATEGORY).on(Tables.MODEL.ID_MODEL_CATEGORY.eq(Tables.MODEL_CATEGORY.ID))
-    //         .join(Tables.COMPONENT_CATEGORY).on(Tables.COMPONENT.ID_COMPONENT_CATEGORY.eq(Tables.COMPONENT_CATEGORY.ID))
-    //         .join(Tables.REPARATION_FEEDBACK).on(Tables.REPARATION.ID.eq(Tables.REPARATION_FEEDBACK.ID_REPARATION))
-    //         .where(Tables.MODEL.ID_MODEL_CATEGORY.eq(idModelCategory))
-    //         .and(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(reparationDetailIDComponentCategory))
-    //         .fetchInto(ReparationDetailInfo.class);
     // }
 
     

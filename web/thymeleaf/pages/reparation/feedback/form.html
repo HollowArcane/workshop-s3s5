@@ -1,0 +1,20 @@
+<!-- select component -->
+<div th:fragment="content">
+    <form action="/reparation/feedback" class="card mb-5 mt-5" method="post">
+        <div class="card-body p-5">
+            <h3> Insertion retour </h3>
+            <div class="mb-3">
+                <label for="idReparation">Réparation</label>
+                <select class="form-select" name="idReparation" id="idReparation">
+                    <option value="">Tous</option>
+                    <option th:each="value : ${selectValues}" th:value="${value.id}" th:text="${value.date}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="dateReparation">Date de réparation</label>
+                <input type="date" name="dateReparation" id="dateReparation">
+            </div>
+            <input type="submit" class="btn btn-primary" value="Valider">
+        </div>
+    </form>
+</div>

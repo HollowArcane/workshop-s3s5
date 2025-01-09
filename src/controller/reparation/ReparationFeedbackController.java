@@ -13,9 +13,26 @@ import model.dto.ReparationDetailInfo;
 import model.dto.ReparationFeedbackDTO;
 import model.tables.records.ComponentCategoryRecord;
 import model.tables.records.ModelCategoryRecord;
+import model.tables.records.ReparationRecord;
 import util.Renderer;
 
 public class ReparationFeedbackController {
+
+    public static void loadForm(Context context)
+        throws ClassNotFoundException,
+                SQLException,
+                RuntimeException{
+
+            Result<ReparationRecord> selectValues = DB.handle(ctx -> {
+                return ctx.fetch(Tables.REPARATION);
+            });
+
+            Map<String,Object> data = Map.of("selectValues",selectValues);
+
+            Renderer.usingDefault()
+                .render("reparation/feedback/form")
+                .with(context,data);    
+        }
 
     public static void index(Context context)
         throws ClassNotFoundException,

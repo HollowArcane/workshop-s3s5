@@ -30,6 +30,7 @@ public class Main
 
                 get("/reparation/reparation", ReparationController::index);
                 get("/reparation/feedback", ReparationFeedbackController::index);
+                get("/reparation/feedback/create", ReparationFeedbackController::loadForm);
                 
                 get("/misc/component-category", ComponentCategoryController::page);
 

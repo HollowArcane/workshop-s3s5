@@ -1,9 +1,13 @@
 package controller.reparation;
 
+import static model.Tables.REPARATION_FEEDBACK;
+
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Result;
 
 import database.DB;
@@ -13,6 +17,7 @@ import model.dto.ReparationDetailInfo;
 import model.dto.ReparationFeedbackDTO;
 import model.tables.records.ComponentCategoryRecord;
 import model.tables.records.ModelCategoryRecord;
+import model.tables.records.ReparationFeedbackRecord;
 import model.tables.records.ReparationRecord;
 import util.Renderer;
 
@@ -32,6 +37,24 @@ public class ReparationFeedbackController {
             Renderer.usingDefault()
                 .render("reparation/feedback/form")
                 .with(context,data);    
+        }
+
+    public static void store (Context context) 
+        throws ClassNotFoundException,
+        SQLException,
+        RuntimeException{
+            Integer idReparation = context.formParamAsClass("idReparation", Integer.class).getOrDefault(null);
+            LocalDate dateReparation = context.formParamAsClass("dateReparation", LocalDate.class).getOrDefault(null);
+            
+            DB.handle(ctx -> {
+                ReparationFeedbackRecord newRecord = ctx.newRecord(REPARATION_FEEDBACK);
+                newRecord.setIdReparation(idReparation);
+                newRecord.setDate(dateReparation);
+                return newRecord.store();
+            });
+
+            context.redirect("reparation/feedback/index");
+
         }
 
     public static void index(Context context)

@@ -1,0 +1,44 @@
+<project name="build-workshop-s3-s5" default="build" basedir=".">
+    <!-- Define the classpath -->
+    <path id="classpath">
+        <fileset dir="../lib">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+
+    <!-- Build target -->
+    <target name="build">
+        <!-- Step 1: Compilation -->
+        <echo message="Compiling..."/>
+        <javac 
+            srcdir="../src" 
+            destdir="../build" 
+            debug="true" 
+            classpathref="classpath" 
+            includeantruntime="false" 
+            encoding="ISO-8859-1"
+            source="8"
+            target="8">
+        </javac>
+        <echo message="Compilation completed."/>
+
+        <!-- Step 2: Copying resources -->
+        <echo message="Copying resources..."/>
+        
+        <!-- Copy static resources -->
+        <copy todir="../build">
+            <fileset dir="../web/static" />
+        </copy>
+        
+        <!-- Copy Thymeleaf templates -->
+        <copy todir="../build">
+            <fileset dir="../web/thymeleaf" />
+        </copy>
+
+        <!-- Copy configuration files -->
+        <copy file="../cnf/jooq-config.xml" tofile="../build/jooq-config.xml"/>
+        <copy file="../cnf/config.db.properties" tofile="../build/config.db.properties"/>
+
+        <echo message="Resource copying completed."/>
+    </target>
+</project>

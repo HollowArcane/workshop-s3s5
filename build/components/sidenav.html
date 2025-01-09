@@ -1,0 +1,32 @@
+<div th:fragment="sidenav(active)" class="pf__navbar shadow">
+    <div class="pf__navbar-brand"> <h1> <a href="/"> LOGO </a></h1> </div>
+    
+    <div class="pf__navbar-section">
+        <h3 class="pf__navbar-subtitle"> Divers </h3>
+        <ul class="pf__navbar-list">
+            <div th:replace="~{:: link(${active}, '/misc/component', 'Pièce')}"></div>
+            <div th:replace="~{:: link(${active}, '/misc/model', 'Modèle')}"></div>
+            <div th:replace="~{:: link(${active}, '/misc/component-category', 'Catégorie de Pièce')}"></div>
+            <div th:replace="~{:: link(${active}, '/misc/model-category', 'Catégorie de Model')}"></div>
+            <div th:replace="~{:: link(${active}, '/misc/brand', 'Marque')}"></div>
+        </ul>
+    </div>
+    
+    <div class="pf__navbar-section">
+        <h3 class="pf__navbar-subtitle"> Réparation </h3>
+        <ul class="pf__navbar-list">
+            <div th:replace="~{:: link(${active}, '/reparation/reparation', 'Réparation')}"></div>
+        </ul>
+    </div>
+
+
+</div>
+
+<li th:fragment="link(active, href, label)" th:class="${active == href ? 'active': ''}">
+    <a
+        class="pf__navbar-item"
+        th:href="${href}"
+        th:text="${label}"
+    >
+    </a>
+</li>

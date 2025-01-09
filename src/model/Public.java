@@ -14,6 +14,7 @@ import model.tables.Model;
 import model.tables.ModelCategory;
 import model.tables.Reparation;
 import model.tables.ReparationDetail;
+import model.tables.ReparationFeedback;
 import model.tables.VLabelComponent;
 import model.tables.VLabelModel;
 
@@ -71,6 +72,11 @@ public class Public extends SchemaImpl {
     public final ReparationDetail REPARATION_DETAIL = ReparationDetail.REPARATION_DETAIL;
 
     /**
+     * The table <code>public.reparation_feedback</code>.
+     */
+    public final ReparationFeedback REPARATION_FEEDBACK = ReparationFeedback.REPARATION_FEEDBACK;
+
+    /**
      * The table <code>public.v_label_component</code>.
      */
     public final VLabelComponent V_LABEL_COMPONENT = VLabelComponent.V_LABEL_COMPONENT;
@@ -103,6 +109,7 @@ public class Public extends SchemaImpl {
             ModelCategory.MODEL_CATEGORY,
             Reparation.REPARATION,
             ReparationDetail.REPARATION_DETAIL,
+            ReparationFeedback.REPARATION_FEEDBACK,
             VLabelComponent.V_LABEL_COMPONENT,
             VLabelModel.V_LABEL_MODEL
         );

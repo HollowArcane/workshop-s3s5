@@ -13,6 +13,7 @@ import model.Keys;
 import model.Public;
 import model.tables.Model.ModelPath;
 import model.tables.ReparationDetail.ReparationDetailPath;
+import model.tables.ReparationFeedback.ReparationFeedbackPath;
 import model.tables.records.ReparationRecord;
 
 import org.jooq.Condition;
@@ -184,6 +185,19 @@ public class Reparation extends TableImpl<ReparationRecord> {
             _reparationDetail = new ReparationDetailPath(this, null, Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_REPARATION_FKEY.getInverseKey());
 
         return _reparationDetail;
+    }
+
+    private transient ReparationFeedbackPath _reparationFeedback;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.reparation_feedback</code> table
+     */
+    public ReparationFeedbackPath reparationFeedback() {
+        if (_reparationFeedback == null)
+            _reparationFeedback = new ReparationFeedbackPath(this, null, Keys.REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_REPARATION_FKEY.getInverseKey());
+
+        return _reparationFeedback;
     }
 
     @Override

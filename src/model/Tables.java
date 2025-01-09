@@ -11,6 +11,7 @@ import model.tables.Model;
 import model.tables.ModelCategory;
 import model.tables.Reparation;
 import model.tables.ReparationDetail;
+import model.tables.ReparationFeedback;
 import model.tables.VLabelComponent;
 import model.tables.VLabelModel;
 
@@ -55,6 +56,11 @@ public class Tables {
      * The table <code>public.reparation_detail</code>.
      */
     public static final ReparationDetail REPARATION_DETAIL = ReparationDetail.REPARATION_DETAIL;
+
+    /**
+     * The table <code>public.reparation_feedback</code>.
+     */
+    public static final ReparationFeedback REPARATION_FEEDBACK = ReparationFeedback.REPARATION_FEEDBACK;
 
     /**
      * The table <code>public.v_label_component</code>.

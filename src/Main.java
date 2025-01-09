@@ -13,6 +13,7 @@ import controller.misc.ComponentController;
 import controller.misc.ModelCategoryController;
 import controller.misc.ModelController;
 import controller.reparation.ReparationController;
+import controller.reparation.ReparationFeedbackController;
 
 
 public class Main
@@ -28,6 +29,7 @@ public class Main
                 get("/",  ctx -> ctx.redirect("/misc/component"));
 
                 get("/reparation/reparation", ReparationController::index);
+                get("/reparation/feedback", ReparationFeedbackController::index);
                 
                 get("/misc/component-category", ComponentCategoryController::page);
 

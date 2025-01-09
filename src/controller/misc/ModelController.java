@@ -97,7 +97,7 @@ public class ModelController
         DB.handle(ctx -> {
             return model.toRecord(ctx).store();
         });
-        APIResponse.success(context, 201, Map.of("message", "Component created successfuly"));
+        APIResponse.success(context, 201, Map.of("message", "Model created successfuly"));
     }
 
     public static void update(Context context)
@@ -118,7 +118,7 @@ public class ModelController
         DB.handle(ctx -> {
             return model.toRecord(ctx).store();
         });
-        APIResponse.success(context, 201, Map.of("message", "Component updated successfuly"));
+        APIResponse.success(context, 201, Map.of("message", "Model updated successfuly"));
     }
 
     public static void delete(Context context)
@@ -130,6 +130,6 @@ public class ModelController
             ctx.fetchOne(MODEL_CATEGORY, MODEL_CATEGORY.ID.eq(id))
                .delete()
         );
-        APIResponse.success(context, 201, Map.of("message", "Component updated successfuly"));
+        APIResponse.success(context, 201, Map.of("message", "Model updated successfuly"));
     }
 }

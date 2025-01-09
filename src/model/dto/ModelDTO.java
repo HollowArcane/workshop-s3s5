@@ -5,7 +5,6 @@ import static model.Tables.MODEL;
 import org.jooq.DSLContext;
 
 import model.tables.records.ModelRecord;
-import model.tables.records.ModelRecord;
 
 public class ModelDTO 
 {

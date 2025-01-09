@@ -12,8 +12,7 @@
                 <h1 th:text="${formTitle}"></h1>
                 
                 <div th:replace="~{/components/form :: input('serialNumber', '', 'text', 'Nº de Série')}"></div>
-                <div th:replace="~{/components/form :: select('idComponentCategory', '', ${componentCategories}, 'Catégorie de Composant')}"></div>
-                <div th:replace="~{/components/form :: select('idModelCategory', '', ${modelCategories}, 'Norme')}"></div>
+                <div th:replace="~{/components/form :: select('idModelCategory', '', ${modelCategories}, 'Catégorie de modèle')}"></div>
                 <div th:replace="~{/components/form :: select('idBrand', '', ${brands}, 'Marque')}"></div>
                 <div th:replace="~{/components/form :: input('description', '', 'text', 'Description')}"></div>
 
@@ -27,8 +26,9 @@
             <tr>
                 <th> </th>
                 <th> Nº de Série </th>
-                <th> Catégorie de Composant </th>
+                <th> Catégorie de Modèle </th>
                 <th> Marque </th>
+                <th> Description </th>
             </tr>
         </thead>
 

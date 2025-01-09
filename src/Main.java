@@ -11,6 +11,7 @@ import controller.misc.BrandController;
 import controller.misc.ComponentCategoryController;
 import controller.misc.ComponentController;
 import controller.misc.ModelCategoryController;
+import controller.misc.ModelController;
 import controller.reparation.ReparationController;
 
 
@@ -66,6 +67,16 @@ public class Main
                     get("/model-category/{id}", ModelCategoryController::show);
                     put("/model-category/{id}", ModelCategoryController::update);
                     delete("/model-category/{id}", ModelCategoryController::delete);
+                });
+
+                get("/misc/model", ModelController::page);
+
+                path("/api/misc", () -> {
+                    get("/model", ModelController::index);
+                    post("/model", ModelController::store);
+                    get("/model/{id}", ModelController::show);
+                    put("/model/{id}", ModelController::update);
+                    delete("/model/{id}", ModelController::delete);
                 });
             });
         }).start(7000);

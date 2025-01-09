@@ -61,7 +61,7 @@ public class ReparationFeedbackDTO {
     }
 
     public static List<ReparationDetailInfo> fetchByIdModelCategoryAndReparationDetail(DSLContext ctx, Integer idModelCategory, Integer reparationDetailIDComponentCategory) {
-        if( idModelCategory != null && reparationDetailIDComponentCategory != null ){
+        if( idModelCategory == null || reparationDetailIDComponentCategory == null ){
             return ctx.select(
                 Tables.COMPONENT.SERIAL_NUMBER,
                 Tables.MODEL_CATEGORY.LABEL.as("model_category_label"),

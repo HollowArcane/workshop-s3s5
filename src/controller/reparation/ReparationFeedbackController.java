@@ -53,7 +53,7 @@ public class ReparationFeedbackController {
                 return newRecord.store();
             });
 
-            context.redirect("reparation/feedback/index");
+            context.redirect("/reparation/feedback");
 
         }
 

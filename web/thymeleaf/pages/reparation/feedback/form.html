@@ -6,7 +6,6 @@
             <div class="mb-3">
                 <label for="idReparation">Réparation</label>
                 <select class="form-select" name="idReparation" id="idReparation">
-                    <option value="">Tous</option>
                     <option th:each="value : ${selectValues}" th:value="${value.id}" th:text="${value.date}"></option>
                 </select>
             </div>

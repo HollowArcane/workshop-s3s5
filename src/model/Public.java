@@ -12,12 +12,13 @@ import model.tables.Component;
 import model.tables.ComponentCategory;
 import model.tables.Model;
 import model.tables.ModelCategory;
+import model.tables.RecommendationComponent;
 import model.tables.Reparation;
 import model.tables.ReparationDetail;
 import model.tables.ReparationFeedback;
 import model.tables.VLabelComponent;
 import model.tables.VLabelModel;
-import model.tables.VLabelReparation;
+import model.tables.VLabelRecommendationComponent;
 
 import org.jooq.Catalog;
 import org.jooq.Table;
@@ -63,6 +64,11 @@ public class Public extends SchemaImpl {
     public final ModelCategory MODEL_CATEGORY = ModelCategory.MODEL_CATEGORY;
 
     /**
+     * The table <code>public.recommendation_component</code>.
+     */
+    public final RecommendationComponent RECOMMENDATION_COMPONENT = RecommendationComponent.RECOMMENDATION_COMPONENT;
+
+    /**
      * The table <code>public.reparation</code>.
      */
     public final Reparation REPARATION = Reparation.REPARATION;
@@ -88,9 +94,9 @@ public class Public extends SchemaImpl {
     public final VLabelModel V_LABEL_MODEL = VLabelModel.V_LABEL_MODEL;
 
     /**
-     * The table <code>public.v_label_reparation</code>.
+     * The table <code>public.v_label_recommendation_component</code>.
      */
-    public final VLabelReparation V_LABEL_REPARATION = VLabelReparation.V_LABEL_REPARATION;
+    public final VLabelRecommendationComponent V_LABEL_RECOMMENDATION_COMPONENT = VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT;
 
     /**
      * No further instances allowed
@@ -113,12 +119,13 @@ public class Public extends SchemaImpl {
             ComponentCategory.COMPONENT_CATEGORY,
             Model.MODEL,
             ModelCategory.MODEL_CATEGORY,
+            RecommendationComponent.RECOMMENDATION_COMPONENT,
             Reparation.REPARATION,
             ReparationDetail.REPARATION_DETAIL,
             ReparationFeedback.REPARATION_FEEDBACK,
             VLabelComponent.V_LABEL_COMPONENT,
             VLabelModel.V_LABEL_MODEL,
-            VLabelReparation.V_LABEL_REPARATION
+            VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT
         );
     }
 }

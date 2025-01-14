@@ -151,6 +151,11 @@ public class ReparationFeedback extends TableImpl<ReparationFeedbackRecord> {
     }
 
     @Override
+    public List<UniqueKey<ReparationFeedbackRecord>> getUniqueKeys() {
+        return Arrays.asList(Keys.REPARATION_FEEDBACK_ID_REPARATION_KEY);
+    }
+
+    @Override
     public List<ForeignKey<ReparationFeedbackRecord, ?>> getReferences() {
         return Arrays.asList(Keys.REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_REPARATION_FKEY);
     }

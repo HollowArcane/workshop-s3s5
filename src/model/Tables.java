@@ -9,12 +9,13 @@ import model.tables.Component;
 import model.tables.ComponentCategory;
 import model.tables.Model;
 import model.tables.ModelCategory;
+import model.tables.RecommendationComponent;
 import model.tables.Reparation;
 import model.tables.ReparationDetail;
 import model.tables.ReparationFeedback;
 import model.tables.VLabelComponent;
 import model.tables.VLabelModel;
-import model.tables.VLabelReparation;
+import model.tables.VLabelRecommendationComponent;
 
 
 /**
@@ -49,6 +50,11 @@ public class Tables {
     public static final ModelCategory MODEL_CATEGORY = ModelCategory.MODEL_CATEGORY;
 
     /**
+     * The table <code>public.recommendation_component</code>.
+     */
+    public static final RecommendationComponent RECOMMENDATION_COMPONENT = RecommendationComponent.RECOMMENDATION_COMPONENT;
+
+    /**
      * The table <code>public.reparation</code>.
      */
     public static final Reparation REPARATION = Reparation.REPARATION;
@@ -74,7 +80,7 @@ public class Tables {
     public static final VLabelModel V_LABEL_MODEL = VLabelModel.V_LABEL_MODEL;
 
     /**
-     * The table <code>public.v_label_reparation</code>.
+     * The table <code>public.v_label_recommendation_component</code>.
      */
-    public static final VLabelReparation V_LABEL_REPARATION = VLabelReparation.V_LABEL_REPARATION;
+    public static final VLabelRecommendationComponent V_LABEL_RECOMMENDATION_COMPONENT = VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT;
 }

@@ -7,7 +7,10 @@ CREATE TABLE recommendation_component(
 );
 
 CREATE VIEW v_label_recommendation_component AS
-    SELECT *
+    SELECT 
+        rec.date_start,
+        rec.date_end,
+        v.*
     FROM
         recommendation_component AS rec
     JOIN 

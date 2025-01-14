@@ -9,6 +9,7 @@ import model.tables.Component;
 import model.tables.ComponentCategory;
 import model.tables.Model;
 import model.tables.ModelCategory;
+import model.tables.RecommendationComponent;
 import model.tables.Reparation;
 import model.tables.ReparationDetail;
 import model.tables.ReparationFeedback;
@@ -17,6 +18,7 @@ import model.tables.records.ComponentCategoryRecord;
 import model.tables.records.ComponentRecord;
 import model.tables.records.ModelCategoryRecord;
 import model.tables.records.ModelRecord;
+import model.tables.records.RecommendationComponentRecord;
 import model.tables.records.ReparationDetailRecord;
 import model.tables.records.ReparationFeedbackRecord;
 import model.tables.records.ReparationRecord;
@@ -44,8 +46,10 @@ public class Keys {
     public static final UniqueKey<ComponentCategoryRecord> COMPONENT_CATEGORY_PKEY = Internal.createUniqueKey(ComponentCategory.COMPONENT_CATEGORY, DSL.name("component_category_pkey"), new TableField[] { ComponentCategory.COMPONENT_CATEGORY.ID }, true);
     public static final UniqueKey<ModelRecord> MODEL_PKEY = Internal.createUniqueKey(Model.MODEL, DSL.name("model_pkey"), new TableField[] { Model.MODEL.ID }, true);
     public static final UniqueKey<ModelCategoryRecord> MODEL_CATEGORY_PKEY = Internal.createUniqueKey(ModelCategory.MODEL_CATEGORY, DSL.name("model_category_pkey"), new TableField[] { ModelCategory.MODEL_CATEGORY.ID }, true);
+    public static final UniqueKey<RecommendationComponentRecord> RECOMMENDATION_COMPONENT_PKEY = Internal.createUniqueKey(RecommendationComponent.RECOMMENDATION_COMPONENT, DSL.name("recommendation_component_pkey"), new TableField[] { RecommendationComponent.RECOMMENDATION_COMPONENT.ID }, true);
     public static final UniqueKey<ReparationRecord> REPARATION_PKEY = Internal.createUniqueKey(Reparation.REPARATION, DSL.name("reparation_pkey"), new TableField[] { Reparation.REPARATION.ID }, true);
     public static final UniqueKey<ReparationDetailRecord> REPARATION_DETAIL_PKEY = Internal.createUniqueKey(ReparationDetail.REPARATION_DETAIL, DSL.name("reparation_detail_pkey"), new TableField[] { ReparationDetail.REPARATION_DETAIL.ID }, true);
+    public static final UniqueKey<ReparationFeedbackRecord> REPARATION_FEEDBACK_ID_REPARATION_KEY = Internal.createUniqueKey(ReparationFeedback.REPARATION_FEEDBACK, DSL.name("reparation_feedback_id_reparation_key"), new TableField[] { ReparationFeedback.REPARATION_FEEDBACK.ID_REPARATION }, true);
     public static final UniqueKey<ReparationFeedbackRecord> REPARATION_FEEDBACK_PKEY = Internal.createUniqueKey(ReparationFeedback.REPARATION_FEEDBACK, DSL.name("reparation_feedback_pkey"), new TableField[] { ReparationFeedback.REPARATION_FEEDBACK.ID }, true);
 
     // -------------------------------------------------------------------------
@@ -57,6 +61,7 @@ public class Keys {
     public static final ForeignKey<ComponentRecord, ModelCategoryRecord> COMPONENT__COMPONENT_ID_MODEL_CATEGORY_FKEY = Internal.createForeignKey(Component.COMPONENT, DSL.name("component_id_model_category_fkey"), new TableField[] { Component.COMPONENT.ID_MODEL_CATEGORY }, Keys.MODEL_CATEGORY_PKEY, new TableField[] { ModelCategory.MODEL_CATEGORY.ID }, true);
     public static final ForeignKey<ModelRecord, BrandRecord> MODEL__MODEL_ID_BRAND_FKEY = Internal.createForeignKey(Model.MODEL, DSL.name("model_id_brand_fkey"), new TableField[] { Model.MODEL.ID_BRAND }, Keys.BRAND_PKEY, new TableField[] { Brand.BRAND.ID }, true);
     public static final ForeignKey<ModelRecord, ModelCategoryRecord> MODEL__MODEL_ID_MODEL_CATEGORY_FKEY = Internal.createForeignKey(Model.MODEL, DSL.name("model_id_model_category_fkey"), new TableField[] { Model.MODEL.ID_MODEL_CATEGORY }, Keys.MODEL_CATEGORY_PKEY, new TableField[] { ModelCategory.MODEL_CATEGORY.ID }, true);
+    public static final ForeignKey<RecommendationComponentRecord, ComponentRecord> RECOMMENDATION_COMPONENT__RECOMMENDATION_COMPONENT_ID_COMPONENT_FKEY = Internal.createForeignKey(RecommendationComponent.RECOMMENDATION_COMPONENT, DSL.name("recommendation_component_id_component_fkey"), new TableField[] { RecommendationComponent.RECOMMENDATION_COMPONENT.ID_COMPONENT }, Keys.COMPONENT_PKEY, new TableField[] { Component.COMPONENT.ID }, true);
     public static final ForeignKey<ReparationRecord, ModelRecord> REPARATION__REPARATION_ID_MODEL_FKEY = Internal.createForeignKey(Reparation.REPARATION, DSL.name("reparation_id_model_fkey"), new TableField[] { Reparation.REPARATION.ID_MODEL }, Keys.MODEL_PKEY, new TableField[] { Model.MODEL.ID }, true);
     public static final ForeignKey<ReparationDetailRecord, ComponentCategoryRecord> REPARATION_DETAIL__REPARATION_DETAIL_ID_COMPONENT_CATEGORY_FKEY = Internal.createForeignKey(ReparationDetail.REPARATION_DETAIL, DSL.name("reparation_detail_id_component_category_fkey"), new TableField[] { ReparationDetail.REPARATION_DETAIL.ID_COMPONENT_CATEGORY }, Keys.COMPONENT_CATEGORY_PKEY, new TableField[] { ComponentCategory.COMPONENT_CATEGORY.ID }, true);
     public static final ForeignKey<ReparationDetailRecord, ReparationRecord> REPARATION_DETAIL__REPARATION_DETAIL_ID_REPARATION_FKEY = Internal.createForeignKey(ReparationDetail.REPARATION_DETAIL, DSL.name("reparation_detail_id_reparation_fkey"), new TableField[] { ReparationDetail.REPARATION_DETAIL.ID_REPARATION }, Keys.REPARATION_PKEY, new TableField[] { Reparation.REPARATION.ID }, true);

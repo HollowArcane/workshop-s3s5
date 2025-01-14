@@ -13,6 +13,7 @@ import model.Public;
 import model.tables.Brand.BrandPath;
 import model.tables.ComponentCategory.ComponentCategoryPath;
 import model.tables.ModelCategory.ModelCategoryPath;
+import model.tables.RecommendationComponent.RecommendationComponentPath;
 import model.tables.records.ComponentRecord;
 
 import org.jooq.Condition;
@@ -207,6 +208,19 @@ public class Component extends TableImpl<ComponentRecord> {
             _modelCategory = new ModelCategoryPath(this, Keys.COMPONENT__COMPONENT_ID_MODEL_CATEGORY_FKEY, null);
 
         return _modelCategory;
+    }
+
+    private transient RecommendationComponentPath _recommendationComponent;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.recommendation_component</code> table
+     */
+    public RecommendationComponentPath recommendationComponent() {
+        if (_recommendationComponent == null)
+            _recommendationComponent = new RecommendationComponentPath(this, null, Keys.RECOMMENDATION_COMPONENT__RECOMMENDATION_COMPONENT_ID_COMPONENT_FKEY.getInverseKey());
+
+        return _recommendationComponent;
     }
 
     @Override

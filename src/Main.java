@@ -1,5 +1,6 @@
 import io.javalin.Javalin;
 import io.javalin.validation.ValidationException;
+import model.tables.RecommendationComponent;
 import model.tables.records.ReparationRecord;
 import util.APIError;
 import util.Flashdata;
@@ -15,6 +16,7 @@ import controller.misc.ComponentCategoryController;
 import controller.misc.ComponentController;
 import controller.misc.ModelCategoryController;
 import controller.misc.ModelController;
+import controller.recommendation.RecommendationComponentController;
 import controller.reparation.ReparationController;
 import controller.reparation.ReparationFeedbackController;
 
@@ -38,6 +40,8 @@ public class Main
                 get("/",  ctx -> ctx.redirect("/misc/component"));
 
                 get("/reparation/reparation", ReparationController::index);
+
+                get("/recommendation/recommendation-component", RecommendationComponentController::index);
 
                 /* FEEDBACK */ {
                     get("/reparation/feedback", ReparationFeedbackController::index);

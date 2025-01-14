@@ -1,4 +1,20 @@
 <div th:fragment="content">
+
+    <form action="" class="card mb-5 mt-5" method="get">
+        <div class="card-body p-5">
+            <h3> Recherche </h3>
+            <div class="mb-3">
+                <label for="dateStart">Date début</label>
+                <input type="date" name="dateStart" id="dateStart">
+            </div>
+            <div class="mb-3">
+                <label for="dateEnd">Date fin</label>
+                <input type="date" name="dateEnd" id="dateEnd">
+            </div>
+            <input type="submit" class="btn btn-primary" value="Valider">
+        </div>
+    </form>
+
     <table class="table table-striped fx__table">
         <thead>
             <th> N° de série </th>

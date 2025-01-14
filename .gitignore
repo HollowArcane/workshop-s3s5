@@ -2,3 +2,6 @@
 build/config.db.properties
 build/config.db.properties
 build/jooq-config.xml
+cnf/config.db.properties
+cnf/jooq-config.xml
+/build

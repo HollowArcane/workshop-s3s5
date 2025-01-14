@@ -1,3 +1,22 @@
 <div th:fragment="content">
-    
+    <table class="table table-striped fx__table">
+        <thead>
+            <th> N° de série </th>
+            <th> Composant </th>
+            <th> Marque </th>
+            <th> Modèle </th>
+            <th> Date début </th>
+            <th> Date fin </th>
+        </thead>
+        <tbody>
+            <tr th:each="recommendation : ${data}">
+                <td th:text="${recommendation.serialNumber}"></td>
+                <td th:text="${recommendation.brand}"></td>
+                <td th:text="${recommendation.componentCategory}"></td>
+                <td th:text="${recommendation.modelCategory}"></td>
+                <td th:text="${recommendation.dateStart}"></td>
+                <td th:text="${recommendation.dateEnd}"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>

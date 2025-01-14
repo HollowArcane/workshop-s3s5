@@ -6,7 +6,6 @@
             <div class="mb-3">
                 <label for="idComponent">Composant</label>
                 <select class="form-select" name="idComponent" id="idComponent">
-                    <option value="">Tous</option>
                     <option th:each="value : ${selectValues1}" th:value="${value.id}" th:text="${value.serialNumber}"></option>
                 </select>
             </div>

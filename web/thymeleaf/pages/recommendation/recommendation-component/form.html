@@ -1,0 +1,25 @@
+<div th:fragment="content">
+
+    <form action="/recommendation/recommendation-component" class="card mb-5 mt-5" method="post">
+        <div class="card-body p-5">
+            <h3> Insertion recommendation </h3>
+            <div class="mb-3">
+                <label for="idComponent">Composant</label>
+                <select class="form-select" name="idComponent" id="idComponent">
+                    <option value="">Tous</option>
+                    <option th:each="value : ${selectValues1}" th:value="${value.id}" th:text="${value.serialNumber}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="dateStart">Date début</label>
+                <input class="form-control" type="date" name="dateStart" id="dateStart">
+            </div>
+            <div class="mb-3">
+                <label for="dateEnd">Date fin</label>
+                <input class="form-control" type="date" name="dateEnd" id="dateEnd">
+            </div>
+            <input type="submit" class="btn btn-primary" value="Valider">
+        </div>
+    </form>
+
+</div>

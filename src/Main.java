@@ -42,6 +42,8 @@ public class Main
                 get("/reparation/reparation", ReparationController::index);
 
                 get("/recommendation/recommendation-component", RecommendationComponentController::index);
+                get("/recommendation/recommendation-component/create", RecommendationComponentController::create);
+                post("/recommendation/recommendation-component", RecommendationComponentController::store);
 
                 /* FEEDBACK */ {
                     get("/reparation/feedback", ReparationFeedbackController::index);

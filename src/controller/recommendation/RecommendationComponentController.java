@@ -5,10 +5,13 @@ import java.time.LocalDate;
 import java.util.Map;
 
 import org.jooq.Result;
+import org.jooq.Table;
 
 import database.DB;
 import io.javalin.http.Context;
+import model.Tables;
 import model.dto.recommendation.RecommendationComponentDTO;
+import model.tables.records.ComponentRecord;
 import model.tables.records.VLabelRecommendationComponentRecord;
 import util.Renderer;
 
@@ -36,6 +39,37 @@ public class RecommendationComponentController {
         Renderer.usingDefault()
             .render("/recommendation/recommendation-component/index")
             .with(context, Map.of("data",data));
+    }
+
+    public static void create(Context context)
+        throws ClassNotFoundException, 
+            SQLException, 
+            RuntimeException{
+
+        Result<ComponentRecord> data = DB.handle(ctx -> {
+            return ctx.fetch(Tables.COMPONENT);
+        });
+        
+        Renderer.usingDefault()
+                .render("/recommendation/recommendation-component/form")
+                .with(context, Map.of("selectValues1",data));
+
+    }
+
+    public static void store(Context context)
+        throws ClassNotFoundException, 
+        SQLException, 
+        RuntimeException{
+            RecommendationComponentDTO recommendationComponentDTO = new RecommendationComponentDTO();
+            recommendationComponentDTO.setIdComponent(Integer.parseInt(context.formParam("idComponent")));
+            recommendationComponentDTO.setDateStart(LocalDate.parse(context.formParam("dateStart")));
+            recommendationComponentDTO.setDateEnd(LocalDate.parse(context.formParam("dateEnd")));
+
+            DB.handle(ctx -> {
+                return recommendationComponentDTO.toRecord(ctx).store();
+            });
+
+            context.redirect("/recommendation/recommendation-component");
     }
     
 }

@@ -2,7 +2,8 @@ package controller.misc;
 
 import database.DB;
 import io.javalin.http.Context;
-import model.dto.ComponentCategoryDTO;
+import model.dto.misc.BrandDTO;
+import model.dto.misc.ComponentCategoryDTO;
 import model.tables.records.ComponentCategoryRecord;
 import toolkit.util.Pagination;
 import util.APIResponse;
@@ -14,6 +15,8 @@ import static util.Validation.*;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONObject;
 
 public class ComponentCategoryController
 {
@@ -54,33 +57,46 @@ public class ComponentCategoryController
         throws ClassNotFoundException,
                SQLException
     {
-        ComponentCategoryDTO model = context.bodyValidator(ComponentCategoryDTO.class)
-            .check("label", m -> notBlank(m.getLabel()), "Label is required")
-            .check("label", m -> unique(m.getLabel(), COMPONENT_CATEGORY.LABEL), "Label already exists")
-            .get();
+        try
+        {
+            JSONObject object = new JSONObject(context.body());
+            ComponentCategoryDTO model = new ComponentCategoryDTO();
+            model.setLabel(object.getString("label"));
 
-        DB.handle(ctx -> {
-            return model.toRecord(ctx).store();
-        });
-        APIResponse.success(context, 201, Map.of("message", "Component Category created successfuly"));
+            DB.handle(ctx -> {
+                return model.toRecord(ctx).store();
+            });
+
+            APIResponse.success(context, 201, Map.of("message", "Catégorie de Composant créée avec succès"));
+        }
+        catch (Exception e)
+        {
+            APIResponse.error(context, 400, Map.of("message", e.getMessage()));
+        }
     }
 
     public static void update(Context context)
         throws ClassNotFoundException,
                SQLException
     {
+        try
+        {
         Integer id = context.pathParamAsClass("id", Integer.class).get();
+        JSONObject object = new JSONObject(context.body());
+            ComponentCategoryDTO model = new ComponentCategoryDTO();
+            model.setLabel(object.getString("label"));
+            model.setId(id);
 
-        ComponentCategoryDTO model = context.bodyValidator(ComponentCategoryDTO.class)
-            .check("label", m -> notBlank(m.getLabel()), "Label is required")
-            .check("label", m -> unique(m.getLabel(), COMPONENT_CATEGORY.LABEL), "Label already exists")
-            .get();
-        model.setId(id);
+            DB.handle(ctx -> {
+                return model.toRecord(ctx).store();
+            });
 
-        DB.handle(ctx -> {
-            return model.toRecord(ctx).store();
-        });
-        APIResponse.success(context, 201, Map.of("message", "Component Category updated successfuly"));
+            APIResponse.success(context, 201, Map.of("message", "Catégorie de Composant modifiée avec succès"));
+        }
+        catch (Exception e)
+        {
+            APIResponse.error(context, 400, Map.of("message", e.getMessage()));
+        }
     }
 
     public static void delete(Context context)
@@ -92,6 +108,6 @@ public class ComponentCategoryController
             ctx.fetchOne(COMPONENT_CATEGORY, COMPONENT_CATEGORY.ID.eq(id))
                .delete()
         );
-        APIResponse.success(context, 201, Map.of("message", "Component Category updated successfuly"));
+        APIResponse.success(context, 201, Map.of("message", "Catégorie de Composant supprimée avec succès"));
     }
 }

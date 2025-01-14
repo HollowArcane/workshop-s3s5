@@ -1,25 +1,36 @@
 package controller.reparation;
 
+import static io.javalin.apibuilder.ApiBuilder.sse;
+import static model.Tables.REPARATION;
 import static model.Tables.REPARATION_FEEDBACK;
+import static model.Tables.V_LABEL_REPARATION;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
+import org.jooq.Record2;
+import org.jooq.Record3;
 import org.jooq.Result;
 
 import database.DB;
 import io.javalin.http.Context;
+import io.javalin.validation.ValidationException;
 import model.Tables;
-import model.dto.ReparationDetailInfo;
-import model.dto.ReparationFeedbackDTO;
+import model.dto.reparation.ReparationDetailInfo;
+import model.dto.reparation.ReparationFeedbackDTO;
 import model.tables.records.ComponentCategoryRecord;
 import model.tables.records.ModelCategoryRecord;
 import model.tables.records.ReparationFeedbackRecord;
 import model.tables.records.ReparationRecord;
+import model.tables.records.VLabelReparationRecord;
+import util.Flashdata;
+import util.FormData;
 import util.Renderer;
+import util.Validation;
 
 public class ReparationFeedbackController {
 
@@ -28,34 +39,54 @@ public class ReparationFeedbackController {
                 SQLException,
                 RuntimeException{
 
-            Result<ReparationRecord> selectValues = DB.handle(ctx -> {
-                return ctx.fetch(Tables.REPARATION);
+            Result<VLabelReparationRecord> selectValues = DB.handle(ctx -> {
+                return ctx.fetch(V_LABEL_REPARATION);
             });
 
-            Map<String,Object> data = Map.of("selectValues",selectValues);
+            Map<String,Object> data = Map.of(
+                "selectValues", selectValues
+            );
 
             Renderer.usingDefault()
                 .render("reparation/feedback/form")
-                .with(context,data);    
+                .with(context, data);    
         }
 
     public static void store (Context context) 
         throws ClassNotFoundException,
         SQLException,
-        RuntimeException{
-            Integer idReparation = context.formParamAsClass("idReparation", Integer.class).getOrDefault(null);
-            LocalDate dateReparation = context.formParamAsClass("dateReparation", LocalDate.class).getOrDefault(null);
-            
+        RuntimeException
+    {
+        try
+        {
+            ReparationFeedbackDTO model = new ReparationFeedbackDTO();
+
+            model.setIdReparation(Validation.parse(
+                Integer.class,
+                context.formParam("idReparation"),
+                "Réparation doit être une réparation valide"
+            ));
+            model.setDate(Validation.parse(
+                LocalDate.class,
+                context.formParam("dateReparation"),
+                "Date de Réparation doît être une date valide"
+            ));
+
             DB.handle(ctx -> {
-                ReparationFeedbackRecord newRecord = ctx.newRecord(REPARATION_FEEDBACK);
-                newRecord.setIdReparation(idReparation);
-                newRecord.setDate(dateReparation);
-                return newRecord.store();
+                return model.toRecord(ctx).store();
             });
 
+            Flashdata.set(context, "message__success", "Retour de Réparation insérée avec succès.");
             context.redirect("/reparation/feedback");
-
         }
+        catch (Exception e)
+        {
+            context.attribute("message__error", e.getMessage());
+            context.attribute("idReparation", context.formParam("idReparation"));
+            context.attribute("dateReparation", context.formParam("dateReparation"));
+            loadForm(context);
+        }
+    }
 
     public static void index(Context context)
         throws ClassNotFoundException,
@@ -65,26 +96,15 @@ public class ReparationFeedbackController {
             Integer idModelCategory = context.queryParamAsClass("idModelCategory", Integer.class).getOrDefault(null);
             Integer idComponentCategory = context.queryParamAsClass("idComponentCategory", Integer.class).getOrDefault(null);
             
-            List<ReparationDetailInfo> listReparationDetailInfos = DB.handle(ctx -> {
-                return ReparationFeedbackDTO.fetchByIdModelCategoryAndReparationDetail(ctx, idModelCategory,idComponentCategory);
+            Map<String,Object> data =  DB.handle(ctx -> {
+                return Map.of("data", ReparationFeedbackDTO.fetchByIdModelCategoryAndReparationDetail(ctx, idModelCategory,idComponentCategory),
+                                "selectValues1", ctx.fetch(Tables.MODEL_CATEGORY),
+                                "selectValues2", ctx.fetch(Tables.COMPONENT_CATEGORY));
             });
-
-            Result<ModelCategoryRecord> selectValues1 = DB.handle(ctx -> {
-                return ctx.fetch(Tables.MODEL_CATEGORY);
-            });
-
-            Result<ComponentCategoryRecord> selectValues2 = DB.handle(ctx -> {
-                return ctx.fetch(Tables.COMPONENT_CATEGORY);
-            });
-
-            Map<String,Object> data = Map.of("data",listReparationDetailInfos,
-                                                "selectValues1",selectValues1,
-                                                "selectValues2",selectValues2);
 
             Renderer.usingDefault()
                 .render("reparation/feedback/index")
                 .with(context,data);
-
         }
     
 }

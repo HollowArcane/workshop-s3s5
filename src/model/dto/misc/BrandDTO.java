@@ -1,4 +1,4 @@
-package model.dto;
+package model.dto.misc;
 
 import static model.Tables.BRAND;
 

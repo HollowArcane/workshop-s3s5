@@ -46,7 +46,6 @@ public class Keys {
     public static final UniqueKey<ModelCategoryRecord> MODEL_CATEGORY_PKEY = Internal.createUniqueKey(ModelCategory.MODEL_CATEGORY, DSL.name("model_category_pkey"), new TableField[] { ModelCategory.MODEL_CATEGORY.ID }, true);
     public static final UniqueKey<ReparationRecord> REPARATION_PKEY = Internal.createUniqueKey(Reparation.REPARATION, DSL.name("reparation_pkey"), new TableField[] { Reparation.REPARATION.ID }, true);
     public static final UniqueKey<ReparationDetailRecord> REPARATION_DETAIL_PKEY = Internal.createUniqueKey(ReparationDetail.REPARATION_DETAIL, DSL.name("reparation_detail_pkey"), new TableField[] { ReparationDetail.REPARATION_DETAIL.ID }, true);
-    public static final UniqueKey<ReparationFeedbackRecord> REPARATION_FEEDBACK_ID_REPARATION_KEY = Internal.createUniqueKey(ReparationFeedback.REPARATION_FEEDBACK, DSL.name("reparation_feedback_id_reparation_key"), new TableField[] { ReparationFeedback.REPARATION_FEEDBACK.ID_REPARATION }, true);
     public static final UniqueKey<ReparationFeedbackRecord> REPARATION_FEEDBACK_PKEY = Internal.createUniqueKey(ReparationFeedback.REPARATION_FEEDBACK, DSL.name("reparation_feedback_pkey"), new TableField[] { ReparationFeedback.REPARATION_FEEDBACK.ID }, true);
 
     // -------------------------------------------------------------------------

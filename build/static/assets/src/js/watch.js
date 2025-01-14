@@ -1,14 +1,12 @@
-setInterval(() => {
-    fetch('http://127.0.0.1:1080/check')
-    .then(response => response.json())
-    .then(json => {
-        if(json.status === 'UPDATE')
-        { 
-            fetch('http://127.0.0.1:1080/reset')
-            .then(response => response.json())
-            .then(() => location.reload())
-            .catch(console.error);
-        }
-    })
-    .catch(console.error);
-}, 1000);
+const ws = new WebSocket('ws://127.0.0.1:1080/check');
+
+ws.onmessage = message => {
+    const json = JSON.parse(message.data);
+    if(json.action === "reload")
+    { window.location.reload(); }
+    else
+    { ws.send('Hello, Server'); }
+};
+ws.onclose = () => {
+    console.log('Connection to watcher closed');
+};

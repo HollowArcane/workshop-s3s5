@@ -7,9 +7,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import database.DB;
 import io.javalin.http.Context;
-import model.dto.BrandDTO;
+import model.dto.misc.BrandDTO;
+import model.dto.misc.ComponentDTO;
 import model.tables.records.BrandRecord;
 import toolkit.util.Pagination;
 import util.APIResponse;
@@ -56,36 +59,48 @@ public class BrandController
                 SQLException,
                 RuntimeException
     {
-        BrandDTO model = context.bodyValidator(BrandDTO.class)
-            .check("label", m -> notBlank(m.getLabel()), "Label is required")
-            .check("label", m -> unique(m.getLabel(), BRAND.LABEL), "Label already exists")
-            .get();
+        try
+        {
+            JSONObject object = new JSONObject(context.body());
+            BrandDTO model = new BrandDTO();
+            model.setLabel(object.getString("label"));
 
-        DB.handle(ctx -> {
-            return model.toRecord(ctx).store();
-        });
+            DB.handle(ctx -> {
+                return model.toRecord(ctx).store();
+            });
 
-        APIResponse.success(context, 201, Map.entry("message", "Brand created successfuly"));
+            APIResponse.success(context, 201, Map.of("message", "Marque créée avec succès"));
+        }
+        catch (Exception e)
+        {
+            APIResponse.error(context, 400, Map.of("message", e.getMessage()));
+        }
     }
 
     public static void update(Context context)
         throws ClassNotFoundException,
                 SQLException,
                 RuntimeException
-    {
-        Integer id = context.pathParamAsClass("id", Integer.class).get();
+    {   
+        try
+        {
+            Integer id = context.pathParamAsClass("id", Integer.class).get();
+            
+            JSONObject object = new JSONObject(context.body());
+            BrandDTO model = new BrandDTO();
+            model.setLabel(object.getString("label"));
+            model.setId(id);
 
-        BrandDTO model = context.bodyValidator(BrandDTO.class)
-            .check("label", m -> notBlank(m.getLabel()), "Label is required")
-            .check("label", m -> unique(m.getLabel(), BRAND.LABEL), "Label already exists")
-            .get();
-        model.setId(id);
+            DB.handle(ctx -> {
+                return model.toRecord(ctx).store();
+            });
 
-        DB.handle(ctx -> {
-            return model.toRecord(ctx).store();
-        });
-
-        APIResponse.success(context, 201, Map.entry("message", "Brand updated successfuly"));
+            APIResponse.success(context, 201, Map.of("message", "Marque modifiée avec succès"));
+        }
+        catch (Exception e)
+        {
+            APIResponse.error(context, 400, Map.of("message", e.getMessage()));
+        }
     }
 
     public static void delete(Context context)  
@@ -100,6 +115,6 @@ public class BrandController
                         .delete();
         });
 
-        APIResponse.success(context, 201, BRAND.ID.eq(id));
+        APIResponse.success(context, 201, Map.of("message", "Marque supprimée avec succès"));
     }
 }

@@ -20,15 +20,20 @@
         </div>
     </form>
 
-    <h1><a class="btn btn-primary" href="/reparation/feedback/create"><i class="fa fa-add"></i></a>Liste des réparations</h1>
+    <div th:insert="/includes/message :: message"></div>
+
+    <h1 class="d-flex gap-3 align-items-center">
+        <a class="btn btn-primary" href="/reparation/feedback/create"><i class="fa fa-add"></i></a>
+        Liste des Retours
+    </h1>
     
     <table class="table table-striped fx__table">
         <thead>
-            <th> Numéro de série </th>
-            <th> Catégorie du modèle </th>
-            <th> Catégorie de la pièce </th>
-            <th> Prix de la réparation </th>
-            <th> Date de retour </th>
+            <th> Numéro de Série </th>
+            <th> Catégorie du Modèle </th>
+            <th> Catégorie de la Pièce </th>
+            <th> Prix de la Réparation </th>
+            <th> Date de Retour </th>
         </thead>
         <tbody>
             <tr th:each="reparation : ${data}">

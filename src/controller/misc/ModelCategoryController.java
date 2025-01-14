@@ -1,6 +1,5 @@
 package controller.misc;
 
-import static model.Tables.BRAND;
 import static model.Tables.MODEL_CATEGORY;
 import static util.Validation.*;
 
@@ -8,11 +7,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import database.DB;
 import io.javalin.http.Context;
-import model.dto.BrandDTO;
-import model.dto.ModelCategoryDTO;
-import model.tables.records.BrandRecord;
+import model.dto.misc.BrandDTO;
+import model.dto.misc.ModelCategoryDTO;
 import model.tables.records.ModelCategoryRecord;
 import toolkit.util.Pagination;
 import util.APIResponse;
@@ -59,16 +59,22 @@ public class ModelCategoryController
                 SQLException,
                 RuntimeException
     {
-        ModelCategoryDTO model = context.bodyValidator(ModelCategoryDTO.class)
-            .check("label", m -> notBlank(m.getLabel()), "Label is required")
-            .check("label", m -> unique(m.getLabel(), MODEL_CATEGORY.LABEL), "Label already exists")
-            .get();
+        try
+        {
+            JSONObject object = new JSONObject(context.body());
+            ModelCategoryDTO model = new ModelCategoryDTO();
+            model.setLabel(object.getString("label"));
 
-        DB.handle(ctx -> {
-            return model.toRecord(ctx).store();
-        });
+            DB.handle(ctx -> {
+                return model.toRecord(ctx).store();
+            });
 
-        APIResponse.success(context, 201, Map.entry("message", "Model category created successfuly"));
+            APIResponse.success(context, 201, Map.of("message", "Catégorie de Model créée avec succès"));
+        }
+        catch (Exception e)
+        {
+            APIResponse.error(context, 400, Map.of("message", e.getMessage()));
+        }
     }
 
     public static void update(Context context)
@@ -76,19 +82,25 @@ public class ModelCategoryController
                 SQLException,
                 RuntimeException
     {
-        Integer id = context.pathParamAsClass("id", Integer.class).get();
+        try
+        {
+            Integer id = context.pathParamAsClass("id", Integer.class).get();
+            
+            JSONObject object = new JSONObject(context.body());
+            ModelCategoryDTO model = new ModelCategoryDTO();
+            model.setLabel(object.getString("label"));
+            model.setId(id);
 
-        ModelCategoryDTO model = context.bodyValidator(ModelCategoryDTO.class)
-            .check("label", m -> notBlank(m.getLabel()), "Label is required")
-            .check("label", m -> unique(m.getLabel(), MODEL_CATEGORY.LABEL), "Label already exists")
-            .get();
-        model.setId(id);
+            DB.handle(ctx -> {
+                return model.toRecord(ctx).store();
+            });
 
-        DB.handle(ctx -> {
-            return model.toRecord(ctx).store();
-        });
-
-        APIResponse.success(context, 201, Map.entry("message", "Model category updated successfuly"));
+            APIResponse.success(context, 201, Map.of("message", "Catégorie de Model modifiée avec succès"));
+        }
+        catch (Exception e)
+        {
+            APIResponse.error(context, 400, Map.of("message", e.getMessage()));
+        }
     }
 
     public static void delete(Context context)  
@@ -103,6 +115,6 @@ public class ModelCategoryController
                         .delete();
         });
 
-        APIResponse.success(context, 201, MODEL_CATEGORY.ID.eq(id));
+        APIResponse.success(context, 201, Map.of("message", "Catégorie de Model supprimée avec succès"));
     }
 }

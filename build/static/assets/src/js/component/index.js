@@ -16,7 +16,7 @@ class Page extends CRUDPage
         };
     }
 
-    render(data)
+    render(data, page)
     {
         const tbody = table.querySelector('tbody');
         tbody.replaceChildren();
@@ -40,12 +40,14 @@ class Page extends CRUDPage
             ]));
         }
         
-        new Pagination(
+        const pagination = new Pagination(
             document.querySelector('.pagination'),
             PaginationPage(),
-            data.content.count,
+            data.count,
             this.read.bind(this)
-        ).init();
+        );
+        pagination.init();
+        pagination.setActive(page);
     }
 }
 

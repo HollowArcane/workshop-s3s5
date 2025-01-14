@@ -1,11 +1,13 @@
 package util;
 
+import java.sql.Date;
 import java.sql.SQLException;
 
 import org.jooq.Record1;
 import org.jooq.TableField;
 
 import database.DB;
+import toolkit.util.Parse;
 
 public class Validation
 {
@@ -14,6 +16,19 @@ public class Validation
     {
         if(!result)
         { throw new IllegalArgumentException(errorMessage); }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T parse(Class<T> clazz, String value, String message)
+    {
+        try
+        {
+            return (T)Parse.valueOf(clazz, value);    
+        }
+        catch (Exception e)
+        {
+            throw new IllegalArgumentException(message);
+        }
     }
 
     public static <T> boolean unique(T value, TableField<?, T> field)
@@ -49,6 +64,20 @@ public class Validation
         { throw new RuntimeException(e); }
         return result != null;
     }
+
+    public static boolean date(String date)
+        throws IllegalArgumentException
+    {
+        try
+        {
+            Date.valueOf(date);
+            return true;    
+        } catch (IllegalArgumentException e)
+        {
+            return false;
+        }
+    }
+
 
     public static boolean notNull(Object value)
     { return value != null; }

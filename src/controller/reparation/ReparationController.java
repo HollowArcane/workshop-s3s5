@@ -9,7 +9,7 @@ import org.jooq.Record3;
 import database.DB;
 import io.javalin.http.Context;
 import model.Tables;
-import model.dto.ReparationDTO;
+import model.dto.reparation.ReparationDTO;
 import model.tables.records.ModelRecord;
 import model.tables.records.ReparationRecord;
 import toolkit.util.Pagination;

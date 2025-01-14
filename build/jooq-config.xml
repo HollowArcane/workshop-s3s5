@@ -5,7 +5,7 @@
     <driver>org.postgresql.Driver</driver>
     <url>jdbc:postgresql://localhost:5432/workshop</url>
     <user>postgres</user>
-    <password>berthin</password>
+    <password>43710</password>
   </jdbc>
 
   <generator>

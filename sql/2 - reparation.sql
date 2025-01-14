@@ -1,20 +1,42 @@
--- tables
-CREATE TABLE reparation(
-   id SERIAL PRIMARY KEY,
-    date DATE,
-    price FLOAT,
-    id_model INT NOT NULL REFERENCES model(id) ON DELETE CASCADE
-);
-
-CREATE TABLE reparation_detail(
-   id SERIAL PRIMARY KEY,
-    id_reparation INT NOT NULL REFERENCES reparation(id) ON DELETE CASCADE,
-    id_component_category INT NOT NULL REFERENCES component_category(id) ON DELETE CASCADE
-);
-
-CREATE TABLE reparation_feedback(
+-- TABLES:
+    CREATE TABLE reparation(
     id SERIAL PRIMARY KEY,
-    date DATE NOT NULL,
-    id_reparation INT NOT NULL UNIQUE REFERENCES reparation(id) ON DELETE CASCADE  
-);
+        date DATE,
+        price FLOAT,
+        id_model INT NOT NULL REFERENCES model(id) ON DELETE CASCADE
+    );
 
+    CREATE TABLE reparation_detail(
+    id SERIAL PRIMARY KEY,
+        id_reparation INT NOT NULL REFERENCES reparation(id) ON DELETE CASCADE,
+        id_component_category INT NOT NULL REFERENCES component_category(id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE reparation_feedback(
+        id SERIAL PRIMARY KEY,
+        date DATE NOT NULL,
+        id_reparation INT NOT NULL REFERENCES reparation(id) ON DELETE CASCADE  
+    );
+
+-- VIEWS:
+    CREATE OR REPLACE VIEW v_label_reparation AS
+        SELECT
+            r.id,
+            r.date,
+            r.price,
+            r.id_model,
+            m.serial_number,
+            m.id_model_category,
+            mc.label AS model_category,
+            m.id_brand,
+            b.label AS brand,
+            m.description
+        FROM
+            reparation AS r
+        JOIN
+            model AS m ON r.id_model = m.id
+        JOIN
+            model_category AS mc ON m.id_model_category = mc.id
+        JOIN
+            brand AS b ON m.id_brand = b.id
+    ;

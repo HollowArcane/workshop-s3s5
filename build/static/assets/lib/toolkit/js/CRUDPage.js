@@ -22,7 +22,7 @@ class CRUDPage
         fetch(`${this.apiPath}?page=${page}`)
         .then(async (response) => {
             if(response.status === 200)
-            { this.render((await response.json()).data); }
+            { this.render((await response.json()).data, page); }
             else
             { alert('Une erreur est survenue. Veuillez réessayer ultérieurement'); }
         })
@@ -61,9 +61,20 @@ class CRUDPage
             },
             body: JSON.stringify(this.form.jsonData()),
             method: 'POST',
-        }).then(response => {
+        }).then(async (response) => {
             if(response.ok)
-            { location.reload(); }
+            {
+                try
+                {
+                    const json = await response.json();
+                    if(json.data.message)
+                    { alert(json.data.message); }
+
+                    location.reload();    
+                }
+                catch (error)
+                { this.error = error; }
+            }
             else
             { this.error(response); }
         });
@@ -77,9 +88,20 @@ class CRUDPage
             },
             body: JSON.stringify(this.form.jsonData()),
             method: 'PUT',
-        }).then(response => {
+        }).then(async (response) => {
             if(response.ok)
-            { location.reload(); }
+            {
+                try
+                {
+                    const json = await response.json();
+                    if(json.data.message)
+                    { alert(json.data.message); }
+
+                    location.reload();    
+                }
+                catch (error)
+                { this.error = error; }
+            }
             else
             { this.error(response); }
         });
@@ -93,9 +115,20 @@ class CRUDPage
         {
             fetch(`${this.apiPath}/${id}`, {
                 method: 'DELETE'
-            }).then(response => {
+            }).then(async (response) => {
                 if(response.ok)
-                { location.reload(); }
+                {
+                    try
+                    {
+                        const json = await response.json();
+                        if(json.data.message)
+                        { alert(json.data.message); }
+    
+                        location.reload();    
+                    }
+                    catch (error)
+                    { this.error = error; }
+                }
                 else
                 { this.error(response); }
             });

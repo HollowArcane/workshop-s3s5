@@ -14,6 +14,7 @@ import model.tables.ReparationDetail;
 import model.tables.ReparationFeedback;
 import model.tables.VLabelComponent;
 import model.tables.VLabelModel;
+import model.tables.VLabelReparation;
 
 
 /**
@@ -71,4 +72,9 @@ public class Tables {
      * The table <code>public.v_label_model</code>.
      */
     public static final VLabelModel V_LABEL_MODEL = VLabelModel.V_LABEL_MODEL;
+
+    /**
+     * The table <code>public.v_label_reparation</code>.
+     */
+    public static final VLabelReparation V_LABEL_REPARATION = VLabelReparation.V_LABEL_REPARATION;
 }

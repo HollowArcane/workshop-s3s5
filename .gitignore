@@ -1,2 +1,4 @@
 
 build/config.db.properties
+build/config.db.properties
+build/jooq-config.xml

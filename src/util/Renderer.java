@@ -3,6 +3,7 @@ package util;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Map.Entry;
 
 import io.javalin.http.Context;
 
@@ -59,6 +60,8 @@ public class Renderer
         additionals.put("page", PAGE_ROOT + page);
         additionals.put("title", title);
 
+        additionals.putAll(context.attributeMap());
+
         context.render(LAYOUT_ROOT + layout, additionals);
     }
 
@@ -69,6 +72,8 @@ public class Renderer
         Map<String, Object> additionals = new HashMap<>(); 
         additionals.put("page", PAGE_ROOT + page);
         additionals.put("title", title);
+
+        additionals.putAll(context.attributeMap());
 
         context.render(LAYOUT_ROOT + layout, additionals);
     }

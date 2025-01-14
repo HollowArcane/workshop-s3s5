@@ -1,4 +1,4 @@
-package model.dto;
+package model.dto.misc;
 
 import static model.Tables.COMPONENT;
 
@@ -14,6 +14,8 @@ public class ComponentDTO
     private Integer idModelCategory;
     private Integer idBrand;
     private String description;
+
+    public ComponentDTO() {}
 
     public ComponentDTO(ComponentRecord record)
     {

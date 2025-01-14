@@ -1,4 +1,4 @@
-package model.dto;
+package model.dto.reparation;
 
 import model.Tables;
 import model.tables.records.ModelRecord;
@@ -80,26 +80,7 @@ public class ReparationDTO {
 
     public static Result<Record3<ReparationRecord, ModelRecord, String>> fetchByComponentCategory(DSLContext context, Integer idComponentCategory){
         
-        if( idComponentCategory != null )
-        {
-            return context.select(
-                    Tables.REPARATION,
-                    Tables.MODEL,
-                    DSL.listAgg(Tables.COMPONENT_CATEGORY.LABEL).withinGroupOrderBy(Tables.COMPONENT_CATEGORY.LABEL)
-                )
-                .from(Tables.REPARATION)
-                .join(Tables.MODEL)
-                    .on(Tables.MODEL.ID.eq(Tables.REPARATION.ID_MODEL))
-                .join(Tables.REPARATION_DETAIL)
-                    .on(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(idComponentCategory)
-                        .and(Tables.REPARATION.ID.eq(Tables.REPARATION_DETAIL.ID_REPARATION)))
-                .join(Tables.COMPONENT_CATEGORY)
-                    .on(Tables.COMPONENT_CATEGORY.ID.eq(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY))
-                .groupBy(Tables.REPARATION, Tables.MODEL)
-                .fetch();
-        }
-
-        return context.select(
+        var result = context.select(
                 Tables.REPARATION,
                 Tables.MODEL,
                 DSL.listAgg(Tables.COMPONENT_CATEGORY.LABEL).withinGroupOrderBy(Tables.COMPONENT_CATEGORY.LABEL)
@@ -108,11 +89,14 @@ public class ReparationDTO {
             .join(Tables.MODEL)
                 .on(Tables.MODEL.ID.eq(Tables.REPARATION.ID_MODEL))
             .join(Tables.REPARATION_DETAIL)
-                .on(Tables.REPARATION.ID.eq(Tables.REPARATION_DETAIL.ID_REPARATION))
-            .join(Tables.COMPONENT_CATEGORY)
-                .on(Tables.COMPONENT_CATEGORY.ID.eq(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY))
-            .groupBy(Tables.REPARATION, Tables.MODEL)
-            .fetch();
+                .on(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(idComponentCategory));
         
+        if( idComponentCategory != null )
+        { result.and(Tables.REPARATION.ID.eq(Tables.REPARATION_DETAIL.ID_REPARATION));  }
+
+        return result.join(Tables.COMPONENT_CATEGORY)
+            .on(Tables.COMPONENT_CATEGORY.ID.eq(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY))
+        .groupBy(Tables.REPARATION, Tables.MODEL)
+        .fetch();
     }
 }

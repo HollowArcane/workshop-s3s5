@@ -1,41 +1,52 @@
 CREATE DATABASE workshop;
 \c workshop;
 
--- tables
+-- TABLES:
+    DROP TABLE IF EXISTS component_category CASCADE;
     CREATE TABLE component_category(
         id SERIAL PRIMARY KEY,
-        label VARCHAR(20) NOT NULL
+        label VARCHAR(20) NOT NULL UNIQUE,
+        CHECK(label != '')
     );
 
+    DROP TABLE IF EXISTS model_category CASCADE;
     CREATE TABLE model_category(
         id SERIAL PRIMARY KEY,
-        label VARCHAR(20) NOT NULL
+        label VARCHAR(20) NOT NULL UNIQUE,
+        CHECK(label != '')
     );
 
+    DROP TABLE IF EXISTS brand CASCADE;
     CREATE TABLE brand(
         id SERIAL PRIMARY KEY,
-        label VARCHAR(20) NOT NULL
+        label VARCHAR(20) NOT NULL UNIQUE,
+        CHECK(label != '')
     );
 
+    DROP TABLE IF EXISTS component CASCADE;
     CREATE TABLE component(
         id SERIAL PRIMARY KEY,
-        serial_number VARCHAR(50) NOT NULL,
+        serial_number VARCHAR(50) NOT NULL UNIQUE,
         id_component_category INT NOT NULL REFERENCES component_category(id) ON DELETE CASCADE,
         -- modèle compatible
         id_model_category INT NOT NULL REFERENCES model_category(id) ON DELETE CASCADE,
         id_brand INT NOT NULL REFERENCES brand(id) ON DELETE CASCADE,
-        description TEXT
+        description TEXT,
+        CHECK(serial_number ~ '^[A-Za-z0-9][A-Za-z0-9 -'']*[A-Za-z0-9]$')
     );
 
+    DROP TABLE IF EXISTS model CASCADE;
     CREATE TABLE model(
         id SERIAL PRIMARY KEY,
         serial_number VARCHAR(50) NOT NULL,
         id_model_category INT NOT NULL REFERENCES model_category(id) ON DELETE CASCADE,
         id_brand INT NOT NULL REFERENCES brand(id) ON DELETE CASCADE,
-        description TEXT
+        description TEXT,
+        CHECK(serial_number ~ '^[A-Za-z0-9][A-Za-z0-9 -'']*[A-Za-z0-9]$')
     );
 
--- vues
+-- VIEWS:
+    DROP VIEW IF EXISTS v_label_component CASCADE;
     CREATE OR REPLACE VIEW v_label_component AS
         SELECT
             c.id,
@@ -57,6 +68,7 @@ CREATE DATABASE workshop;
             brand AS b ON c.id_brand = b.id
     ;
 
+    DROP VIEW IF EXISTS v_label_model CASCADE;
     CREATE OR REPLACE VIEW v_label_model AS
         SELECT
             m.id,
@@ -73,3 +85,4 @@ CREATE DATABASE workshop;
         JOIN
             brand AS b ON m.id_brand = b.id
     ;
+    

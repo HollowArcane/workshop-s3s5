@@ -2,10 +2,10 @@ package controller.misc;
 
 import database.DB;
 import io.javalin.http.Context;
-import model.dto.BrandDTO;
-import model.dto.ComponentCategoryDTO;
-import model.dto.ComponentDTO;
-import model.dto.ModelCategoryDTO;
+import model.dto.misc.BrandDTO;
+import model.dto.misc.ComponentCategoryDTO;
+import model.dto.misc.ComponentDTO;
+import model.dto.misc.ModelCategoryDTO;
 import model.tables.records.BrandRecord;
 import model.tables.records.ComponentCategoryRecord;
 import model.tables.records.ComponentRecord;
@@ -14,6 +14,8 @@ import toolkit.util.Pagination;
 import util.APIResponse;
 import util.Data;
 import util.Renderer;
+
+import org.json.*;
 
 import static model.Tables.*;
 import static util.Validation.*;
@@ -98,41 +100,54 @@ public class ComponentController
         throws ClassNotFoundException,
                SQLException
     {
-        ComponentDTO model = context.bodyValidator(ComponentDTO.class)
-            .check("serialNumber", m -> notBlank(m.getSerialNumber()), "Serial Number is required")
-            .check("serialNumber", m -> unique(m.getSerialNumber(), COMPONENT.SERIAL_NUMBER), "Serial Number already exists")
-            .check("idComponentCategory", m -> exists(m.getIdComponentCategory(), COMPONENT_CATEGORY.ID), "Component Category must exists")
-            .check("idModelCategory", m -> exists(m.getIdModelCategory(), MODEL_CATEGORY.ID), "Model Category must exists")
-            .check("idBrand", m -> exists(m.getIdBrand(), BRAND.ID), "Brand must exists")
-            .check("description", m -> notBlank(m.getDescription()), "Description is required")
-            .get();
+        try
+        {
+            JSONObject object = new JSONObject(context.body());
+            ComponentDTO model = new ComponentDTO();
+            model.setSerialNumber(object.getString("serialNumber"));
+            model.setIdComponentCategory(object.getInt("idComponentCategory"));
+            model.setIdModelCategory(object.getInt("idModelCategory"));
+            model.setIdBrand(object.getInt("idBrand"));
+            model.setDescription(object.getString("description"));
 
-        DB.handle(ctx -> {
-            return model.toRecord(ctx).store();
-        });
-        APIResponse.success(context, 201, Map.of("message", "Component created successfuly"));
+            DB.handle(ctx -> {
+                return model.toRecord(ctx).store();
+            });
+
+            APIResponse.success(context, 201, Map.of("message", "Composant créée avec succès"));
+        }
+        catch (Exception e)
+        {
+            APIResponse.error(context, 400, Map.of("message", e.getMessage()));
+        }
     }
 
     public static void update(Context context)
         throws ClassNotFoundException,
                SQLException
     {
-        Integer id = context.pathParamAsClass("id", Integer.class).get();
+        try
+        {
+            Integer id = context.pathParamAsClass("id", Integer.class).get();
+            JSONObject object = new JSONObject(context.body());
+            ComponentDTO model = new ComponentDTO();
+            model.setSerialNumber(object.getString("serialNumber"));
+            model.setIdComponentCategory(object.getInt("idComponentCategory"));
+            model.setIdModelCategory(object.getInt("idModelCategory"));
+            model.setIdBrand(object.getInt("idBrand"));
+            model.setDescription(object.getString("description"));
+            model.setId(id);
 
-        ComponentDTO model = context.bodyValidator(ComponentDTO.class)
-            .check("serialNumber", m -> notBlank(m.getSerialNumber()), "Serial Number is required")
-            .check("serialNumber", m -> unique(m.getSerialNumber(), COMPONENT.SERIAL_NUMBER), "Serial Number already exists")
-            .check("idComponentCategory", m -> exists(m.getIdComponentCategory(), COMPONENT_CATEGORY.ID), "Component Category must exists")
-            .check("idModelCategory", m -> exists(m.getIdModelCategory(), MODEL_CATEGORY.ID), "Model Category must exists")
-            .check("idBrand", m -> exists(m.getIdBrand(), BRAND.ID), "Brand must exists")
-            .check("description", m -> notBlank(m.getDescription()), "Description is required")
-            .get();
-        model.setId(id);
+            DB.handle(ctx -> {
+                return model.toRecord(ctx).store();
+            });
 
-        DB.handle(ctx -> {
-            return model.toRecord(ctx).store();
-        });
-        APIResponse.success(context, 201, Map.of("message", "Component updated successfuly"));
+            APIResponse.success(context, 201, Map.of("message", "Composant modifiée avec succès"));
+        }
+        catch (Exception e)
+        {
+            APIResponse.error(context, 400, Map.of("message", e.getMessage()));
+        }
     }
 
     public static void delete(Context context)
@@ -144,6 +159,6 @@ public class ComponentController
             ctx.fetchOne(COMPONENT_CATEGORY, COMPONENT_CATEGORY.ID.eq(id))
                .delete()
         );
-        APIResponse.success(context, 201, Map.of("message", "Component updated successfuly"));
+        APIResponse.success(context, 201, Map.of("message", "Composant supprimée avec succès"));
     }
 }

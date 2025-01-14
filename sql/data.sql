@@ -140,3 +140,12 @@ INSERT INTO reparation_feedback (id, date, id_reparation) VALUES
 (15, '2024-02-15', 15);
 
 
+-- Insertion de données dans la table `recommendation_component`
+INSERT INTO recommendation_component (id_component, date_start, date_end) VALUES 
+    (1, '2025-01-01', '2025-01-15'),
+    (2, '2025-01-16', '2025-01-31'),
+    (3, '2025-02-01', '2025-02-15'),
+    (4, '2025-02-16', '2025-02-28'),
+    (5, '2025-03-01', '2025-03-15');
+
+

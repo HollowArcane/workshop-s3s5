@@ -86,14 +86,22 @@ public class ModelController
         throws ClassNotFoundException,
                SQLException
     {
-        
+        try {
+            
+        } catch (Exception e) {
+            APIResponse.error(context, 400, Map.of("message", e.getMessage()));
+        }   
     }
 
     public static void update(Context context)
         throws ClassNotFoundException,
                SQLException
     {
-        
+        try {
+            
+        } catch (Exception e) {
+            APIResponse.error(context, 400, Map.of("message", e.getMessage()));
+        }   
     }
 
     public static void delete(Context context)

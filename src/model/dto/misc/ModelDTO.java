@@ -14,6 +14,8 @@ public class ModelDTO
     private Integer idBrand;
     private String description;    
 
+    public ModelDTO() {}
+
     public ModelDTO(ModelRecord record)
     {
         id = record.getId();

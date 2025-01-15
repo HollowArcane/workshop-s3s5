@@ -4,6 +4,7 @@ import database.DB;
 import io.javalin.http.Context;
 import model.Tables;
 import model.dto.misc.BrandDTO;
+import model.dto.misc.ComponentDTO;
 import model.dto.misc.ModelCategoryDTO;
 import model.dto.misc.ModelDTO;
 import model.tables.records.BrandRecord;
@@ -20,6 +21,8 @@ import static util.Validation.*;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONObject;
 
 public class ModelController 
 {
@@ -87,7 +90,19 @@ public class ModelController
                SQLException
     {
         try {
-            
+            JSONObject object = new JSONObject(context.body());
+            ModelDTO model = new ModelDTO();
+            model.setSerialNumber(object.getString("serialNumber"));
+            model.setIdModelCategory(object.getInt("idModelCategory"));
+            model.setIdBrand(object.getInt("idBrand"));
+            model.setDescription(object.getString("description"));
+
+            DB.handle(ctx -> {
+                return model.toRecord(ctx).store();
+            });
+
+            APIResponse.success(context, 201, Map.of("message", "Modèle créé avec succès"));
+
         } catch (Exception e) {
             APIResponse.error(context, 400, Map.of("message", e.getMessage()));
         }   
@@ -98,7 +113,20 @@ public class ModelController
                SQLException
     {
         try {
-            
+            Integer id = context.pathParamAsClass("id", Integer.class).get();
+            JSONObject object = new JSONObject(context.body());
+            ModelDTO model = new ModelDTO();
+            model.setSerialNumber(object.getString("serialNumber"));
+            model.setIdModelCategory(object.getInt("idModelCategory"));
+            model.setIdBrand(object.getInt("idBrand"));
+            model.setDescription(object.getString("description"));
+            model.setId(id);
+
+            DB.handle(ctx -> {
+                return model.toRecord(ctx).store();
+            });
+
+            APIResponse.success(context, 201, Map.of("message", "Modèle modifié avec succès"));
         } catch (Exception e) {
             APIResponse.error(context, 400, Map.of("message", e.getMessage()));
         }   

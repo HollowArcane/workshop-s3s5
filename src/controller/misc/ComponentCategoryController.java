@@ -83,15 +83,15 @@ public class ComponentCategoryController
         {
         Integer id = context.pathParamAsClass("id", Integer.class).get();
         JSONObject object = new JSONObject(context.body());
-            ComponentCategoryDTO model = new ComponentCategoryDTO();
-            model.setLabel(object.getString("label"));
-            model.setId(id);
+        ComponentCategoryDTO model = new ComponentCategoryDTO();
+        model.setLabel(object.getString("label"));
+        model.setId(id);
 
-            DB.handle(ctx -> {
-                return model.toRecord(ctx).store();
-            });
+        DB.handle(ctx -> {
+            return model.toRecord(ctx).store();
+        });
 
-            APIResponse.success(context, 201, Map.of("message", "Catégorie de Composant modifiée avec succès"));
+        APIResponse.success(context, 201, Map.of("message", "Catégorie de Composant modifiée avec succès"));
         }
         catch (Exception e)
         {

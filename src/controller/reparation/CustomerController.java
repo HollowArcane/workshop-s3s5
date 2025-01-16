@@ -1,6 +1,7 @@
 package controller.reparation;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -21,17 +22,21 @@ import util.Renderer;
 public class CustomerController {
 
     public static void index(Context context)
-        throws ClassNotFoundException, 
-                    SQLException, 
-                    RuntimeException{
-
+            throws ClassNotFoundException,
+            SQLException,
+            RuntimeException {
+                
         Result<CustomerRecord> data = DB.handle(ctx -> {
-            return CustomerDTO.fetchByDate(ctx, null);
+            LocalDate date = null;
+            if (context.queryParam("date") != null) {
+                date = LocalDate.parse(context.queryParam("date"));
+            }
+            return CustomerDTO.fetchByDate(ctx, date);
         });
 
         Renderer.usingDefault()
-        .render("/reparation/customer/index")
-        .with(context,Map.of("data",data));
+                .render("/reparation/customer/index")
+                .with(context, Map.of("data", data));
     }
-    
+
 }

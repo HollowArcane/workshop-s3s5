@@ -1,9 +1,12 @@
 package model.dto.reparation;
 
+import static model.Tables.REPARATION_FEEDBACK;
+
 import java.time.LocalDate;
 
 import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
+import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.Table;
 
@@ -83,13 +86,22 @@ public class CustomerDTO {
     }
 
 
-    public static Result<CustomerRecord> fetchByDate(DSLContext context, LocalDate date)
+    public static Result<Record1<CustomerRecord>> fetchByDate(DSLContext context, LocalDate date)
     {
         if(date==null)
-        { return context.fetch(Tables.CUSTOMER);} 
+        { 
+            return context.
+            select(Tables.CUSTOMER).
+            from(Tables.CUSTOMER).fetch();
+        } 
         else 
         {
-            return null;
+            return context.
+                    select(Tables.CUSTOMER).
+                    from(Tables.CUSTOMER).
+                    join(Tables.REPARATION_FEEDBACK).
+                    on(Tables.REPARATION_FEEDBACK.ID_CUSTOMER.eq(Tables.CUSTOMER.ID)).
+                    where(Tables.REPARATION_FEEDBACK.DATE.eq(date)).fetch();
         }
     }
     

@@ -1,4 +1,16 @@
 <div th:fragment="content">
+    
+    <form action="" class="card">
+        <div class="card-body">
+            <h3>Filtre</h3>
+            <div class="mb-3">
+                <label for="date">Date</label>
+                <input type="date" name="ate" id="date">
+            </div>
+            <input type="submit" class="btn btn-primary" value="Valider">
+        </div>
+    </form>
+
     <h1>Liste des clients</h1>
     <table class="table table-striped fx__table">
         <thead>
@@ -9,10 +21,10 @@
         </thead>
         <tbody>
             <tr th:each=" customer: ${data}">
-                <td th:text="${customer.name}"></td>
-                <td th:text="${customer.telephone}"></td>
-                <td th:text="${customer.email}"></td>
-                <td th:text="${customer.address}"></td>
+                <td th:text="${customer.value1().name}"></td>
+                <td th:text="${customer.value1().telephone}"></td>
+                <td th:text="${customer.value1().email}"></td>
+                <td th:text="${customer.value1().address}"></td>
             </tr>
         </tbody>
     </table>

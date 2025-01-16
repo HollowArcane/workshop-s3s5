@@ -13,6 +13,12 @@
                 </select>
             </div>
             <div class="mb-3">
+                <label for="idCustomer">Client</label>
+                <select class="form-select" name="idCustomer" id="idCustomer">
+                    <option th:selected="${value.id == idCustomer}" th:each="value : ${customers}" th:value="${value.id}" th:text="${value.name}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
                 <label for="dateReparation">Date de Retour</label>
                 <input th:value="${dateReparation}" class="form-control" type="date" name="dateReparation" id="dateReparation">
             </div>

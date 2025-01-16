@@ -1,6 +1,7 @@
 package controller.reparation;
 
 import static io.javalin.apibuilder.ApiBuilder.sse;
+import static model.Tables.CUSTOMER;
 import static model.Tables.REPARATION;
 import static model.Tables.REPARATION_FEEDBACK;
 import static model.Tables.V_LABEL_REPARATION;
@@ -23,6 +24,7 @@ import model.Tables;
 import model.dto.reparation.ReparationDetailInfo;
 import model.dto.reparation.ReparationFeedbackDTO;
 import model.tables.records.ComponentCategoryRecord;
+import model.tables.records.CustomerRecord;
 import model.tables.records.ModelCategoryRecord;
 import model.tables.records.ReparationFeedbackRecord;
 import model.tables.records.ReparationRecord;
@@ -43,8 +45,13 @@ public class ReparationFeedbackController {
                 return ctx.fetch(V_LABEL_REPARATION);
             });
 
+            Result<CustomerRecord> customers = DB.handle(ctx -> {
+                return ctx.fetch(CUSTOMER);
+            });
+
             Map<String,Object> data = Map.of(
                 "selectValues", selectValues,
+                "customers", customers,
                 "active", "/reparation/reparation-feedback"
             );
 
@@ -67,6 +74,10 @@ public class ReparationFeedbackController {
                 context.formParam("idReparation"),
                 "Réparation doit être une réparation valide"
             ));
+            model.setIdCustomer(Validation.parse(
+                Integer.class,
+                context.formParam("idCustomer"),
+                "Client doit être un client valide"));
             model.setDate(Validation.parse(
                 LocalDate.class,
                 context.formParam("dateReparation"),
@@ -83,6 +94,7 @@ public class ReparationFeedbackController {
         catch (Exception e)
         {
             context.attribute("message__error", e.getMessage());
+            context.attribute("idCustomer", context.formParam("idCustomer"));
             context.attribute("idReparation", context.formParam("idReparation"));
             context.attribute("dateReparation", context.formParam("dateReparation"));
             loadForm(context);

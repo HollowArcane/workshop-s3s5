@@ -15,6 +15,7 @@ public class ReparationFeedbackDTO {
 
     private Integer id;
     private LocalDate date;
+    private Integer idCustomer;
     private Integer idReparation;
 
     public ReparationFeedbackDTO() {
@@ -23,6 +24,7 @@ public class ReparationFeedbackDTO {
     public ReparationFeedbackDTO(ReparationFeedbackDTO record) {
         this.id = record.getId();
         this.date = record.getDate();
+        this.idCustomer = record.getIdCustomer();
         this.idReparation = record.getIdReparation();
     }
 
@@ -32,6 +34,7 @@ public class ReparationFeedbackDTO {
                 context.fetchOne(Tables.REPARATION_FEEDBACK, Tables.REPARATION_FEEDBACK.ID.eq(id));
 
         newRecord.setDate(getDate());
+        newRecord.setIdCustomer(getIdCustomer());;
         newRecord.setIdReparation(getIdReparation());
         return newRecord;
     }
@@ -50,6 +53,14 @@ public class ReparationFeedbackDTO {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Integer getIdCustomer() {
+        return idCustomer;
+    }
+
+    public void setIdCustomer(Integer idCustomer) {
+        this.idCustomer = idCustomer;
     }
 
     public Integer getIdReparation() {

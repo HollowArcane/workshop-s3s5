@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.Record1;
 import org.jooq.Record3;
 import org.jooq.Result;
 
@@ -25,8 +26,8 @@ public class CustomerController {
             throws ClassNotFoundException,
             SQLException,
             RuntimeException {
-                
-        Result<CustomerRecord> data = DB.handle(ctx -> {
+
+        Result<Record1<CustomerRecord>> data = DB.handle(ctx -> {
             LocalDate date = null;
             if (context.queryParam("date") != null) {
                 date = LocalDate.parse(context.queryParam("date"));

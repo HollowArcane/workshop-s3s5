@@ -38,7 +38,10 @@ public class RecommendationComponentController {
         });
         Renderer.usingDefault()
             .render("/recommendation/recommendation-component/index")
-            .with(context, Map.of("data",data));
+            .with(context, Map.of(
+                "data",data,
+                "active", "/recommendation/recommendation-component"
+            ));
     }
 
     public static void create(Context context)
@@ -52,7 +55,10 @@ public class RecommendationComponentController {
         
         Renderer.usingDefault()
                 .render("/recommendation/recommendation-component/form")
-                .with(context, Map.of("selectValues1",data));
+                .with(context, Map.of(
+                    "selectValues1",data,
+                    "active", "/recommendation/recommendation-component"
+                ));
 
     }
 
@@ -69,7 +75,22 @@ public class RecommendationComponentController {
                 return recommendationComponentDTO.toRecord(ctx).store();
             });
 
-            context.redirect("/recommendation/recommendation-component");
+            if(recommendationComponentDTO.getDateEnd().isBefore(recommendationComponentDTO.getDateStart()))
+            {
+                context.attribute("message__error", "la Date de Fin doît être après Date de Début");
+                context.attribute("idComponent", recommendationComponentDTO.getIdComponent());
+                context.attribute("dateStart", recommendationComponentDTO.getDateStart());
+                context.attribute("dateEnd", recommendationComponentDTO.getDateEnd());
+                create(context);
+            }
+            else
+            {
+                DB.handle(ctx -> {
+                    return recommendationComponentDTO.toRecord(ctx).store();
+                });
+    
+                context.redirect("/recommendation/recommendation-component");
+            }
     }
     
 }

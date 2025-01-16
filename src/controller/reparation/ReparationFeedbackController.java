@@ -44,7 +44,8 @@ public class ReparationFeedbackController {
             });
 
             Map<String,Object> data = Map.of(
-                "selectValues", selectValues
+                "selectValues", selectValues,
+                "active", "/reparation/reparation-feedback"
             );
 
             Renderer.usingDefault()
@@ -99,7 +100,9 @@ public class ReparationFeedbackController {
             Map<String,Object> data =  DB.handle(ctx -> {
                 return Map.of("data", ReparationFeedbackDTO.fetchByIdModelCategoryAndReparationDetail(ctx, idModelCategory,idComponentCategory),
                                 "selectValues1", ctx.fetch(Tables.MODEL_CATEGORY),
-                                "selectValues2", ctx.fetch(Tables.COMPONENT_CATEGORY));
+                                "selectValues2", ctx.fetch(Tables.COMPONENT_CATEGORY),
+                                "active", "/reparation/reparation-feedback"
+                                );
             });
 
             Renderer.usingDefault()

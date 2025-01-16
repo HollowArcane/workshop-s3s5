@@ -5,3 +5,5 @@ build/jooq-config.xml
 cnf/config.db.properties
 cnf/jooq-config.xml
 /build
+.vscode/settings.json
+/build

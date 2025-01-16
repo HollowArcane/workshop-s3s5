@@ -49,17 +49,31 @@ public class ReparationFeedbackRecord extends UpdatableRecordImpl<ReparationFeed
     }
 
     /**
+     * Setter for <code>public.reparation_feedback.id_customer</code>.
+     */
+    public void setIdCustomer(Integer value) {
+        set(2, value);
+    }
+
+    /**
+     * Getter for <code>public.reparation_feedback.id_customer</code>.
+     */
+    public Integer getIdCustomer() {
+        return (Integer) get(2);
+    }
+
+    /**
      * Setter for <code>public.reparation_feedback.id_reparation</code>.
      */
     public void setIdReparation(Integer value) {
-        set(2, value);
+        set(3, value);
     }
 
     /**
      * Getter for <code>public.reparation_feedback.id_reparation</code>.
      */
     public Integer getIdReparation() {
-        return (Integer) get(2);
+        return (Integer) get(3);
     }
 
     // -------------------------------------------------------------------------
@@ -85,11 +99,12 @@ public class ReparationFeedbackRecord extends UpdatableRecordImpl<ReparationFeed
     /**
      * Create a detached, initialised ReparationFeedbackRecord
      */
-    public ReparationFeedbackRecord(Integer id, LocalDate date, Integer idReparation) {
+    public ReparationFeedbackRecord(Integer id, LocalDate date, Integer idCustomer, Integer idReparation) {
         super(ReparationFeedback.REPARATION_FEEDBACK);
 
         setId(id);
         setDate(date);
+        setIdCustomer(idCustomer);
         setIdReparation(idReparation);
         resetChangedOnNotNull();
     }

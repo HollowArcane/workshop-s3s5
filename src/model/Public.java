@@ -10,6 +10,7 @@ import java.util.List;
 import model.tables.Brand;
 import model.tables.Component;
 import model.tables.ComponentCategory;
+import model.tables.Customer;
 import model.tables.Model;
 import model.tables.ModelCategory;
 import model.tables.RecommendationComponent;
@@ -20,6 +21,7 @@ import model.tables.VLabelComponent;
 import model.tables.VLabelModel;
 import model.tables.VLabelRecommendationComponent;
 import model.tables.VLabelReparation;
+import model.tables.VLabelReparationFeedback;
 
 import org.jooq.Catalog;
 import org.jooq.Table;
@@ -53,6 +55,11 @@ public class Public extends SchemaImpl {
      * The table <code>public.component_category</code>.
      */
     public final ComponentCategory COMPONENT_CATEGORY = ComponentCategory.COMPONENT_CATEGORY;
+
+    /**
+     * The table <code>public.customer</code>.
+     */
+    public final Customer CUSTOMER = Customer.CUSTOMER;
 
     /**
      * The table <code>public.model</code>.
@@ -105,6 +112,11 @@ public class Public extends SchemaImpl {
     public final VLabelReparation V_LABEL_REPARATION = VLabelReparation.V_LABEL_REPARATION;
 
     /**
+     * The table <code>public.v_label_reparation_feedback</code>.
+     */
+    public final VLabelReparationFeedback V_LABEL_REPARATION_FEEDBACK = VLabelReparationFeedback.V_LABEL_REPARATION_FEEDBACK;
+
+    /**
      * No further instances allowed
      */
     private Public() {
@@ -123,6 +135,7 @@ public class Public extends SchemaImpl {
             Brand.BRAND,
             Component.COMPONENT,
             ComponentCategory.COMPONENT_CATEGORY,
+            Customer.CUSTOMER,
             Model.MODEL,
             ModelCategory.MODEL_CATEGORY,
             RecommendationComponent.RECOMMENDATION_COMPONENT,
@@ -132,7 +145,8 @@ public class Public extends SchemaImpl {
             VLabelComponent.V_LABEL_COMPONENT,
             VLabelModel.V_LABEL_MODEL,
             VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT,
-            VLabelReparation.V_LABEL_REPARATION
+            VLabelReparation.V_LABEL_REPARATION,
+            VLabelReparationFeedback.V_LABEL_REPARATION_FEEDBACK
         );
     }
 }

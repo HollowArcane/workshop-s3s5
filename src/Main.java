@@ -17,6 +17,7 @@ import controller.misc.ComponentController;
 import controller.misc.ModelCategoryController;
 import controller.misc.ModelController;
 import controller.recommendation.RecommendationComponentController;
+import controller.reparation.CustomerController;
 import controller.reparation.ReparationController;
 import controller.reparation.ReparationFeedbackController;
 
@@ -110,6 +111,10 @@ public class Main
                         put("/model/{id}", ModelController::update);
                         delete("/model/{id}", ModelController::delete);
                     });
+                }
+
+                /* CUSTOMER */{
+                    get("/reparation/customer", CustomerController::index);
                 }
             });
         }).start(7000);

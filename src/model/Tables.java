@@ -7,6 +7,7 @@ package model;
 import model.tables.Brand;
 import model.tables.Component;
 import model.tables.ComponentCategory;
+import model.tables.Customer;
 import model.tables.Model;
 import model.tables.ModelCategory;
 import model.tables.RecommendationComponent;
@@ -17,6 +18,7 @@ import model.tables.VLabelComponent;
 import model.tables.VLabelModel;
 import model.tables.VLabelRecommendationComponent;
 import model.tables.VLabelReparation;
+import model.tables.VLabelReparationFeedback;
 
 
 /**
@@ -39,6 +41,11 @@ public class Tables {
      * The table <code>public.component_category</code>.
      */
     public static final ComponentCategory COMPONENT_CATEGORY = ComponentCategory.COMPONENT_CATEGORY;
+
+    /**
+     * The table <code>public.customer</code>.
+     */
+    public static final Customer CUSTOMER = Customer.CUSTOMER;
 
     /**
      * The table <code>public.model</code>.
@@ -89,4 +96,9 @@ public class Tables {
      * The table <code>public.v_label_reparation</code>.
      */
     public static final VLabelReparation V_LABEL_REPARATION = VLabelReparation.V_LABEL_REPARATION;
+
+    /**
+     * The table <code>public.v_label_reparation_feedback</code>.
+     */
+    public static final VLabelReparationFeedback V_LABEL_REPARATION_FEEDBACK = VLabelReparationFeedback.V_LABEL_REPARATION_FEEDBACK;
 }

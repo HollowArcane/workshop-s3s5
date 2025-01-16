@@ -11,6 +11,7 @@ import java.util.List;
 
 import model.Keys;
 import model.Public;
+import model.tables.Customer.CustomerPath;
 import model.tables.Reparation.ReparationPath;
 import model.tables.records.ReparationFeedbackRecord;
 
@@ -67,6 +68,11 @@ public class ReparationFeedback extends TableImpl<ReparationFeedbackRecord> {
      * The column <code>public.reparation_feedback.date</code>.
      */
     public final TableField<ReparationFeedbackRecord, LocalDate> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATE.nullable(false), this, "");
+
+    /**
+     * The column <code>public.reparation_feedback.id_customer</code>.
+     */
+    public final TableField<ReparationFeedbackRecord, Integer> ID_CUSTOMER = createField(DSL.name("id_customer"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.reparation_feedback.id_reparation</code>.
@@ -151,13 +157,20 @@ public class ReparationFeedback extends TableImpl<ReparationFeedbackRecord> {
     }
 
     @Override
-    public List<UniqueKey<ReparationFeedbackRecord>> getUniqueKeys() {
-        return Arrays.asList(Keys.REPARATION_FEEDBACK_ID_REPARATION_KEY);
+    public List<ForeignKey<ReparationFeedbackRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_CUSTOMER_FKEY, Keys.REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_REPARATION_FKEY);
     }
 
-    @Override
-    public List<ForeignKey<ReparationFeedbackRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_REPARATION_FKEY);
+    private transient CustomerPath _customer;
+
+    /**
+     * Get the implicit join path to the <code>public.customer</code> table.
+     */
+    public CustomerPath customer() {
+        if (_customer == null)
+            _customer = new CustomerPath(this, Keys.REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_CUSTOMER_FKEY, null);
+
+        return _customer;
     }
 
     private transient ReparationPath _reparation;

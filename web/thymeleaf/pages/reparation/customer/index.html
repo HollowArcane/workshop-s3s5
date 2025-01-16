@@ -1,0 +1,19 @@
+<div th:fragment="content">
+    <h1>Liste des clients</h1>
+    <table class="table table-striped fx__table">
+        <thead>
+            <th>Nom</th>
+            <th>Téléphone</th>
+            <th>Email</th>
+            <th>Adresse</th>
+        </thead>
+        <tbody>
+            <tr th:each=" customer: ${data}">
+                <td th:text="${customer.name}"></td>
+                <td th:text="${customer.telephone}"></td>
+                <td th:text="${customer.email}"></td>
+                <td th:text="${customer.address}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

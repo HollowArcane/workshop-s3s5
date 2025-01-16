@@ -35,14 +35,14 @@ class Page extends CRUDPage
                 tag('td', {}, [text(row.serialNumber)]),
                 tag('td', {}, [text(data.modelCategories[row.idModelCategory])]),
                 tag('td', {}, [text(data.brands[row.idBrand])]),
-                tag('td', {}, [text(data.description)]),
+                tag('td', {}, [text(row.description)]),
             ]));
         }
         
         const pagination = new Pagination(
             document.querySelector('.pagination'),
             PaginationPage(),
-            data.count,
+            data.content.count,
             this.read.bind(this)
         );
         pagination.init();

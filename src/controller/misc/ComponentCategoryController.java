@@ -2,7 +2,6 @@ package controller.misc;
 
 import database.DB;
 import io.javalin.http.Context;
-import model.dto.misc.BrandDTO;
 import model.dto.misc.ComponentCategoryDTO;
 import model.tables.records.ComponentCategoryRecord;
 import toolkit.util.Pagination;
@@ -10,7 +9,6 @@ import util.APIResponse;
 import util.Renderer;
 
 import static model.Tables.*;
-import static util.Validation.*;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -149,3 +149,36 @@ INSERT INTO recommendation_component (id_component, date_start, date_end) VALUES
     (5, '2025-03-01', '2025-03-15');
 
 
+-- Insertion de données dans la table customer
+INSERT INTO customer (name, telephone, email, address)
+VALUES
+('Alice Dupont', '+33123456789', 'alice.dupont@example.com', '123 Rue de Paris, Paris'),
+('Bob Martin', '+447123456789', 'bob.martin@example.co.uk', '45 Baker Street, London'),
+('Carla Garcia', '+34912345678', 'carla.garcia@example.es', '12 Calle Mayor, Madrid'),
+('David Brown', '+12125551234', 'david.brown@example.com', '100 Main Street, New York'),
+('Eva Schmidt', '+4915123456789', 'eva.schmidt@example.de', '56 Hauptstrasse, Berlin');
+
+-- Exemple avec des valeurs optionnelles (téléphone et email peuvent être NULL)
+INSERT INTO customer (name, telephone, email, address)
+VALUES
+('François Leclerc', NULL, 'francois.leclerc@example.fr', '789 Boulevard Saint-Michel, Paris'),
+('Gina Rossi', '+390612345678', NULL, 'Via Roma 32, Rome');
+
+
+-- Insertion de données dans la table reparation_feedback
+INSERT INTO reparation_feedback (id, date, id_customer, id_reparation) VALUES
+(1, '2024-02-01', 1, 1),
+(2, '2024-02-02', 2, 2),
+(3, '2024-02-03', 3, 3),
+(4, '2024-02-04', 4, 4),
+(5, '2024-02-05', 5, 5),
+(6, '2024-02-06', 1, 6),
+(7, '2024-02-07', 2, 7),
+(8, '2024-02-08', 3, 8),
+(9, '2024-02-09', 4, 9),
+(10, '2024-02-10', 5, 10),
+(11, '2024-02-11', 1, 11),
+(12, '2024-02-12', 2, 12),
+(13, '2024-02-13', 3, 13),
+(14, '2024-02-14', 4, 14),
+(15, '2024-02-15', 5, 15);

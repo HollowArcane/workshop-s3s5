@@ -18,7 +18,7 @@
     CREATE TABLE reparation_feedback(
         id SERIAL PRIMARY KEY,
         date DATE NOT NULL,
-        id_customer INT NOT NULL REFERENCES customer(id),
+        id_customer INT NOT NULL REFERENCES customer(id) ON DELETE CASCADE,
         id_reparation INT NOT NULL REFERENCES reparation(id) ON DELETE CASCADE  
     );
 
@@ -27,7 +27,7 @@
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL UNIQUE,
         telephone VARCHAR(15),
-        email VARCHAR(15),
+        email VARCHAR(255),
         address VARCHAR(255),
         CHECK(name != ''),
         CHECK (telephone ~ '^\+?[0-9]{10,}$'),

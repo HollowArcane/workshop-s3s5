@@ -34,6 +34,16 @@ public class RecommendationComponentController {
             {
                 dateMax = LocalDate.parse(context.queryParamAsClass("dateEnd",String.class).get());
             }
+
+            Integer year = null; 
+            if(context.queryParamAsClass("year", String.class).getOrDefault(null) != null)
+            {
+                year = Integer.parseInt(context.queryParamAsClass("year",String.class).get());
+            }
+            
+            if(year != null)
+            { return RecommendationComponentDTO.fetchByDate(ctx, year); }
+
             return RecommendationComponentDTO.fetchByDate(ctx, dateMin, dateMax);
         });
         Renderer.usingDefault()
@@ -70,10 +80,6 @@ public class RecommendationComponentController {
             recommendationComponentDTO.setIdComponent(Integer.parseInt(context.formParam("idComponent")));
             recommendationComponentDTO.setDateStart(LocalDate.parse(context.formParam("dateStart")));
             recommendationComponentDTO.setDateEnd(LocalDate.parse(context.formParam("dateEnd")));
-
-            DB.handle(ctx -> {
-                return recommendationComponentDTO.toRecord(ctx).store();
-            });
 
             if(recommendationComponentDTO.getDateEnd().isBefore(recommendationComponentDTO.getDateStart()))
             {

@@ -77,13 +77,15 @@ public class RecommendationComponentDTO {
         var result = context.selectFrom(Tables.V_LABEL_RECOMMENDATION_COMPONENT).where("1=1");
         if( min != null )
         {
-            result.and(Tables.V_LABEL_RECOMMENDATION_COMPONENT.DATE_START.greaterOrEqual(min));
+            result.and(Tables.V_LABEL_RECOMMENDATION_COMPONENT.DATE_END.greaterOrEqual(min));
         }
         if( max != null )
         {
-            result.and(Tables.V_LABEL_RECOMMENDATION_COMPONENT.DATE_END.lessThan(max));
+            result.and(Tables.V_LABEL_RECOMMENDATION_COMPONENT.DATE_START.lessThan(max));
         }
         return result.fetch();
     }
+    public static Result<VLabelRecommendationComponentRecord> fetchByDate(DSLContext context, int year)
+    { return fetchByDate(context, LocalDate.parse(year + "-01-01"), LocalDate.parse((year + 1) + "-01-01")); }
     
 }

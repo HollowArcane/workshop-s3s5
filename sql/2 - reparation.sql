@@ -92,7 +92,7 @@
             v_label_reparation AS vlr ON rf.id_reparation = vlr.id
     ;
 
-    CREATE OR REPLACE VIEW AS
+    CREATE OR REPLACE VIEW v_engineer_commission AS
         SELECT
             eng.*,
             fb.date,

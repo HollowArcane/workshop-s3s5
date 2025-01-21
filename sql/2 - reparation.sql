@@ -1,15 +1,16 @@
 -- TABLES:
     DROP TABLE IF EXISTS reparation CASCADE;
     CREATE TABLE reparation(
-    id SERIAL PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         date DATE,
         price FLOAT,
-        id_model INT NOT NULL REFERENCES model(id) ON DELETE CASCADE
+        id_model INT NOT NULL REFERENCES model(id) ON DELETE CASCADE,
+        id_engineer INT NOT NULL REFERENCES engineer(id) ON DELETE CASCADE
     );
 
     DROP TABLE IF EXISTS reparation_detail CASCADE;
     CREATE TABLE reparation_detail(
-    id SERIAL PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         id_reparation INT NOT NULL REFERENCES reparation(id) ON DELETE CASCADE,
         id_component_category INT NOT NULL REFERENCES component_category(id) ON DELETE CASCADE
     );
@@ -24,6 +25,18 @@
 
     DROP TABLE IF EXISTS customer CASCADE;
     CREATE TABLE customer(
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL UNIQUE,
+        telephone VARCHAR(15),
+        email VARCHAR(255),
+        address VARCHAR(255),
+        CHECK(name != ''),
+        CHECK (telephone ~ '^\+?[0-9]{10,}$'),
+        CHECK (email ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
+    );
+
+    DROP TABLE IF EXISTS engineer CASCADE;
+    CREATE TABLE engineer(
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL UNIQUE,
         telephone VARCHAR(15),
@@ -77,4 +90,17 @@
             customer AS c ON rf.id_customer = c.id
         JOIN 
             v_label_reparation AS vlr ON rf.id_reparation = vlr.id
+    ;
+
+    CREATE OR REPLACE VIEW AS
+        SELECT
+            eng.*,
+            fb.date,
+            price*(5/100) AS commission
+        FROM
+            engineer as eng
+        JOIN
+            reparation as rep ON rep.id_engineer = eng.id 
+        JOIN 
+            reparation_feedback as fb ON fb.id_reparation = rep.id
     ;

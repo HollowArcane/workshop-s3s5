@@ -1,0 +1,31 @@
+<div th:fragment="content">
+    <form action="/reparation/reparation" class="card mb-5 mt-5" method="post">
+        <div class="card-body p-5">
+            <h3> Insertion Réparation </h3>
+
+            <div th:insert="/includes/message :: message"></div>
+
+            <div class="mb-3">
+                <label for="price">Prix de réparation</label>
+                <input th:value="${price}" class="form-control" type="number" name="price" id="price">
+            </div>
+            <div class="mb-3">
+                <label for="date">Date de début de dépôt</label>
+                <input th:value="${date}" class="form-control" type="date" name="date" id="date">
+            </div>
+            <div class="mb-3">
+                <label for="idModel">Model</label>
+                <select class="form-select" name="idModel" id="idModel">
+                    <option th:selected="${value.id == idModel}" th:each="value : ${selectModels}" th:value="${value.id}" th:text="${value.serialNumber}+':'+${value.modelCategory}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="idEngineer">Technicien attribué</label>
+                <select class="form-select" name="idEngineer" id="idEngineer">
+                    <option th:selected="${value.id == idEngineer}" th:each="value : ${engineer}" th:value="${value.id}" th:text="${value.name}"></option>
+                </select>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Valider">
+        </div>
+    </form>
+</div>

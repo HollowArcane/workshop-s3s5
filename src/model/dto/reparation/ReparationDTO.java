@@ -22,6 +22,7 @@ public class ReparationDTO {
     private LocalDate date;
     private Double price;
     private Integer idModel;
+    private Integer idEngineer;
 
     public ReparationDTO() {}
 
@@ -31,6 +32,7 @@ public class ReparationDTO {
         this.date = record.getDate();
         this.price = record.getPrice();
         this.idModel = record.getIdModel();
+        this.idEngineer = record.getIdEngineer();
     }
 
     public ReparationRecord toRecord(DSLContext context)
@@ -42,6 +44,7 @@ public class ReparationDTO {
         newRecord.setDate(getDate());
         newRecord.setPrice(getPrice());
         newRecord.setIdModel(getIdModel());
+        newRecord.setIdEngineer(getIdEngineer());
         return newRecord;
     }
 
@@ -75,6 +78,14 @@ public class ReparationDTO {
 
     public void setIdModel(Integer idModel) {
         this.idModel = idModel;
+    }
+
+    public Integer getIdEngineer() {
+        return idEngineer;
+    }
+
+    public void setIdEngineer(Integer idEngineer) {
+        this.idEngineer = idEngineer;
     }
 
 

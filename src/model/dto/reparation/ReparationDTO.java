@@ -89,10 +89,10 @@ public class ReparationDTO {
             .join(Tables.MODEL)
                 .on(Tables.MODEL.ID.eq(Tables.REPARATION.ID_MODEL))
             .join(Tables.REPARATION_DETAIL)
-                .on(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(idComponentCategory));
-        
+                .on(Tables.REPARATION.ID.eq(Tables.REPARATION_DETAIL.ID_REPARATION));
+                
         if( idComponentCategory != null )
-        { result.and(Tables.REPARATION.ID.eq(Tables.REPARATION_DETAIL.ID_REPARATION));  }
+        { result.and(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(idComponentCategory));  }
 
         return result.join(Tables.COMPONENT_CATEGORY)
             .on(Tables.COMPONENT_CATEGORY.ID.eq(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY))

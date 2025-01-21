@@ -77,7 +77,7 @@ public class Customer extends TableImpl<CustomerRecord> {
     /**
      * The column <code>public.customer.email</code>.
      */
-    public final TableField<CustomerRecord, String> EMAIL = createField(DSL.name("email"), SQLDataType.VARCHAR(15), this, "");
+    public final TableField<CustomerRecord, String> EMAIL = createField(DSL.name("email"), SQLDataType.VARCHAR(255), this, "");
 
     /**
      * The column <code>public.customer.address</code>.

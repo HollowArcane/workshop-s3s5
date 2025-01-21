@@ -8,17 +8,17 @@ import model.tables.Brand;
 import model.tables.Component;
 import model.tables.ComponentCategory;
 import model.tables.Customer;
+import model.tables.Engineer;
 import model.tables.Model;
 import model.tables.ModelCategory;
 import model.tables.RecommendationComponent;
 import model.tables.Reparation;
 import model.tables.ReparationDetail;
 import model.tables.ReparationFeedback;
+import model.tables.VEngineerCommission;
 import model.tables.VLabelComponent;
 import model.tables.VLabelModel;
 import model.tables.VLabelRecommendationComponent;
-import model.tables.VLabelReparation;
-import model.tables.VLabelReparationFeedback;
 
 
 /**
@@ -46,6 +46,11 @@ public class Tables {
      * The table <code>public.customer</code>.
      */
     public static final Customer CUSTOMER = Customer.CUSTOMER;
+
+    /**
+     * The table <code>public.engineer</code>.
+     */
+    public static final Engineer ENGINEER = Engineer.ENGINEER;
 
     /**
      * The table <code>public.model</code>.
@@ -78,6 +83,11 @@ public class Tables {
     public static final ReparationFeedback REPARATION_FEEDBACK = ReparationFeedback.REPARATION_FEEDBACK;
 
     /**
+     * The table <code>public.v_engineer_commission</code>.
+     */
+    public static final VEngineerCommission V_ENGINEER_COMMISSION = VEngineerCommission.V_ENGINEER_COMMISSION;
+
+    /**
      * The table <code>public.v_label_component</code>.
      */
     public static final VLabelComponent V_LABEL_COMPONENT = VLabelComponent.V_LABEL_COMPONENT;
@@ -91,14 +101,4 @@ public class Tables {
      * The table <code>public.v_label_recommendation_component</code>.
      */
     public static final VLabelRecommendationComponent V_LABEL_RECOMMENDATION_COMPONENT = VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT;
-
-    /**
-     * The table <code>public.v_label_reparation</code>.
-     */
-    public static final VLabelReparation V_LABEL_REPARATION = VLabelReparation.V_LABEL_REPARATION;
-
-    /**
-     * The table <code>public.v_label_reparation_feedback</code>.
-     */
-    public static final VLabelReparationFeedback V_LABEL_REPARATION_FEEDBACK = VLabelReparationFeedback.V_LABEL_REPARATION_FEEDBACK;
 }

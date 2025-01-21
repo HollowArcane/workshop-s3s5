@@ -20,6 +20,7 @@ import controller.recommendation.RecommendationComponentController;
 import controller.reparation.CustomerController;
 import controller.reparation.ReparationController;
 import controller.reparation.ReparationFeedbackController;
+import controller.staff.EngineerController;
 
 
 public class Main
@@ -115,6 +116,10 @@ public class Main
 
                 /* CUSTOMER */{
                     get("/reparation/customer", CustomerController::index);
+                }
+
+                /* ENGINEER */{
+                    get("/staff/engineer", EngineerController::index);
                 }
             });
         }).start(7000);

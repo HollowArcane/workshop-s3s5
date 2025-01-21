@@ -11,17 +11,17 @@ import model.tables.Brand;
 import model.tables.Component;
 import model.tables.ComponentCategory;
 import model.tables.Customer;
+import model.tables.Engineer;
 import model.tables.Model;
 import model.tables.ModelCategory;
 import model.tables.RecommendationComponent;
 import model.tables.Reparation;
 import model.tables.ReparationDetail;
 import model.tables.ReparationFeedback;
+import model.tables.VEngineerCommission;
 import model.tables.VLabelComponent;
 import model.tables.VLabelModel;
 import model.tables.VLabelRecommendationComponent;
-import model.tables.VLabelReparation;
-import model.tables.VLabelReparationFeedback;
 
 import org.jooq.Catalog;
 import org.jooq.Table;
@@ -62,6 +62,11 @@ public class Public extends SchemaImpl {
     public final Customer CUSTOMER = Customer.CUSTOMER;
 
     /**
+     * The table <code>public.engineer</code>.
+     */
+    public final Engineer ENGINEER = Engineer.ENGINEER;
+
+    /**
      * The table <code>public.model</code>.
      */
     public final Model MODEL = Model.MODEL;
@@ -92,6 +97,11 @@ public class Public extends SchemaImpl {
     public final ReparationFeedback REPARATION_FEEDBACK = ReparationFeedback.REPARATION_FEEDBACK;
 
     /**
+     * The table <code>public.v_engineer_commission</code>.
+     */
+    public final VEngineerCommission V_ENGINEER_COMMISSION = VEngineerCommission.V_ENGINEER_COMMISSION;
+
+    /**
      * The table <code>public.v_label_component</code>.
      */
     public final VLabelComponent V_LABEL_COMPONENT = VLabelComponent.V_LABEL_COMPONENT;
@@ -105,16 +115,6 @@ public class Public extends SchemaImpl {
      * The table <code>public.v_label_recommendation_component</code>.
      */
     public final VLabelRecommendationComponent V_LABEL_RECOMMENDATION_COMPONENT = VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT;
-
-    /**
-     * The table <code>public.v_label_reparation</code>.
-     */
-    public final VLabelReparation V_LABEL_REPARATION = VLabelReparation.V_LABEL_REPARATION;
-
-    /**
-     * The table <code>public.v_label_reparation_feedback</code>.
-     */
-    public final VLabelReparationFeedback V_LABEL_REPARATION_FEEDBACK = VLabelReparationFeedback.V_LABEL_REPARATION_FEEDBACK;
 
     /**
      * No further instances allowed
@@ -136,17 +136,17 @@ public class Public extends SchemaImpl {
             Component.COMPONENT,
             ComponentCategory.COMPONENT_CATEGORY,
             Customer.CUSTOMER,
+            Engineer.ENGINEER,
             Model.MODEL,
             ModelCategory.MODEL_CATEGORY,
             RecommendationComponent.RECOMMENDATION_COMPONENT,
             Reparation.REPARATION,
             ReparationDetail.REPARATION_DETAIL,
             ReparationFeedback.REPARATION_FEEDBACK,
+            VEngineerCommission.V_ENGINEER_COMMISSION,
             VLabelComponent.V_LABEL_COMPONENT,
             VLabelModel.V_LABEL_MODEL,
-            VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT,
-            VLabelReparation.V_LABEL_REPARATION,
-            VLabelReparationFeedback.V_LABEL_REPARATION_FEEDBACK
+            VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT
         );
     }
 }

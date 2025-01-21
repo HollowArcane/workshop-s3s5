@@ -11,7 +11,6 @@ import java.util.List;
 import model.Keys;
 import model.Public;
 import model.tables.ComponentCategory.ComponentCategoryPath;
-import model.tables.Reparation.ReparationPath;
 import model.tables.records.ReparationDetailRecord;
 
 import org.jooq.Condition;
@@ -152,7 +151,7 @@ public class ReparationDetail extends TableImpl<ReparationDetailRecord> {
 
     @Override
     public List<ForeignKey<ReparationDetailRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_COMPONENT_CATEGORY_FKEY, Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_REPARATION_FKEY);
+        return Arrays.asList(Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_COMPONENT_CATEGORY_FKEY);
     }
 
     private transient ComponentCategoryPath _componentCategory;
@@ -166,18 +165,6 @@ public class ReparationDetail extends TableImpl<ReparationDetailRecord> {
             _componentCategory = new ComponentCategoryPath(this, Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_COMPONENT_CATEGORY_FKEY, null);
 
         return _componentCategory;
-    }
-
-    private transient ReparationPath _reparation;
-
-    /**
-     * Get the implicit join path to the <code>public.reparation</code> table.
-     */
-    public ReparationPath reparation() {
-        if (_reparation == null)
-            _reparation = new ReparationPath(this, Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_REPARATION_FKEY, null);
-
-        return _reparation;
     }
 
     @Override

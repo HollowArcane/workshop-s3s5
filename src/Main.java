@@ -41,11 +41,17 @@ public class Main
             config.router.apiBuilder(() -> {
                 get("/",  ctx -> ctx.redirect("/misc/component"));
 
-                get("/reparation/reparation", ReparationController::index);
+                /* REPARATION */ {
+                    get("/reparation/reparation", ReparationController::index);
+                    post("/reparation/reparation", ReparationController::store);
+                    get("/reparation/reparation/create", ReparationController::loadForm);
+                }
 
-                get("/recommendation/recommendation-component", RecommendationComponentController::index);
-                get("/recommendation/recommendation-component/create", RecommendationComponentController::create);
-                post("/recommendation/recommendation-component", RecommendationComponentController::store);
+                /* RECOMMENDATION */ {
+                    get("/recommendation/recommendation-component", RecommendationComponentController::index);
+                    get("/recommendation/recommendation-component/create", RecommendationComponentController::create);
+                    post("/recommendation/recommendation-component", RecommendationComponentController::store);
+                }
 
                 /* FEEDBACK */ {
                     get("/reparation/feedback", ReparationFeedbackController::index);

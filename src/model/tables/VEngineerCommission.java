@@ -95,7 +95,7 @@ public class VEngineerCommission extends TableImpl<VEngineerCommissionRecord> {
          eng.email,
          eng.address,
          fb.date,
-         (rep.price * ((5 / 100))::double precision) AS commission
+         ((rep.price * (5)::double precision) / (100)::double precision) AS commission
         FROM ((engineer eng
           JOIN reparation rep ON ((rep.id_engineer = eng.id)))
           JOIN reparation_feedback fb ON ((fb.id_reparation = rep.id)));

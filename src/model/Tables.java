@@ -19,6 +19,7 @@ import model.tables.VEngineerCommission;
 import model.tables.VLabelComponent;
 import model.tables.VLabelModel;
 import model.tables.VLabelRecommendationComponent;
+import model.tables.VLabelReparation;
 
 
 /**
@@ -101,4 +102,9 @@ public class Tables {
      * The table <code>public.v_label_recommendation_component</code>.
      */
     public static final VLabelRecommendationComponent V_LABEL_RECOMMENDATION_COMPONENT = VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT;
+
+    /**
+     * The table <code>public.v_label_reparation</code>.
+     */
+    public static final VLabelReparation V_LABEL_REPARATION = VLabelReparation.V_LABEL_REPARATION;
 }

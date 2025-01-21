@@ -30,7 +30,20 @@ public class EngineerController {
         RuntimeException {
          
             Result<VEngineerCommissionRecord> data = DB.handle(ctx -> {
-                return EngineerDTO.fetchByDate(ctx, null, null);
+                
+                LocalDate dateMin = null;
+                if(context.queryParamAsClass("dateMin",String.class).getOrDefault(null) != null)
+                {
+                    dateMin = LocalDate.parse(context.queryParamAsClass("dateMin",String.class).get());
+                }
+                
+                LocalDate dateMax = null; 
+                if(context.queryParamAsClass("dateMax",String.class).getOrDefault(null) != null)
+                {
+                    dateMax = LocalDate.parse(context.queryParamAsClass("dateMax",String.class).get());
+                }
+
+                return EngineerDTO.fetchByDate(ctx, dateMin, dateMax);
             });
             
             Renderer.usingDefault()

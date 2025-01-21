@@ -1,6 +1,7 @@
 package model.dto.staff;
 
 import static model.Tables.REPARATION_FEEDBACK;
+import static model.Tables.V_ENGINEER_COMMISSION;
 
 import java.time.LocalDate;
 
@@ -88,8 +89,19 @@ public class EngineerDTO {
 
     public static Result<VEngineerCommissionRecord> fetchByDate(DSLContext context, LocalDate dateMin, LocalDate dateMax)
     {
-        return context
-            .selectFrom(Tables.V_ENGINEER_COMMISSION).fetch();
+        var data = context
+                    .selectFrom(Tables.V_ENGINEER_COMMISSION)
+                    .where("1=1");
+
+        if(dateMin!=null)
+        {
+            data.and(Tables.V_ENGINEER_COMMISSION.DATE.greaterOrEqual(dateMin));
+        }
+        if(dateMax!=null)
+        {
+            data.and(Tables.V_ENGINEER_COMMISSION.DATE.lessThan(dateMax));
+        }
+        return data.fetch();
     }
     
 }

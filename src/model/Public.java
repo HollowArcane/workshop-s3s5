@@ -22,6 +22,7 @@ import model.tables.VEngineerCommission;
 import model.tables.VLabelComponent;
 import model.tables.VLabelModel;
 import model.tables.VLabelRecommendationComponent;
+import model.tables.VLabelReparation;
 
 import org.jooq.Catalog;
 import org.jooq.Table;
@@ -117,6 +118,11 @@ public class Public extends SchemaImpl {
     public final VLabelRecommendationComponent V_LABEL_RECOMMENDATION_COMPONENT = VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT;
 
     /**
+     * The table <code>public.v_label_reparation</code>.
+     */
+    public final VLabelReparation V_LABEL_REPARATION = VLabelReparation.V_LABEL_REPARATION;
+
+    /**
      * No further instances allowed
      */
     private Public() {
@@ -146,7 +152,8 @@ public class Public extends SchemaImpl {
             VEngineerCommission.V_ENGINEER_COMMISSION,
             VLabelComponent.V_LABEL_COMPONENT,
             VLabelModel.V_LABEL_MODEL,
-            VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT
+            VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT,
+            VLabelReparation.V_LABEL_REPARATION
         );
     }
 }

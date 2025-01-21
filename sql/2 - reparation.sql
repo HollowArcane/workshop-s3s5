@@ -96,7 +96,7 @@
         SELECT
             eng.*,
             fb.date,
-            price*(5/100) AS commission
+            (price*5)/100 AS commission
         FROM
             engineer as eng
         JOIN

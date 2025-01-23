@@ -4,9 +4,7 @@
 package model.tables;
 
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import model.Keys;
 import model.Public;
@@ -14,7 +12,6 @@ import model.tables.Component.ComponentPath;
 import model.tables.ReparationDetail.ReparationDetailPath;
 import model.tables.records.ComponentCategoryRecord;
 
-import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -34,7 +31,6 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
-import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
@@ -147,11 +143,6 @@ public class ComponentCategory extends TableImpl<ComponentCategoryRecord> {
         return Keys.COMPONENT_CATEGORY_PKEY;
     }
 
-    @Override
-    public List<UniqueKey<ComponentCategoryRecord>> getUniqueKeys() {
-        return Arrays.asList(Keys.COMPONENT_CATEGORY_LABEL_KEY);
-    }
-
     private transient ComponentPath _component;
 
     /**
@@ -176,13 +167,6 @@ public class ComponentCategory extends TableImpl<ComponentCategoryRecord> {
             _reparationDetail = new ReparationDetailPath(this, null, Keys.REPARATION_DETAIL__REPARATION_DETAIL_ID_COMPONENT_CATEGORY_FKEY.getInverseKey());
 
         return _reparationDetail;
-    }
-
-    @Override
-    public List<Check<ComponentCategoryRecord>> getChecks() {
-        return Arrays.asList(
-            Internal.createCheck(this, DSL.name("component_category_label_check"), "(((label)::text <> ''::text))", true)
-        );
     }
 
     @Override

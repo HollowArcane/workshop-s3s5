@@ -10,15 +10,21 @@ import java.util.List;
 
 import model.Keys;
 import model.Public;
+import model.tables.ReparationFeedback.ReparationFeedbackPath;
+import model.tables.Ticket.TicketPath;
 import model.tables.records.CustomerRecord;
 
 import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -108,6 +114,39 @@ public class Customer extends TableImpl<CustomerRecord> {
         this(DSL.name("customer"), null);
     }
 
+    public <O extends Record> Customer(Table<O> path, ForeignKey<O, CustomerRecord> childPath, InverseForeignKey<O, CustomerRecord> parentPath) {
+        super(path, childPath, parentPath, CUSTOMER);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class CustomerPath extends Customer implements Path<CustomerRecord> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> CustomerPath(Table<O> path, ForeignKey<O, CustomerRecord> childPath, InverseForeignKey<O, CustomerRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private CustomerPath(Name alias, Table<CustomerRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public CustomerPath as(String alias) {
+            return new CustomerPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public CustomerPath as(Name alias) {
+            return new CustomerPath(alias, this);
+        }
+
+        @Override
+        public CustomerPath as(Table<?> alias) {
+            return new CustomerPath(alias.getQualifiedName(), this);
+        }
+    }
+
     @Override
     public Schema getSchema() {
         return aliased() ? null : Public.PUBLIC;
@@ -126,6 +165,32 @@ public class Customer extends TableImpl<CustomerRecord> {
     @Override
     public List<UniqueKey<CustomerRecord>> getUniqueKeys() {
         return Arrays.asList(Keys.CUSTOMER_NAME_KEY);
+    }
+
+    private transient ReparationFeedbackPath _reparationFeedback;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.reparation_feedback</code> table
+     */
+    public ReparationFeedbackPath reparationFeedback() {
+        if (_reparationFeedback == null)
+            _reparationFeedback = new ReparationFeedbackPath(this, null, Keys.REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_CUSTOMER_FKEY.getInverseKey());
+
+        return _reparationFeedback;
+    }
+
+    private transient TicketPath _ticket;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.ticket</code>
+     * table
+     */
+    public TicketPath ticket() {
+        if (_ticket == null)
+            _ticket = new TicketPath(this, null, Keys.TICKET__TICKET_ID_CUSTOMER_FKEY.getInverseKey());
+
+        return _ticket;
     }
 
     @Override

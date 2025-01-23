@@ -13,12 +13,11 @@ import java.util.List;
 import model.Keys;
 import model.Public;
 import model.tables.Component.ComponentPath;
-import model.tables.EntryComponent.EntryComponentPath;
+import model.tables.Customer.CustomerPath;
 import model.tables.Model.ModelPath;
 import model.tables.MvtTicketState.MvtTicketStatePath;
 import model.tables.TicketComponent.TicketComponentPath;
 import model.tables.TicketState.TicketStatePath;
-import model.tables.TicketStockWithdraw.TicketStockWithdrawPath;
 import model.tables.records.TicketRecord;
 
 import org.jooq.Check;
@@ -186,7 +185,19 @@ public class Ticket extends TableImpl<TicketRecord> {
 
     @Override
     public List<ForeignKey<TicketRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.TICKET__TICKET_ID_MODEL_FKEY, Keys.TICKET__TICKET_ID_TICKET_STATE_FKEY);
+        return Arrays.asList(Keys.TICKET__TICKET_ID_CUSTOMER_FKEY, Keys.TICKET__TICKET_ID_MODEL_FKEY, Keys.TICKET__TICKET_ID_TICKET_STATE_FKEY);
+    }
+
+    private transient CustomerPath _customer;
+
+    /**
+     * Get the implicit join path to the <code>public.customer</code> table.
+     */
+    public CustomerPath customer() {
+        if (_customer == null)
+            _customer = new CustomerPath(this, Keys.TICKET__TICKET_ID_CUSTOMER_FKEY, null);
+
+        return _customer;
     }
 
     private transient ModelPath _model;
@@ -239,19 +250,6 @@ public class Ticket extends TableImpl<TicketRecord> {
         return _ticketComponent;
     }
 
-    private transient TicketStockWithdrawPath _ticketStockWithdraw;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.ticket_stock_withdraw</code> table
-     */
-    public TicketStockWithdrawPath ticketStockWithdraw() {
-        if (_ticketStockWithdraw == null)
-            _ticketStockWithdraw = new TicketStockWithdrawPath(this, null, Keys.TICKET_STOCK_WITHDRAW__TICKET_STOCK_WITHDRAW_ID_TICKET_FKEY.getInverseKey());
-
-        return _ticketStockWithdraw;
-    }
-
     /**
      * Get the implicit many-to-many join path to the
      * <code>public.component</code> table
@@ -260,18 +258,10 @@ public class Ticket extends TableImpl<TicketRecord> {
         return ticketComponent().component();
     }
 
-    /**
-     * Get the implicit many-to-many join path to the
-     * <code>public.entry_component</code> table
-     */
-    public EntryComponentPath entryComponent() {
-        return ticketStockWithdraw().entryComponent();
-    }
-
     @Override
     public List<Check<TicketRecord>> getChecks() {
         return Arrays.asList(
-            Internal.createCheck(this, DSL.name("ticket_check"), "(((id_ticket_state = 1) OR (id_ticket_state = 2) OR (diagnostic IS NOT NULL)))", true),
+            Internal.createCheck(this, DSL.name("ticket_check"), "(((id_ticket_state IS NULL) OR (id_ticket_state = 1) OR (id_ticket_state = 2) OR (diagnostic IS NOT NULL)))", true),
             Internal.createCheck(this, DSL.name("ticket_price_reparation_check"), "((price_reparation >= (0)::numeric))", true)
         );
     }

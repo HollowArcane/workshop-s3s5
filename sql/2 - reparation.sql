@@ -93,15 +93,4 @@
             v_label_reparation AS vlr ON rf.id_reparation = vlr.id
     ;
 
-    CREATE OR REPLACE VIEW v_engineer_commission AS
-        SELECT
-            eng.*,
-            fb.date,
-            (price*5)/100 AS commission
-        FROM
-            engineer as eng
-        JOIN
-            reparation as rep ON rep.id_engineer = eng.id 
-        JOIN 
-            reparation_feedback as fb ON fb.id_reparation = rep.id
-    ;
+    

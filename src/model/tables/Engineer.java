@@ -10,7 +10,7 @@ import java.util.List;
 
 import model.Keys;
 import model.Public;
-import model.tables.Reparation.ReparationPath;
+import model.tables.Gender.GenderPath;
 import model.tables.records.EngineerRecord;
 
 import org.jooq.Check;
@@ -83,6 +83,11 @@ public class Engineer extends TableImpl<EngineerRecord> {
      * The column <code>public.engineer.address</code>.
      */
     public final TableField<EngineerRecord, String> ADDRESS = createField(DSL.name("address"), SQLDataType.VARCHAR(255), this, "");
+
+    /**
+     * The column <code>public.engineer.id_gender</code>.
+     */
+    public final TableField<EngineerRecord, Integer> ID_GENDER = createField(DSL.name("id_gender"), SQLDataType.INTEGER.nullable(false), this, "");
 
     private Engineer(Name alias, Table<EngineerRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -166,17 +171,21 @@ public class Engineer extends TableImpl<EngineerRecord> {
         return Arrays.asList(Keys.ENGINEER_NAME_KEY);
     }
 
-    private transient ReparationPath _reparation;
+    @Override
+    public List<ForeignKey<EngineerRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.ENGINEER__ENGINEER_ID_GENDER_FKEY);
+    }
+
+    private transient GenderPath _gender;
 
     /**
-     * Get the implicit to-many join path to the <code>public.reparation</code>
-     * table
+     * Get the implicit join path to the <code>public.gender</code> table.
      */
-    public ReparationPath reparation() {
-        if (_reparation == null)
-            _reparation = new ReparationPath(this, null, Keys.REPARATION__REPARATION_ID_ENGINEER_FKEY.getInverseKey());
+    public GenderPath gender() {
+        if (_gender == null)
+            _gender = new GenderPath(this, Keys.ENGINEER__ENGINEER_ID_GENDER_FKEY, null);
 
-        return _reparation;
+        return _gender;
     }
 
     @Override

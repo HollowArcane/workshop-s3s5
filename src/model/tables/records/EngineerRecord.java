@@ -88,6 +88,20 @@ public class EngineerRecord extends UpdatableRecordImpl<EngineerRecord> {
         return (String) get(4);
     }
 
+    /**
+     * Setter for <code>public.engineer.id_gender</code>.
+     */
+    public void setIdGender(Integer value) {
+        set(5, value);
+    }
+
+    /**
+     * Getter for <code>public.engineer.id_gender</code>.
+     */
+    public Integer getIdGender() {
+        return (Integer) get(5);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -111,7 +125,7 @@ public class EngineerRecord extends UpdatableRecordImpl<EngineerRecord> {
     /**
      * Create a detached, initialised EngineerRecord
      */
-    public EngineerRecord(Integer id, String name, String telephone, String email, String address) {
+    public EngineerRecord(Integer id, String name, String telephone, String email, String address, Integer idGender) {
         super(Engineer.ENGINEER);
 
         setId(id);
@@ -119,6 +133,7 @@ public class EngineerRecord extends UpdatableRecordImpl<EngineerRecord> {
         setTelephone(telephone);
         setEmail(email);
         setAddress(address);
+        setIdGender(idGender);
         resetChangedOnNotNull();
     }
 }

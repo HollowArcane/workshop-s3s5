@@ -12,15 +12,12 @@ import model.Keys;
 import model.Public;
 import model.tables.Brand.BrandPath;
 import model.tables.ComponentCategory.ComponentCategoryPath;
-import model.tables.EntryComponent.EntryComponentPath;
 import model.tables.ModelCategory.ModelCategoryPath;
-import model.tables.MvtStockComponent.MvtStockComponentPath;
 import model.tables.RecommendationComponent.RecommendationComponentPath;
 import model.tables.Ticket.TicketPath;
 import model.tables.TicketComponent.TicketComponentPath;
 import model.tables.records.ComponentRecord;
 
-import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -40,7 +37,6 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
-import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
@@ -174,11 +170,6 @@ public class Component extends TableImpl<ComponentRecord> {
     }
 
     @Override
-    public List<UniqueKey<ComponentRecord>> getUniqueKeys() {
-        return Arrays.asList(Keys.COMPONENT_SERIAL_NUMBER_KEY);
-    }
-
-    @Override
     public List<ForeignKey<ComponentRecord, ?>> getReferences() {
         return Arrays.asList(Keys.COMPONENT__COMPONENT_ID_BRAND_FKEY, Keys.COMPONENT__COMPONENT_ID_COMPONENT_CATEGORY_FKEY, Keys.COMPONENT__COMPONENT_ID_MODEL_CATEGORY_FKEY);
     }
@@ -221,32 +212,6 @@ public class Component extends TableImpl<ComponentRecord> {
         return _modelCategory;
     }
 
-    private transient EntryComponentPath _entryComponent;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.entry_component</code> table
-     */
-    public EntryComponentPath entryComponent() {
-        if (_entryComponent == null)
-            _entryComponent = new EntryComponentPath(this, null, Keys.ENTRY_COMPONENT__ENTRY_COMPONENT_ID_COMPONENT_FKEY.getInverseKey());
-
-        return _entryComponent;
-    }
-
-    private transient MvtStockComponentPath _mvtStockComponent;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.mvt_stock_component</code> table
-     */
-    public MvtStockComponentPath mvtStockComponent() {
-        if (_mvtStockComponent == null)
-            _mvtStockComponent = new MvtStockComponentPath(this, null, Keys.MVT_STOCK_COMPONENT__MVT_STOCK_COMPONENT_ID_COMPONENT_FKEY.getInverseKey());
-
-        return _mvtStockComponent;
-    }
-
     private transient RecommendationComponentPath _recommendationComponent;
 
     /**
@@ -279,13 +244,6 @@ public class Component extends TableImpl<ComponentRecord> {
      */
     public TicketPath ticket() {
         return ticketComponent().ticket();
-    }
-
-    @Override
-    public List<Check<ComponentRecord>> getChecks() {
-        return Arrays.asList(
-            Internal.createCheck(this, DSL.name("component_serial_number_check"), "(((serial_number)::text ~ '^[A-Za-z0-9][A-Za-z0-9 -'']*[A-Za-z0-9]$'::text))", true)
-        );
     }
 
     @Override

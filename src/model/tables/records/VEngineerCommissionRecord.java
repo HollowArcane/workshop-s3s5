@@ -90,31 +90,59 @@ public class VEngineerCommissionRecord extends TableRecordImpl<VEngineerCommissi
     }
 
     /**
+     * Setter for <code>public.v_engineer_commission.id_gender</code>.
+     */
+    public void setIdGender(Integer value) {
+        set(5, value);
+    }
+
+    /**
+     * Getter for <code>public.v_engineer_commission.id_gender</code>.
+     */
+    public Integer getIdGender() {
+        return (Integer) get(5);
+    }
+
+    /**
      * Setter for <code>public.v_engineer_commission.date</code>.
      */
     public void setDate(LocalDate value) {
-        set(5, value);
+        set(6, value);
     }
 
     /**
      * Getter for <code>public.v_engineer_commission.date</code>.
      */
     public LocalDate getDate() {
-        return (LocalDate) get(5);
+        return (LocalDate) get(6);
+    }
+
+    /**
+     * Setter for <code>public.v_engineer_commission.gender</code>.
+     */
+    public void setGender(String value) {
+        set(7, value);
+    }
+
+    /**
+     * Getter for <code>public.v_engineer_commission.gender</code>.
+     */
+    public String getGender() {
+        return (String) get(7);
     }
 
     /**
      * Setter for <code>public.v_engineer_commission.commission</code>.
      */
     public void setCommission(Double value) {
-        set(6, value);
+        set(8, value);
     }
 
     /**
      * Getter for <code>public.v_engineer_commission.commission</code>.
      */
     public Double getCommission() {
-        return (Double) get(6);
+        return (Double) get(8);
     }
 
     // -------------------------------------------------------------------------
@@ -131,7 +159,7 @@ public class VEngineerCommissionRecord extends TableRecordImpl<VEngineerCommissi
     /**
      * Create a detached, initialised VEngineerCommissionRecord
      */
-    public VEngineerCommissionRecord(Integer id, String name, String telephone, String email, String address, LocalDate date, Double commission) {
+    public VEngineerCommissionRecord(Integer id, String name, String telephone, String email, String address, Integer idGender, LocalDate date, String gender, Double commission) {
         super(VEngineerCommission.V_ENGINEER_COMMISSION);
 
         setId(id);
@@ -139,7 +167,9 @@ public class VEngineerCommissionRecord extends TableRecordImpl<VEngineerCommissi
         setTelephone(telephone);
         setEmail(email);
         setAddress(address);
+        setIdGender(idGender);
         setDate(date);
+        setGender(gender);
         setCommission(commission);
         resetChangedOnNotNull();
     }

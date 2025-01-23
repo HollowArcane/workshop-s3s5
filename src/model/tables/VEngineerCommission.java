@@ -74,9 +74,19 @@ public class VEngineerCommission extends TableImpl<VEngineerCommissionRecord> {
     public final TableField<VEngineerCommissionRecord, String> ADDRESS = createField(DSL.name("address"), SQLDataType.VARCHAR(255), this, "");
 
     /**
+     * The column <code>public.v_engineer_commission.id_gender</code>.
+     */
+    public final TableField<VEngineerCommissionRecord, Integer> ID_GENDER = createField(DSL.name("id_gender"), SQLDataType.INTEGER, this, "");
+
+    /**
      * The column <code>public.v_engineer_commission.date</code>.
      */
     public final TableField<VEngineerCommissionRecord, LocalDate> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATE, this, "");
+
+    /**
+     * The column <code>public.v_engineer_commission.gender</code>.
+     */
+    public final TableField<VEngineerCommissionRecord, String> GENDER = createField(DSL.name("gender"), SQLDataType.VARCHAR(55), this, "");
 
     /**
      * The column <code>public.v_engineer_commission.commission</code>.
@@ -94,11 +104,14 @@ public class VEngineerCommission extends TableImpl<VEngineerCommissionRecord> {
          eng.telephone,
          eng.email,
          eng.address,
+         eng.id_gender,
          fb.date,
+         gd.gender,
          ((rep.price * (5)::double precision) / (100)::double precision) AS commission
-        FROM ((engineer eng
+        FROM (((engineer eng
           JOIN reparation rep ON ((rep.id_engineer = eng.id)))
-          JOIN reparation_feedback fb ON ((fb.id_reparation = rep.id)));
+          JOIN reparation_feedback fb ON ((fb.id_reparation = rep.id)))
+          JOIN gender gd ON ((gd.id = eng.id_gender)));
         """), where);
     }
 

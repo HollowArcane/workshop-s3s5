@@ -184,11 +184,16 @@ INSERT INTO reparation_feedback (id, date, id_customer, id_reparation) VALUES
 (14, '2024-02-14', 4, 14),
 (15, '2024-02-15', 5, 15);
 
--- Insertion de données dans la table engineer
-INSERT INTO engineer (name, telephone, email, address) VALUES
-('Alice Dupont', '+33123456789', 'alice.dupont@example.com', '123 Rue de Paris, 75001 Paris, France'),
-('Bob Martin', '+441234567890', 'bob.martin@example.co.uk', '456 Oxford Street, London, UK'),
-('Charlie Nguyen', '+4915123456789', 'charlie.nguyen@example.de', '789 Berliner Str., Berlin, Germany'),
-('Dana Lee', '+8613912345678', 'dana.lee@example.cn', '101 Zhongguancun, Beijing, China'),
-('Ethan Brown', '+18191234567', 'ethan.brown@example.com', '202 Elm Street, New York, USA');
+-- Insertion de techniciens
+INSERT INTO engineer (name, telephone, email, address, id_gender) VALUES
+('Alice Dupont', '+33123456789', 'alice.dupont@example.com', '123 Rue de Paris, 75001 Paris, France', 2),
+('Bob Martin', '+441234567890', 'bob.martin@example.co.uk', '456 Oxford Street, London, UK', 1),
+('Charlie Nguyen', '+4915123456789', 'charlie.nguyen@example.de', '789 Berliner Str., Berlin, Germany', 2),
+('Dana Lee', '+8613912345678', 'dana.lee@example.cn', '101 Zhongguancun, Beijing, China', 1),
+('Ethan Brown', '+18191234567', 'ethan.brown@example.com', '202 Elm Street, New York, USA', 1);
+
+-- Insertion de genre
+INSERT INTO gender (gender) VALUES 
+('Homme'),
+('Femme');
 

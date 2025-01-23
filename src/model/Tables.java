@@ -9,10 +9,7 @@ import model.tables.Component;
 import model.tables.ComponentCategory;
 import model.tables.Customer;
 import model.tables.Engineer;
-<<<<<<< HEAD
 import model.tables.EntryComponent;
-=======
->>>>>>> 7b555d5371200f884cecf79ce7f9b91e91d53d06
 import model.tables.Model;
 import model.tables.ModelCategory;
 import model.tables.MvtStockComponent;
@@ -21,14 +18,11 @@ import model.tables.RecommendationComponent;
 import model.tables.Reparation;
 import model.tables.ReparationDetail;
 import model.tables.ReparationFeedback;
-<<<<<<< HEAD
 import model.tables.Supplier;
 import model.tables.Ticket;
 import model.tables.TicketComponent;
 import model.tables.TicketState;
 import model.tables.TicketStockWithdraw;
-=======
->>>>>>> 7b555d5371200f884cecf79ce7f9b91e91d53d06
 import model.tables.VEngineerCommission;
 import model.tables.VLabelComponent;
 import model.tables.VLabelEntryComponent;
@@ -36,12 +30,9 @@ import model.tables.VLabelModel;
 import model.tables.VLabelMvtStockComponent;
 import model.tables.VLabelRecommendationComponent;
 import model.tables.VLabelReparation;
-<<<<<<< HEAD
 import model.tables.VLabelReparationFeedback;
 import model.tables.VLabelTicket;
 import model.tables.VStateMvtTicketState;
-=======
->>>>>>> 7b555d5371200f884cecf79ce7f9b91e91d53d06
 
 
 /**
@@ -76,14 +67,11 @@ public class Tables {
     public static final Engineer ENGINEER = Engineer.ENGINEER;
 
     /**
-<<<<<<< HEAD
      * The table <code>public.entry_component</code>.
      */
     public static final EntryComponent ENTRY_COMPONENT = EntryComponent.ENTRY_COMPONENT;
 
     /**
-=======
->>>>>>> 7b555d5371200f884cecf79ce7f9b91e91d53d06
      * The table <code>public.model</code>.
      */
     public static final Model MODEL = Model.MODEL;
@@ -124,7 +112,6 @@ public class Tables {
     public static final ReparationFeedback REPARATION_FEEDBACK = ReparationFeedback.REPARATION_FEEDBACK;
 
     /**
-<<<<<<< HEAD
      * The table <code>public.supplier</code>.
      */
     public static final Supplier SUPPLIER = Supplier.SUPPLIER;
@@ -150,8 +137,6 @@ public class Tables {
     public static final TicketStockWithdraw TICKET_STOCK_WITHDRAW = TicketStockWithdraw.TICKET_STOCK_WITHDRAW;
 
     /**
-=======
->>>>>>> 7b555d5371200f884cecf79ce7f9b91e91d53d06
      * The table <code>public.v_engineer_commission</code>.
      */
     public static final VEngineerCommission V_ENGINEER_COMMISSION = VEngineerCommission.V_ENGINEER_COMMISSION;
@@ -185,7 +170,6 @@ public class Tables {
      * The table <code>public.v_label_reparation</code>.
      */
     public static final VLabelReparation V_LABEL_REPARATION = VLabelReparation.V_LABEL_REPARATION;
-<<<<<<< HEAD
 
     /**
      * The table <code>public.v_label_reparation_feedback</code>.
@@ -201,6 +185,4 @@ public class Tables {
      * The table <code>public.v_state_mvt_ticket_state</code>.
      */
     public static final VStateMvtTicketState V_STATE_MVT_TICKET_STATE = VStateMvtTicketState.V_STATE_MVT_TICKET_STATE;
-=======
->>>>>>> 7b555d5371200f884cecf79ce7f9b91e91d53d06
 }

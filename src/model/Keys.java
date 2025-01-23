@@ -9,10 +9,7 @@ import model.tables.Component;
 import model.tables.ComponentCategory;
 import model.tables.Customer;
 import model.tables.Engineer;
-<<<<<<< HEAD
 import model.tables.EntryComponent;
-=======
->>>>>>> 7b555d5371200f884cecf79ce7f9b91e91d53d06
 import model.tables.Model;
 import model.tables.ModelCategory;
 import model.tables.MvtStockComponent;
@@ -31,10 +28,7 @@ import model.tables.records.ComponentCategoryRecord;
 import model.tables.records.ComponentRecord;
 import model.tables.records.CustomerRecord;
 import model.tables.records.EngineerRecord;
-<<<<<<< HEAD
 import model.tables.records.EntryComponentRecord;
-=======
->>>>>>> 7b555d5371200f884cecf79ce7f9b91e91d53d06
 import model.tables.records.ModelCategoryRecord;
 import model.tables.records.ModelRecord;
 import model.tables.records.MvtStockComponentRecord;
@@ -77,11 +71,8 @@ public class Keys {
     public static final UniqueKey<CustomerRecord> CUSTOMER_PKEY = Internal.createUniqueKey(Customer.CUSTOMER, DSL.name("customer_pkey"), new TableField[] { Customer.CUSTOMER.ID }, true);
     public static final UniqueKey<EngineerRecord> ENGINEER_NAME_KEY = Internal.createUniqueKey(Engineer.ENGINEER, DSL.name("engineer_name_key"), new TableField[] { Engineer.ENGINEER.NAME }, true);
     public static final UniqueKey<EngineerRecord> ENGINEER_PKEY = Internal.createUniqueKey(Engineer.ENGINEER, DSL.name("engineer_pkey"), new TableField[] { Engineer.ENGINEER.ID }, true);
-<<<<<<< HEAD
     public static final UniqueKey<EntryComponentRecord> ENTRY_COMPONENT_DATETIME_ID_COMPONENT_KEY = Internal.createUniqueKey(EntryComponent.ENTRY_COMPONENT, DSL.name("entry_component_datetime_id_component_key"), new TableField[] { EntryComponent.ENTRY_COMPONENT.DATETIME, EntryComponent.ENTRY_COMPONENT.ID_COMPONENT }, true);
     public static final UniqueKey<EntryComponentRecord> ENTRY_COMPONENT_PKEY = Internal.createUniqueKey(EntryComponent.ENTRY_COMPONENT, DSL.name("entry_component_pkey"), new TableField[] { EntryComponent.ENTRY_COMPONENT.ID }, true);
-=======
->>>>>>> 7b555d5371200f884cecf79ce7f9b91e91d53d06
     public static final UniqueKey<ModelRecord> MODEL_PKEY = Internal.createUniqueKey(Model.MODEL, DSL.name("model_pkey"), new TableField[] { Model.MODEL.ID }, true);
     public static final UniqueKey<ModelCategoryRecord> MODEL_CATEGORY_LABEL_KEY = Internal.createUniqueKey(ModelCategory.MODEL_CATEGORY, DSL.name("model_category_label_key"), new TableField[] { ModelCategory.MODEL_CATEGORY.LABEL }, true);
     public static final UniqueKey<ModelCategoryRecord> MODEL_CATEGORY_PKEY = Internal.createUniqueKey(ModelCategory.MODEL_CATEGORY, DSL.name("model_category_pkey"), new TableField[] { ModelCategory.MODEL_CATEGORY.ID }, true);
@@ -120,7 +111,6 @@ public class Keys {
     public static final ForeignKey<ReparationRecord, EngineerRecord> REPARATION__REPARATION_ID_ENGINEER_FKEY = Internal.createForeignKey(Reparation.REPARATION, DSL.name("reparation_id_engineer_fkey"), new TableField[] { Reparation.REPARATION.ID_ENGINEER }, Keys.ENGINEER_PKEY, new TableField[] { Engineer.ENGINEER.ID }, true);
     public static final ForeignKey<ReparationRecord, ModelRecord> REPARATION__REPARATION_ID_MODEL_FKEY = Internal.createForeignKey(Reparation.REPARATION, DSL.name("reparation_id_model_fkey"), new TableField[] { Reparation.REPARATION.ID_MODEL }, Keys.MODEL_PKEY, new TableField[] { Model.MODEL.ID }, true);
     public static final ForeignKey<ReparationDetailRecord, ComponentCategoryRecord> REPARATION_DETAIL__REPARATION_DETAIL_ID_COMPONENT_CATEGORY_FKEY = Internal.createForeignKey(ReparationDetail.REPARATION_DETAIL, DSL.name("reparation_detail_id_component_category_fkey"), new TableField[] { ReparationDetail.REPARATION_DETAIL.ID_COMPONENT_CATEGORY }, Keys.COMPONENT_CATEGORY_PKEY, new TableField[] { ComponentCategory.COMPONENT_CATEGORY.ID }, true);
-<<<<<<< HEAD
     public static final ForeignKey<ReparationDetailRecord, ReparationRecord> REPARATION_DETAIL__REPARATION_DETAIL_ID_REPARATION_FKEY = Internal.createForeignKey(ReparationDetail.REPARATION_DETAIL, DSL.name("reparation_detail_id_reparation_fkey"), new TableField[] { ReparationDetail.REPARATION_DETAIL.ID_REPARATION }, Keys.REPARATION_PKEY, new TableField[] { Reparation.REPARATION.ID }, true);
     public static final ForeignKey<ReparationFeedbackRecord, ReparationRecord> REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_REPARATION_FKEY = Internal.createForeignKey(ReparationFeedback.REPARATION_FEEDBACK, DSL.name("reparation_feedback_id_reparation_fkey"), new TableField[] { ReparationFeedback.REPARATION_FEEDBACK.ID_REPARATION }, Keys.REPARATION_PKEY, new TableField[] { Reparation.REPARATION.ID }, true);
     public static final ForeignKey<TicketRecord, ModelRecord> TICKET__TICKET_ID_MODEL_FKEY = Internal.createForeignKey(Ticket.TICKET, DSL.name("ticket_id_model_fkey"), new TableField[] { Ticket.TICKET.ID_MODEL }, Keys.MODEL_PKEY, new TableField[] { Model.MODEL.ID }, true);
@@ -129,7 +119,4 @@ public class Keys {
     public static final ForeignKey<TicketComponentRecord, TicketRecord> TICKET_COMPONENT__TICKET_COMPONENT_ID_TICKET_FKEY = Internal.createForeignKey(TicketComponent.TICKET_COMPONENT, DSL.name("ticket_component_id_ticket_fkey"), new TableField[] { TicketComponent.TICKET_COMPONENT.ID_TICKET }, Keys.TICKET_PKEY, new TableField[] { Ticket.TICKET.ID }, true);
     public static final ForeignKey<TicketStockWithdrawRecord, EntryComponentRecord> TICKET_STOCK_WITHDRAW__TICKET_STOCK_WITHDRAW_ID_ENTRY_COMPONENT_FKEY = Internal.createForeignKey(TicketStockWithdraw.TICKET_STOCK_WITHDRAW, DSL.name("ticket_stock_withdraw_id_entry_component_fkey"), new TableField[] { TicketStockWithdraw.TICKET_STOCK_WITHDRAW.ID_ENTRY_COMPONENT }, Keys.ENTRY_COMPONENT_PKEY, new TableField[] { EntryComponent.ENTRY_COMPONENT.ID }, true);
     public static final ForeignKey<TicketStockWithdrawRecord, TicketRecord> TICKET_STOCK_WITHDRAW__TICKET_STOCK_WITHDRAW_ID_TICKET_FKEY = Internal.createForeignKey(TicketStockWithdraw.TICKET_STOCK_WITHDRAW, DSL.name("ticket_stock_withdraw_id_ticket_fkey"), new TableField[] { TicketStockWithdraw.TICKET_STOCK_WITHDRAW.ID_TICKET }, Keys.TICKET_PKEY, new TableField[] { Ticket.TICKET.ID }, true);
-=======
-    public static final ForeignKey<ReparationFeedbackRecord, CustomerRecord> REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_CUSTOMER_FKEY = Internal.createForeignKey(ReparationFeedback.REPARATION_FEEDBACK, DSL.name("reparation_feedback_id_customer_fkey"), new TableField[] { ReparationFeedback.REPARATION_FEEDBACK.ID_CUSTOMER }, Keys.CUSTOMER_PKEY, new TableField[] { Customer.CUSTOMER.ID }, true);
->>>>>>> 7b555d5371200f884cecf79ce7f9b91e91d53d06
 }

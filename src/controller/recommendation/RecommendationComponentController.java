@@ -34,7 +34,6 @@ public class RecommendationComponentController {
             {
                 dateMax = LocalDate.parse(context.queryParamAsClass("dateEnd",String.class).get());
             }
-
             Integer year = null; 
             if(context.queryParamAsClass("year", String.class).getOrDefault(null) != null)
             {

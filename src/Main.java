@@ -53,6 +53,10 @@ public class Main
                     post("/recommendation/recommendation-component", RecommendationComponentController::store);
                 }
 
+                get("/recommendation/recommendation-component", RecommendationComponentController::index);
+                get("/recommendation/recommendation-component/create", RecommendationComponentController::create);
+                post("/recommendation/recommendation-component", RecommendationComponentController::store);
+
                 /* FEEDBACK */ {
                     get("/reparation/feedback", ReparationFeedbackController::index);
                     

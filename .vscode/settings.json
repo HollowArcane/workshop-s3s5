@@ -60,5 +60,6 @@
         "l:\\exercices\\gestion-projet\\workshop-s3s5\\lib\\jetty-webapp-11.0.24.jar",
         "l:\\exercices\\gestion-projet\\workshop-s3s5\\lib\\ognl-3.3.4.jar",
         "l:\\exercices\\gestion-projet\\workshop-s3s5\\lib\\jakarta.xml.bind-api-3.0.0.jar"
-    ]
+    ],
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable"
 }

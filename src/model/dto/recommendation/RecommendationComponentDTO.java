@@ -85,7 +85,7 @@ public class RecommendationComponentDTO {
         }
         return result.fetch();
     }
+
     public static Result<VLabelRecommendationComponentRecord> fetchByDate(DSLContext context, int year)
     { return fetchByDate(context, LocalDate.parse(year + "-01-01"), LocalDate.parse((year + 1) + "-01-01")); }
-    
 }

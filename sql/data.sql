@@ -150,6 +150,7 @@ INSERT INTO recommendation_component (id_component, date_start, date_end) VALUES
     (5, '2025-03-01', '2025-03-15');
 
 
+<<<<<<< Updated upstream
 -- Insertion de données dans la table customer
 INSERT INTO customer (name, telephone, email, address)
 VALUES
@@ -192,3 +193,5 @@ INSERT INTO engineer (name, telephone, email, address) VALUES
 ('Dana Lee', '+8613912345678', 'dana.lee@example.cn', '101 Zhongguancun, Beijing, China'),
 ('Ethan Brown', '+18191234567', 'ethan.brown@example.com', '202 Elm Street, New York, USA');
 
+=======
+>>>>>>> Stashed changes

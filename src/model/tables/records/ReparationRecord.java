@@ -76,6 +76,20 @@ public class ReparationRecord extends UpdatableRecordImpl<ReparationRecord> {
         return (Integer) get(3);
     }
 
+    /**
+     * Setter for <code>public.reparation.id_engineer</code>.
+     */
+    public void setIdEngineer(Integer value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>public.reparation.id_engineer</code>.
+     */
+    public Integer getIdEngineer() {
+        return (Integer) get(4);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -99,13 +113,14 @@ public class ReparationRecord extends UpdatableRecordImpl<ReparationRecord> {
     /**
      * Create a detached, initialised ReparationRecord
      */
-    public ReparationRecord(Integer id, LocalDate date, Double price, Integer idModel) {
+    public ReparationRecord(Integer id, LocalDate date, Double price, Integer idModel, Integer idEngineer) {
         super(Reparation.REPARATION);
 
         setId(id);
         setDate(date);
         setPrice(price);
         setIdModel(idModel);
+        setIdEngineer(idEngineer);
         resetChangedOnNotNull();
     }
 }

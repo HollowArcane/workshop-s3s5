@@ -8,17 +8,31 @@ import model.tables.Brand;
 import model.tables.Component;
 import model.tables.ComponentCategory;
 import model.tables.Customer;
+import model.tables.Engineer;
+import model.tables.EntryComponent;
 import model.tables.Model;
 import model.tables.ModelCategory;
+import model.tables.MvtStockComponent;
+import model.tables.MvtTicketState;
 import model.tables.RecommendationComponent;
 import model.tables.Reparation;
 import model.tables.ReparationDetail;
 import model.tables.ReparationFeedback;
+import model.tables.Supplier;
+import model.tables.Ticket;
+import model.tables.TicketComponent;
+import model.tables.TicketState;
+import model.tables.TicketStockWithdraw;
+import model.tables.VEngineerCommission;
 import model.tables.VLabelComponent;
+import model.tables.VLabelEntryComponent;
 import model.tables.VLabelModel;
+import model.tables.VLabelMvtStockComponent;
 import model.tables.VLabelRecommendationComponent;
 import model.tables.VLabelReparation;
 import model.tables.VLabelReparationFeedback;
+import model.tables.VLabelTicket;
+import model.tables.VStateMvtTicketState;
 
 
 /**
@@ -48,6 +62,16 @@ public class Tables {
     public static final Customer CUSTOMER = Customer.CUSTOMER;
 
     /**
+     * The table <code>public.engineer</code>.
+     */
+    public static final Engineer ENGINEER = Engineer.ENGINEER;
+
+    /**
+     * The table <code>public.entry_component</code>.
+     */
+    public static final EntryComponent ENTRY_COMPONENT = EntryComponent.ENTRY_COMPONENT;
+
+    /**
      * The table <code>public.model</code>.
      */
     public static final Model MODEL = Model.MODEL;
@@ -56,6 +80,16 @@ public class Tables {
      * The table <code>public.model_category</code>.
      */
     public static final ModelCategory MODEL_CATEGORY = ModelCategory.MODEL_CATEGORY;
+
+    /**
+     * The table <code>public.mvt_stock_component</code>.
+     */
+    public static final MvtStockComponent MVT_STOCK_COMPONENT = MvtStockComponent.MVT_STOCK_COMPONENT;
+
+    /**
+     * The table <code>public.mvt_ticket_state</code>.
+     */
+    public static final MvtTicketState MVT_TICKET_STATE = MvtTicketState.MVT_TICKET_STATE;
 
     /**
      * The table <code>public.recommendation_component</code>.
@@ -78,14 +112,54 @@ public class Tables {
     public static final ReparationFeedback REPARATION_FEEDBACK = ReparationFeedback.REPARATION_FEEDBACK;
 
     /**
+     * The table <code>public.supplier</code>.
+     */
+    public static final Supplier SUPPLIER = Supplier.SUPPLIER;
+
+    /**
+     * The table <code>public.ticket</code>.
+     */
+    public static final Ticket TICKET = Ticket.TICKET;
+
+    /**
+     * The table <code>public.ticket_component</code>.
+     */
+    public static final TicketComponent TICKET_COMPONENT = TicketComponent.TICKET_COMPONENT;
+
+    /**
+     * The table <code>public.ticket_state</code>.
+     */
+    public static final TicketState TICKET_STATE = TicketState.TICKET_STATE;
+
+    /**
+     * The table <code>public.ticket_stock_withdraw</code>.
+     */
+    public static final TicketStockWithdraw TICKET_STOCK_WITHDRAW = TicketStockWithdraw.TICKET_STOCK_WITHDRAW;
+
+    /**
+     * The table <code>public.v_engineer_commission</code>.
+     */
+    public static final VEngineerCommission V_ENGINEER_COMMISSION = VEngineerCommission.V_ENGINEER_COMMISSION;
+
+    /**
      * The table <code>public.v_label_component</code>.
      */
     public static final VLabelComponent V_LABEL_COMPONENT = VLabelComponent.V_LABEL_COMPONENT;
 
     /**
+     * The table <code>public.v_label_entry_component</code>.
+     */
+    public static final VLabelEntryComponent V_LABEL_ENTRY_COMPONENT = VLabelEntryComponent.V_LABEL_ENTRY_COMPONENT;
+
+    /**
      * The table <code>public.v_label_model</code>.
      */
     public static final VLabelModel V_LABEL_MODEL = VLabelModel.V_LABEL_MODEL;
+
+    /**
+     * The table <code>public.v_label_mvt_stock_component</code>.
+     */
+    public static final VLabelMvtStockComponent V_LABEL_MVT_STOCK_COMPONENT = VLabelMvtStockComponent.V_LABEL_MVT_STOCK_COMPONENT;
 
     /**
      * The table <code>public.v_label_recommendation_component</code>.
@@ -101,4 +175,14 @@ public class Tables {
      * The table <code>public.v_label_reparation_feedback</code>.
      */
     public static final VLabelReparationFeedback V_LABEL_REPARATION_FEEDBACK = VLabelReparationFeedback.V_LABEL_REPARATION_FEEDBACK;
+
+    /**
+     * The table <code>public.v_label_ticket</code>.
+     */
+    public static final VLabelTicket V_LABEL_TICKET = VLabelTicket.V_LABEL_TICKET;
+
+    /**
+     * The table <code>public.v_state_mvt_ticket_state</code>.
+     */
+    public static final VStateMvtTicketState V_STATE_MVT_TICKET_STATE = VStateMvtTicketState.V_STATE_MVT_TICKET_STATE;
 }

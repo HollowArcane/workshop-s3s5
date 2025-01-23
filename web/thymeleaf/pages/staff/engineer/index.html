@@ -1,0 +1,39 @@
+<div th:fragment="content" class="container mt-5">
+    <form action="" class="card mb-5 mt-5" method="get">
+        <div class="card-body p-5">
+            <h3> Recherche </h3>
+            <div class="mb-3">
+                <label for="dateMin">Date début</label>
+                <input class="form-control" type="date" name="dateMin" id="dateMin">
+            </div>
+            <div class="mb-3">
+                <label for="dateMax">Date fin</label>
+                <input class="form-control" type="date" name="dateMax" id="dateMax">
+            </div>
+            <input type="submit" class="btn btn-primary" value="Valider">
+        </div>
+    </form>
+
+    <h1>Liste des techniciens</h1>
+
+    <table class="table table-striped fx__table">
+        <thead>
+            <th> Nom </th>
+            <th> Téléphone </th>
+            <th> Email </th>
+            <th> Adresse </th>
+            <th> Date de retour </th>
+            <th> Commission </th>
+        </thead>
+        <tbody>
+            <tr th:each="engineer : ${data}">
+                <td th:text="${engineer.name}"></td>
+                <td th:text="${engineer.telephone}"></td>
+                <td th:text="${engineer.email}"></td>
+                <td th:text="${engineer.address}"></td>
+                <td th:text="${engineer.date}"></td>
+                <td th:text="${engineer.commission}" align="right"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

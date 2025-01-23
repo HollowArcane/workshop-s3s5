@@ -11,17 +11,31 @@ import model.tables.Brand;
 import model.tables.Component;
 import model.tables.ComponentCategory;
 import model.tables.Customer;
+import model.tables.Engineer;
+import model.tables.EntryComponent;
 import model.tables.Model;
 import model.tables.ModelCategory;
+import model.tables.MvtStockComponent;
+import model.tables.MvtTicketState;
 import model.tables.RecommendationComponent;
 import model.tables.Reparation;
 import model.tables.ReparationDetail;
 import model.tables.ReparationFeedback;
+import model.tables.Supplier;
+import model.tables.Ticket;
+import model.tables.TicketComponent;
+import model.tables.TicketState;
+import model.tables.TicketStockWithdraw;
+import model.tables.VEngineerCommission;
 import model.tables.VLabelComponent;
+import model.tables.VLabelEntryComponent;
 import model.tables.VLabelModel;
+import model.tables.VLabelMvtStockComponent;
 import model.tables.VLabelRecommendationComponent;
 import model.tables.VLabelReparation;
 import model.tables.VLabelReparationFeedback;
+import model.tables.VLabelTicket;
+import model.tables.VStateMvtTicketState;
 
 import org.jooq.Catalog;
 import org.jooq.Table;
@@ -62,6 +76,16 @@ public class Public extends SchemaImpl {
     public final Customer CUSTOMER = Customer.CUSTOMER;
 
     /**
+     * The table <code>public.engineer</code>.
+     */
+    public final Engineer ENGINEER = Engineer.ENGINEER;
+
+    /**
+     * The table <code>public.entry_component</code>.
+     */
+    public final EntryComponent ENTRY_COMPONENT = EntryComponent.ENTRY_COMPONENT;
+
+    /**
      * The table <code>public.model</code>.
      */
     public final Model MODEL = Model.MODEL;
@@ -70,6 +94,16 @@ public class Public extends SchemaImpl {
      * The table <code>public.model_category</code>.
      */
     public final ModelCategory MODEL_CATEGORY = ModelCategory.MODEL_CATEGORY;
+
+    /**
+     * The table <code>public.mvt_stock_component</code>.
+     */
+    public final MvtStockComponent MVT_STOCK_COMPONENT = MvtStockComponent.MVT_STOCK_COMPONENT;
+
+    /**
+     * The table <code>public.mvt_ticket_state</code>.
+     */
+    public final MvtTicketState MVT_TICKET_STATE = MvtTicketState.MVT_TICKET_STATE;
 
     /**
      * The table <code>public.recommendation_component</code>.
@@ -92,14 +126,54 @@ public class Public extends SchemaImpl {
     public final ReparationFeedback REPARATION_FEEDBACK = ReparationFeedback.REPARATION_FEEDBACK;
 
     /**
+     * The table <code>public.supplier</code>.
+     */
+    public final Supplier SUPPLIER = Supplier.SUPPLIER;
+
+    /**
+     * The table <code>public.ticket</code>.
+     */
+    public final Ticket TICKET = Ticket.TICKET;
+
+    /**
+     * The table <code>public.ticket_component</code>.
+     */
+    public final TicketComponent TICKET_COMPONENT = TicketComponent.TICKET_COMPONENT;
+
+    /**
+     * The table <code>public.ticket_state</code>.
+     */
+    public final TicketState TICKET_STATE = TicketState.TICKET_STATE;
+
+    /**
+     * The table <code>public.ticket_stock_withdraw</code>.
+     */
+    public final TicketStockWithdraw TICKET_STOCK_WITHDRAW = TicketStockWithdraw.TICKET_STOCK_WITHDRAW;
+
+    /**
+     * The table <code>public.v_engineer_commission</code>.
+     */
+    public final VEngineerCommission V_ENGINEER_COMMISSION = VEngineerCommission.V_ENGINEER_COMMISSION;
+
+    /**
      * The table <code>public.v_label_component</code>.
      */
     public final VLabelComponent V_LABEL_COMPONENT = VLabelComponent.V_LABEL_COMPONENT;
 
     /**
+     * The table <code>public.v_label_entry_component</code>.
+     */
+    public final VLabelEntryComponent V_LABEL_ENTRY_COMPONENT = VLabelEntryComponent.V_LABEL_ENTRY_COMPONENT;
+
+    /**
      * The table <code>public.v_label_model</code>.
      */
     public final VLabelModel V_LABEL_MODEL = VLabelModel.V_LABEL_MODEL;
+
+    /**
+     * The table <code>public.v_label_mvt_stock_component</code>.
+     */
+    public final VLabelMvtStockComponent V_LABEL_MVT_STOCK_COMPONENT = VLabelMvtStockComponent.V_LABEL_MVT_STOCK_COMPONENT;
 
     /**
      * The table <code>public.v_label_recommendation_component</code>.
@@ -115,6 +189,16 @@ public class Public extends SchemaImpl {
      * The table <code>public.v_label_reparation_feedback</code>.
      */
     public final VLabelReparationFeedback V_LABEL_REPARATION_FEEDBACK = VLabelReparationFeedback.V_LABEL_REPARATION_FEEDBACK;
+
+    /**
+     * The table <code>public.v_label_ticket</code>.
+     */
+    public final VLabelTicket V_LABEL_TICKET = VLabelTicket.V_LABEL_TICKET;
+
+    /**
+     * The table <code>public.v_state_mvt_ticket_state</code>.
+     */
+    public final VStateMvtTicketState V_STATE_MVT_TICKET_STATE = VStateMvtTicketState.V_STATE_MVT_TICKET_STATE;
 
     /**
      * No further instances allowed
@@ -136,17 +220,31 @@ public class Public extends SchemaImpl {
             Component.COMPONENT,
             ComponentCategory.COMPONENT_CATEGORY,
             Customer.CUSTOMER,
+            Engineer.ENGINEER,
+            EntryComponent.ENTRY_COMPONENT,
             Model.MODEL,
             ModelCategory.MODEL_CATEGORY,
+            MvtStockComponent.MVT_STOCK_COMPONENT,
+            MvtTicketState.MVT_TICKET_STATE,
             RecommendationComponent.RECOMMENDATION_COMPONENT,
             Reparation.REPARATION,
             ReparationDetail.REPARATION_DETAIL,
             ReparationFeedback.REPARATION_FEEDBACK,
+            Supplier.SUPPLIER,
+            Ticket.TICKET,
+            TicketComponent.TICKET_COMPONENT,
+            TicketState.TICKET_STATE,
+            TicketStockWithdraw.TICKET_STOCK_WITHDRAW,
+            VEngineerCommission.V_ENGINEER_COMMISSION,
             VLabelComponent.V_LABEL_COMPONENT,
+            VLabelEntryComponent.V_LABEL_ENTRY_COMPONENT,
             VLabelModel.V_LABEL_MODEL,
+            VLabelMvtStockComponent.V_LABEL_MVT_STOCK_COMPONENT,
             VLabelRecommendationComponent.V_LABEL_RECOMMENDATION_COMPONENT,
             VLabelReparation.V_LABEL_REPARATION,
-            VLabelReparationFeedback.V_LABEL_REPARATION_FEEDBACK
+            VLabelReparationFeedback.V_LABEL_REPARATION_FEEDBACK,
+            VLabelTicket.V_LABEL_TICKET,
+            VStateMvtTicketState.V_STATE_MVT_TICKET_STATE
         );
     }
 }

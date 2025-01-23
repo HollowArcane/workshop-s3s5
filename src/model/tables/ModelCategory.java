@@ -4,7 +4,9 @@
 package model.tables;
 
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import model.Keys;
 import model.Public;
@@ -12,6 +14,7 @@ import model.tables.Component.ComponentPath;
 import model.tables.Model.ModelPath;
 import model.tables.records.ModelCategoryRecord;
 
+import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -31,6 +34,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
@@ -143,6 +147,11 @@ public class ModelCategory extends TableImpl<ModelCategoryRecord> {
         return Keys.MODEL_CATEGORY_PKEY;
     }
 
+    @Override
+    public List<UniqueKey<ModelCategoryRecord>> getUniqueKeys() {
+        return Arrays.asList(Keys.MODEL_CATEGORY_LABEL_KEY);
+    }
+
     private transient ComponentPath _component;
 
     /**
@@ -166,6 +175,13 @@ public class ModelCategory extends TableImpl<ModelCategoryRecord> {
             _model = new ModelPath(this, null, Keys.MODEL__MODEL_ID_MODEL_CATEGORY_FKEY.getInverseKey());
 
         return _model;
+    }
+
+    @Override
+    public List<Check<ModelCategoryRecord>> getChecks() {
+        return Arrays.asList(
+            Internal.createCheck(this, DSL.name("model_category_label_check"), "(((label)::text <> ''::text))", true)
+        );
     }
 
     @Override

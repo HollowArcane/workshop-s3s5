@@ -11,6 +11,7 @@ import java.util.List;
 
 import model.Keys;
 import model.Public;
+import model.tables.Engineer.EngineerPath;
 import model.tables.Model.ModelPath;
 import model.tables.ReparationDetail.ReparationDetailPath;
 import model.tables.ReparationFeedback.ReparationFeedbackPath;
@@ -79,6 +80,11 @@ public class Reparation extends TableImpl<ReparationRecord> {
      * The column <code>public.reparation.id_model</code>.
      */
     public final TableField<ReparationRecord, Integer> ID_MODEL = createField(DSL.name("id_model"), SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>public.reparation.id_engineer</code>.
+     */
+    public final TableField<ReparationRecord, Integer> ID_ENGINEER = createField(DSL.name("id_engineer"), SQLDataType.INTEGER.nullable(false), this, "");
 
     private Reparation(Name alias, Table<ReparationRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -159,7 +165,19 @@ public class Reparation extends TableImpl<ReparationRecord> {
 
     @Override
     public List<ForeignKey<ReparationRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.REPARATION__REPARATION_ID_MODEL_FKEY);
+        return Arrays.asList(Keys.REPARATION__REPARATION_ID_ENGINEER_FKEY, Keys.REPARATION__REPARATION_ID_MODEL_FKEY);
+    }
+
+    private transient EngineerPath _engineer;
+
+    /**
+     * Get the implicit join path to the <code>public.engineer</code> table.
+     */
+    public EngineerPath engineer() {
+        if (_engineer == null)
+            _engineer = new EngineerPath(this, Keys.REPARATION__REPARATION_ID_ENGINEER_FKEY, null);
+
+        return _engineer;
     }
 
     private transient ModelPath _model;

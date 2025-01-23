@@ -20,6 +20,7 @@ import controller.recommendation.RecommendationComponentController;
 import controller.reparation.CustomerController;
 import controller.reparation.ReparationController;
 import controller.reparation.ReparationFeedbackController;
+import controller.staff.EngineerController;
 
 
 public class Main
@@ -40,11 +41,17 @@ public class Main
             config.router.apiBuilder(() -> {
                 get("/",  ctx -> ctx.redirect("/misc/component"));
 
-                get("/reparation/reparation", ReparationController::index);
+                /* REPARATION */ {
+                    get("/reparation/reparation", ReparationController::index);
+                    post("/reparation/reparation", ReparationController::store);
+                    get("/reparation/reparation/create", ReparationController::loadForm);
+                }
 
-                get("/recommendation/recommendation-component", RecommendationComponentController::index);
-                get("/recommendation/recommendation-component/create", RecommendationComponentController::create);
-                post("/recommendation/recommendation-component", RecommendationComponentController::store);
+                /* RECOMMENDATION */ {
+                    get("/recommendation/recommendation-component", RecommendationComponentController::index);
+                    get("/recommendation/recommendation-component/create", RecommendationComponentController::create);
+                    post("/recommendation/recommendation-component", RecommendationComponentController::store);
+                }
 
                 /* FEEDBACK */ {
                     get("/reparation/feedback", ReparationFeedbackController::index);
@@ -115,6 +122,10 @@ public class Main
 
                 /* CUSTOMER */{
                     get("/reparation/customer", CustomerController::index);
+                }
+
+                /* ENGINEER */{
+                    get("/staff/engineer", EngineerController::index);
                 }
             });
         }).start(7000);

@@ -22,6 +22,7 @@ public class ReparationDTO {
     private LocalDate date;
     private Double price;
     private Integer idModel;
+    private Integer idEngineer;
 
     public ReparationDTO() {}
 
@@ -31,6 +32,7 @@ public class ReparationDTO {
         this.date = record.getDate();
         this.price = record.getPrice();
         this.idModel = record.getIdModel();
+        this.idEngineer = record.getIdEngineer();
     }
 
     public ReparationRecord toRecord(DSLContext context)
@@ -42,6 +44,7 @@ public class ReparationDTO {
         newRecord.setDate(getDate());
         newRecord.setPrice(getPrice());
         newRecord.setIdModel(getIdModel());
+        newRecord.setIdEngineer(getIdEngineer());
         return newRecord;
     }
 
@@ -77,6 +80,14 @@ public class ReparationDTO {
         this.idModel = idModel;
     }
 
+    public Integer getIdEngineer() {
+        return idEngineer;
+    }
+
+    public void setIdEngineer(Integer idEngineer) {
+        this.idEngineer = idEngineer;
+    }
+
 
     public static Result<Record3<ReparationRecord, ModelRecord, String>> fetchByComponentCategory(DSLContext context, Integer idComponentCategory){
         
@@ -88,11 +99,11 @@ public class ReparationDTO {
             .from(Tables.REPARATION)
             .join(Tables.MODEL)
                 .on(Tables.MODEL.ID.eq(Tables.REPARATION.ID_MODEL))
-            .join(Tables.REPARATION_DETAIL)
-                .on(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(idComponentCategory));
-        
+            .leftJoin(Tables.REPARATION_DETAIL)
+                .on(Tables.REPARATION.ID.eq(Tables.REPARATION_DETAIL.ID_REPARATION));
+                
         if( idComponentCategory != null )
-        { result.and(Tables.REPARATION.ID.eq(Tables.REPARATION_DETAIL.ID_REPARATION));  }
+        { result.and(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY.eq(idComponentCategory));  }
 
         return result.join(Tables.COMPONENT_CATEGORY)
             .on(Tables.COMPONENT_CATEGORY.ID.eq(Tables.REPARATION_DETAIL.ID_COMPONENT_CATEGORY))

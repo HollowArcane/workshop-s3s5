@@ -7,17 +7,25 @@
         CHECK(label != '')
     );
 
+    -- user has to insert into mvt_ticket_state after inserting into this table
+    -- mvt_ticket_state flow has to follow NULL, 1, 2, 3, 4, 5 by date
+    -- diagnostic may be null only in state NULL, 1 and 2
+
+    -- automatic insertion into mvt_ticket_state is possible if date_start is set on insert into ticket
+    -- please not that this feature is for convenience only and it is not encouraged to set values of dn columns
     DROP TABLE IF EXISTS ticket CASCADE;
     CREATE TABLE ticket(
         id SERIAL PRIMARY KEY,
         price_reparation NUMERIC(13, 2) NOT NULL,
         id_customer INT NOT NULL REFERENCES customer(id) ON DELETE CASCADE,
         id_model INT NOT NULL REFERENCES model(id) ON DELETE CASCADE,
-        diagnostic TEXT NOT NULL,
+        diagnostic TEXT,
         -- denormalization
         id_ticket_state INT REFERENCES ticket_state(id) ON DELETE CASCADE, -- dn of mvt_ticket_state.id_ticket_status
-        date_start DATE,
-        date_end DATE,
+        date_start TIMESTAMP, -- dn of mvt_ticket_state.datetime when ticket_state is 1
+        date_end TIMESTAMP, -- dn of mvt_ticket_state.datetime when ticket_state is 5
+        -- diagnostic should only be null when diagnostic did not happen yet
+        CHECK(id_ticket_state IS NULL OR id_ticket_state = 1 OR id_ticket_state = 2 OR diagnostic IS NOT NULL),
         CHECK(price_reparation >= 0)
     );
 
@@ -111,7 +119,7 @@
     ;
 
 -- TRIGGERS:
-    DROP PROCEDURE p_state_mvt_ticket_state;
+    DROP PROCEDURE IF EXISTS p_state_mvt_ticket_state CASCADE;
     CREATE OR REPLACE PROCEDURE p_state_mvt_ticket_state(
             id_ticket_param INT,
             OUT id_ticket_status_output INT
@@ -132,7 +140,7 @@
         END;
     $$;
 
-    DROP FUNCTION fn_state_mvt_ticket_state;
+    DROP FUNCTION IF EXISTS fn_state_mvt_ticket_state CASCADE;
     CREATE OR REPLACE FUNCTION fn_state_mvt_ticket_state()
         RETURNS TRIGGER AS $$
         DECLARE
@@ -143,9 +151,17 @@
 
                 UPDATE ticket
                 SET
-                    id_ticket_status = id_ticket_status_param
+                    id_ticket_state = id_ticket_status_param
                 WHERE
                     id = NEW.id_ticket;
+
+                IF NEW.id_ticket_state = 5 THEN
+                    UPDATE ticket
+                    SET
+                        date_end = NEW.datetime
+                    WHERE
+                        id = NEW.id_ticket;
+                END IF;
             END IF;
 
             IF TG_OP = 'UPDATE' OR TG_OP = 'DELETE' THEN
@@ -153,7 +169,7 @@
 
                 UPDATE ticket
                 SET
-                    id_ticket_status = id_ticket_status_param
+                    id_ticket_state = id_ticket_status_param
                 WHERE
                     id = NEW.id_ticket;
             END IF;
@@ -167,6 +183,25 @@
         FOR EACH ROW
         EXECUTE FUNCTION fn_state_mvt_ticket_state();
 
+    DROP FUNCTION IF EXISTS fn_ticket CASCADE;
+    CREATE OR REPLACE FUNCTION fn_ticket()
+        RETURNS TRIGGER AS $$
+        DECLARE
+            id_ticket_status_param INT;
+        BEGIN
+            IF TG_OP = 'INSERT' AND NEW.date_start IS NOT NULL THEN
+                INSERT INTO mvt_ticket_state(datetime, id_ticket, id_ticket_state)
+                VALUES(NEW.date_start, NEW.id, 1);
+            END IF;
+            RETURN NEW;
+        END;
+    $$ LANGUAGE plpgsql;
+
+    CREATE OR REPLACE TRIGGER t_ticket
+        AFTER INSERT OR UPDATE OR DELETE ON ticket
+        FOR EACH ROW
+        EXECUTE FUNCTION fn_ticket();
+
 -- CONSTANTS:
     INSERT INTO ticket_state(id, label) VALUES
     (1, 'En Attente'),
@@ -174,3 +209,4 @@
     (3, 'Réparation'),
     (4, 'Terminé'),
     (5, 'Récupéré');
+    

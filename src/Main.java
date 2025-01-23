@@ -21,6 +21,9 @@ import controller.reparation.CustomerController;
 import controller.reparation.ReparationController;
 import controller.reparation.ReparationFeedbackController;
 import controller.staff.EngineerController;
+import controller.ticket.MvtTicketStateController;
+import controller.ticket.TicketComponentController;
+import controller.ticket.TicketController;
 
 
 public class Main
@@ -40,6 +43,50 @@ public class Main
 
             config.router.apiBuilder(() -> {
                 get("/",  ctx -> ctx.redirect("/misc/component"));
+                
+                /* TICKET */{
+                    get("/ticket/ticket", TicketController::page);
+    
+                    path("/api/ticket", () -> {
+                        get("/ticket", TicketController::index);
+                        post("/ticket", TicketController::store);
+                        get("/ticket/{id}", TicketController::show);
+                        put("/ticket/{id}", TicketController::update);
+                        delete("/ticket/{id}", TicketController::delete);
+                    });
+                }
+
+                /* TICKET COMPONENT */{
+                    get("/ticket/ticket-component", TicketComponentController::page);
+    
+                    path("/api/ticket", () -> {
+                        get("/ticket-component", TicketComponentController::index);
+                        post("/ticket-component", TicketComponentController::store);
+                        get("/ticket-component/{id}", TicketComponentController::show);
+                        put("/ticket-component/{id}", TicketComponentController::update);
+                        delete("/ticket-component/{id}", TicketComponentController::delete);
+                    });
+                }
+
+                /* TICKET COMPONENT STATE */{
+                    get("/ticket/mvt-ticket-state", MvtTicketStateController::page);
+    
+                    path("/api/ticket", () -> {
+                        get("/mvt-ticket-state", MvtTicketStateController::index);
+                        post("/mvt-ticket-state", MvtTicketStateController::store);
+                        get("/mvt-ticket-state/{id}", MvtTicketStateController::show);
+                        put("/mvt-ticket-state/{id}", MvtTicketStateController::update);
+                        delete("/mvt-ticket-state/{id}", MvtTicketStateController::delete);
+                    });
+                }
+
+                
+                /* RECOMMENDATION */ {
+                    get("/recommendation/recommendation-component", RecommendationComponentController::index);
+                    get("/recommendation/recommendation-component/create", RecommendationComponentController::create);
+                    post("/recommendation/recommendation-component", RecommendationComponentController::store);
+                }
+
 
                 /* REPARATION */ {
                     get("/reparation/reparation", ReparationController::index);
@@ -47,23 +94,18 @@ public class Main
                     get("/reparation/reparation/create", ReparationController::loadForm);
                 }
 
-                /* RECOMMENDATION */ {
-                    get("/recommendation/recommendation-component", RecommendationComponentController::index);
-                    get("/recommendation/recommendation-component/create", RecommendationComponentController::create);
-                    post("/recommendation/recommendation-component", RecommendationComponentController::store);
-                }
-
-                get("/recommendation/recommendation-component", RecommendationComponentController::index);
-                get("/recommendation/recommendation-component/create", RecommendationComponentController::create);
-                post("/recommendation/recommendation-component", RecommendationComponentController::store);
-
-                /* FEEDBACK */ {
+                /* REPARATION FEEDBACK */ {
                     get("/reparation/feedback", ReparationFeedbackController::index);
                     
                     get("/reparation/feedback/create", ReparationFeedbackController::loadForm);
                     post("/reparation/feedback", ReparationFeedbackController::store);
                 }
                 
+                /* CUSTOMER */{
+                    get("/reparation/customer", CustomerController::index);
+                }
+
+
                 /* COMPONENT CATEGORY */{
                     get("/misc/component-category", ComponentCategoryController::page);
 
@@ -124,10 +166,7 @@ public class Main
                     });
                 }
 
-                /* CUSTOMER */{
-                    get("/reparation/customer", CustomerController::index);
-                }
-
+                
                 /* ENGINEER */{
                     get("/staff/engineer", EngineerController::index);
                 }

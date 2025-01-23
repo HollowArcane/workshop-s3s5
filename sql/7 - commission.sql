@@ -25,7 +25,10 @@ CREATE OR REPLACE VIEW v_engineer_commission AS
         eng.*,
         fb.date,
         gd.gender,
-        (price*5)/100 AS commission
+        CASE
+            WHEN price >= 200000 THEN (price*5)/100
+            ELSE 0
+        END AS commission
     FROM
         engineer as eng
     JOIN

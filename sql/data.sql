@@ -132,19 +132,19 @@ INSERT INTO recommendation_component (id_component, date_start, date_end) VALUES
 
 
 -- Insertion de données dans la table customer
-INSERT INTO customer (name, telephone, email, address)
+INSERT INTO customer (id, name, telephone, email, address)
 VALUES
-('Alice Dupont', '+33123456789', 'alice.dupont@example.com', '123 Rue de Paris, Paris'),
-('Bob Martin', '+447123456789', 'bob.martin@example.co.uk', '45 Baker Street, London'),
-('Carla Garcia', '+34912345678', 'carla.garcia@example.es', '12 Calle Mayor, Madrid'),
-('David Brown', '+12125551234', 'david.brown@example.com', '100 Main Street, New York'),
-('Eva Schmidt', '+4915123456789', 'eva.schmidt@example.de', '56 Hauptstrasse, Berlin');
+(1, 'Alice Dupont', '+33123456789', 'alice.dupont@example.com', '123 Rue de Paris, Paris'),
+(2, 'Bob Martin', '+447123456789', 'bob.martin@example.co.uk', '45 Baker Street, London'),
+(3 ,'Carla Garcia', '+34912345678', 'carla.garcia@example.es', '12 Calle Mayor, Madrid'),
+(4, 'David Brown', '+12125551234', 'david.brown@example.com', '100 Main Street, New York'),
+(5, 'Eva Schmidt', '+4915123456789', 'eva.schmidt@example.de', '56 Hauptstrasse, Berlin');
 
 -- Exemple avec des valeurs optionnelles (téléphone et email peuvent être NULL)
-INSERT INTO customer (name, telephone, email, address)
+INSERT INTO customer (id, name, telephone, email, address)
 VALUES
-('François Leclerc', NULL, 'francois.leclerc@example.fr', '789 Boulevard Saint-Michel, Paris'),
-('Gina Rossi', '+390612345678', NULL, 'Via Roma 32, Rome');
+(6, 'François Leclerc', NULL, 'francois.leclerc@example.fr', '789 Boulevard Saint-Michel, Paris'),
+(7, 'Gina Rossi', '+390612345678', NULL, 'Via Roma 32, Rome');
 
 
 -- Insertion de données dans la table reparation_feedback
@@ -165,16 +165,18 @@ INSERT INTO reparation_feedback (id, date, id_customer, id_reparation) VALUES
 (14, '2024-02-14', 4, 14),
 (15, '2024-02-15', 5, 15);
 
--- Insertion de techniciens
-INSERT INTO engineer (name, telephone, email, address, id_gender) VALUES
-('Alice Dupont', '+33123456789', 'alice.dupont@example.com', '123 Rue de Paris, 75001 Paris, France', 2),
-('Bob Martin', '+441234567890', 'bob.martin@example.co.uk', '456 Oxford Street, London, UK', 1),
-('Charlie Nguyen', '+4915123456789', 'charlie.nguyen@example.de', '789 Berliner Str., Berlin, Germany', 2),
-('Dana Lee', '+8613912345678', 'dana.lee@example.cn', '101 Zhongguancun, Beijing, China', 1),
-('Ethan Brown', '+18191234567', 'ethan.brown@example.com', '202 Elm Street, New York, USA', 1);
 
 -- Insertion de genre
-INSERT INTO gender (gender) VALUES 
-('Homme'),
-('Femme');
+INSERT INTO gender (id, gender) VALUES 
+(1, 'Homme'),
+(2, 'Femme');
 
+
+
+-- Insertion de techniciens
+INSERT INTO engineer (id, name, telephone, email, address, id_gender) VALUES
+(1, 'Alice Dupont', '+33123456789', 'alice.dupont@example.com', '123 Rue de Paris, 75001 Paris, France', 2),
+(2, 'Bob Martin', '+441234567890', 'bob.martin@example.co.uk', '456 Oxford Street, London, UK', 1),
+(3, 'Charlie Nguyen', '+4915123456789', 'charlie.nguyen@example.de', '789 Berliner Str., Berlin, Germany', 2),
+(4, 'Dana Lee', '+8613912345678', 'dana.lee@example.cn', '101 Zhongguancun, Beijing, China', 1),
+(5, 'Ethan Brown', '+18191234567', 'ethan.brown@example.com', '202 Elm Street, New York, USA', 1);

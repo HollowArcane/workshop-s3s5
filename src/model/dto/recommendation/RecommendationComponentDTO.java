@@ -1,15 +1,11 @@
 package model.dto.recommendation;
 
-import static model.Tables.BRAND;
-
 import java.time.LocalDate;
 
 import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
-import org.jooq.Record2;
 import org.jooq.Result;
 import org.jooq.Table;
-import org.jooq.impl.DSL;
 
 import model.Tables;
 import model.tables.records.RecommendationComponentRecord;

@@ -105,20 +105,21 @@ public class EngineerDTO {
     public static Result<VEngineerCommissionRecord> fetchByDate(DSLContext context, LocalDate dateMin, LocalDate dateMax)
     {
         var data = context
-        .select(
-            V_ENGINEER_COMMISSION.ID,
+                    .select(
+                        V_ENGINEER_COMMISSION.ID,
                         V_ENGINEER_COMMISSION.NAME,
                         V_ENGINEER_COMMISSION.TELEPHONE,
                         V_ENGINEER_COMMISSION.ADDRESS,
                         V_ENGINEER_COMMISSION.EMAIL,
+                        V_ENGINEER_COMMISSION.GENDER,
                         DSL.max(V_ENGINEER_COMMISSION.DATE).as("date"),
                         DSL.sum(V_ENGINEER_COMMISSION.COMMISSION).as("commission")
-                        )
-                        .from(V_ENGINEER_COMMISSION)
-                        .where("1=1");
-                        
-                        if(dateMin!=null)
-                        {
+                    )
+                    .from(V_ENGINEER_COMMISSION)
+                    .where("1=1");
+        
+        if(dateMin!=null)
+        {
             data.and(Tables.V_ENGINEER_COMMISSION.DATE.greaterOrEqual(dateMin));
         }
         if(dateMax!=null)
@@ -131,6 +132,7 @@ public class EngineerDTO {
                 V_ENGINEER_COMMISSION.NAME,
                 V_ENGINEER_COMMISSION.TELEPHONE,
                 V_ENGINEER_COMMISSION.ADDRESS,
+                V_ENGINEER_COMMISSION.GENDER,
                 V_ENGINEER_COMMISSION.EMAIL
             ).fetchInto(V_ENGINEER_COMMISSION);
     }

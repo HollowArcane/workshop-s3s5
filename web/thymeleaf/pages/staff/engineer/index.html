@@ -36,23 +36,15 @@
             </tr>
         </tbody>
     </table>
-    
+
     <table class="table table-striped fx__table">
         <thead>
-            <th> Nom </th>
-            <th> Téléphone </th>
-            <th> Email </th>
-            <th> Adresse </th>
-            <th> Date de retour </th>
+            <th> Genre </th>
             <th> Commission </th>
         </thead>
         <tbody>
-            <tr th:each="engineer : ${data}">
-                <td th:text="${engineer.name}"></td>
-                <td th:text="${engineer.telephone}"></td>
-                <td th:text="${engineer.email}"></td>
-                <td th:text="${engineer.address}"></td>
-                <td th:text="${engineer.date}"></td>
+            <tr th:each="engineer : ${data2}">
+                <td th:text="${engineer.gender}"></td>
                 <td th:text="${engineer.commission}" align="right"></td>
             </tr>
         </tbody>

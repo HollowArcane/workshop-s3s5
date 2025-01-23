@@ -11,7 +11,11 @@ import java.util.List;
 
 import model.Keys;
 import model.Public;
+<<<<<<< HEAD
 import model.tables.Reparation.ReparationPath;
+=======
+import model.tables.Customer.CustomerPath;
+>>>>>>> 7b555d5371200f884cecf79ce7f9b91e91d53d06
 import model.tables.records.ReparationFeedbackRecord;
 
 import org.jooq.Condition;
@@ -157,19 +161,23 @@ public class ReparationFeedback extends TableImpl<ReparationFeedbackRecord> {
 
     @Override
     public List<ForeignKey<ReparationFeedbackRecord, ?>> getReferences() {
+<<<<<<< HEAD
         return Arrays.asList(Keys.REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_REPARATION_FKEY);
+=======
+        return Arrays.asList(Keys.REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_CUSTOMER_FKEY);
     }
 
-    private transient ReparationPath _reparation;
+    private transient CustomerPath _customer;
 
     /**
-     * Get the implicit join path to the <code>public.reparation</code> table.
+     * Get the implicit join path to the <code>public.customer</code> table.
      */
-    public ReparationPath reparation() {
-        if (_reparation == null)
-            _reparation = new ReparationPath(this, Keys.REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_REPARATION_FKEY, null);
+    public CustomerPath customer() {
+        if (_customer == null)
+            _customer = new CustomerPath(this, Keys.REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_CUSTOMER_FKEY, null);
 
-        return _reparation;
+        return _customer;
+>>>>>>> 7b555d5371200f884cecf79ce7f9b91e91d53d06
     }
 
     @Override

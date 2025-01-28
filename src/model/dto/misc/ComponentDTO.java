@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
-import org.jooq.meta.firebird.rdb.tables.Rdb.refConstraints;
 
 import model.Tables;
 import model.dto.ticket.VLabelTicketComponentDTO;

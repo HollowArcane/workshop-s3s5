@@ -1,17 +1,17 @@
 <div th:fragment="content" class="container mt-5">
+    <form id="form" class="card mb-5">
+        <div class="card-body">
+            <h1>Filtre</h1>
+            
+            <div th:replace="~{/components/form :: input('dateMin', '', 'date', 'Date début')}"></div>
+            <div th:replace="~{/components/form :: input('dateMax', '', 'date', 'Date fin')}"></div>
+            <button class="btn btn-primary"> Valider </button>
+        </div>
+    </form>
+
     <h1 class="d-flex gap-1 align-items-center mb-3">
         Mouvement de prix de pièces
     </h1>
-    
-
-    <form id="form">
-        <h1>Filtre</h1>
-        
-        <div th:replace="~{/components/form :: input('dateMin', '', 'date', 'Date début')}"></div>
-        <div th:replace="~{/components/form :: input('dateMax', '', 'date', 'Date fin')}"></div>
-
-        <button class="btn btn-primary"> Valider </button>
-    </form>
 
     <table id="table" class="table table-striped fx__table">
         <thead>

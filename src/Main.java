@@ -118,7 +118,8 @@ public class Main
 
                 /* COMPONENT */{
                     get("/misc/component", ComponentController::page);
-    
+                    get("/misc/component/history", ComponentController::history);
+                    
                     path("/api/misc", () -> {
                         get("/component", ComponentController::index);
                         post("/component", ComponentController::store);

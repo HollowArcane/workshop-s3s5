@@ -36,7 +36,6 @@ public class MvtTicketStateDTO
 		{
 			newRecord = context.fetchOne(Tables.MVT_TICKET_STATE, Tables.MVT_TICKET_STATE.ID.eq(id));
 		}
-		newRecord.setId(getId());
 		newRecord.setDatetime(getDatetime());
 		newRecord.setIdTicket(getIdTicket());
 		newRecord.setIdTicketState(getIdTicketState());

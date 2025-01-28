@@ -1,7 +1,6 @@
 import io.javalin.Javalin;
 import io.javalin.validation.ValidationException;
 import model.tables.RecommendationComponent;
-import model.tables.records.ReparationRecord;
 import util.APIError;
 import util.Flashdata;
 import util.Renderer;
@@ -17,9 +16,7 @@ import controller.misc.ComponentController;
 import controller.misc.ModelCategoryController;
 import controller.misc.ModelController;
 import controller.recommendation.RecommendationComponentController;
-import controller.reparation.CustomerController;
-import controller.reparation.ReparationController;
-import controller.reparation.ReparationFeedbackController;
+import controller.ticket.CustomerController;
 import controller.staff.EngineerController;
 import controller.ticket.MvtTicketStateController;
 import controller.ticket.TicketComponentController;
@@ -38,11 +35,13 @@ public class Main
          */
 
         Javalin app = Javalin.create(config -> {
+            config.validation.register(LocalDate.class, LocalDate::parse);
             config.staticFiles.add("static");
             config.fileRenderer(new ThymeleafRenderer());
 
             config.router.apiBuilder(() -> {
                 get("/",  ctx -> ctx.redirect("/misc/component"));
+             
                 
                 /* TICKET */{
                     get("/ticket/ticket", TicketController::page);
@@ -68,7 +67,7 @@ public class Main
                     });
                 }
 
-                /* TICKET COMPONENT STATE */{
+                /* TICKET STATE */{
                     get("/ticket/mvt-ticket-state", MvtTicketStateController::page);
     
                     path("/api/ticket", () -> {
@@ -80,29 +79,16 @@ public class Main
                     });
                 }
 
-                
+                /* CUSTOMER */{
+                    get("/ticket/customer", CustomerController::index);
+                }
+
+
+
                 /* RECOMMENDATION */ {
                     get("/recommendation/recommendation-component", RecommendationComponentController::index);
                     get("/recommendation/recommendation-component/create", RecommendationComponentController::create);
                     post("/recommendation/recommendation-component", RecommendationComponentController::store);
-                }
-
-
-                /* REPARATION */ {
-                    get("/reparation/reparation", ReparationController::index);
-                    post("/reparation/reparation", ReparationController::store);
-                    get("/reparation/reparation/create", ReparationController::loadForm);
-                }
-
-                /* REPARATION FEEDBACK */ {
-                    get("/reparation/feedback", ReparationFeedbackController::index);
-                    
-                    get("/reparation/feedback/create", ReparationFeedbackController::loadForm);
-                    post("/reparation/feedback", ReparationFeedbackController::store);
-                }
-                
-                /* CUSTOMER */{
-                    get("/reparation/customer", CustomerController::index);
                 }
 
 

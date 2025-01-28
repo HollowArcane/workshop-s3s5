@@ -12,13 +12,11 @@ import org.jooq.Result;
 import database.DB;
 import io.javalin.http.Context;
 import model.Tables;
-import model.dto.reparation.CustomerDTO;
-import model.dto.reparation.ReparationDTO;
 import model.dto.staff.EngineerDTO;
 import model.dto.staff.GenderCommissionDTO;
+import model.dto.ticket.CustomerDTO;
 import model.tables.records.CustomerRecord;
 import model.tables.records.ModelRecord;
-import model.tables.records.ReparationRecord;
 import model.tables.records.VEngineerCommissionRecord;
 import toolkit.util.Pagination;
 import util.Renderer;
@@ -28,48 +26,19 @@ public class EngineerController {
     public static void index(Context context)
         throws ClassNotFoundException,
         SQLException,
-        RuntimeException {
+        RuntimeException
+        {
+            LocalDate dateMin = context.queryParamAsClass("dateMin", LocalDate.class).getOrDefault(null);
+            LocalDate dateMax = context.queryParamAsClass("dateMax", LocalDate.class).getOrDefault(null);
          
-            Result<VEngineerCommissionRecord> data = DB.handle(ctx -> {
-                
-                LocalDate dateMin = null;
-                if(context.queryParamAsClass("dateMin",String.class).getOrDefault(null) != null)
-                {
-                    dateMin = LocalDate.parse(context.queryParamAsClass("dateMin",String.class).get());
-                }
-                
-                LocalDate dateMax = null; 
-                if(context.queryParamAsClass("dateMax",String.class).getOrDefault(null) != null)
-                {
-                    dateMax = LocalDate.parse(context.queryParamAsClass("dateMax",String.class).get());
-                }
-
-                return EngineerDTO.fetchByDate(ctx, dateMin, dateMax);
-            });
-
-            List<GenderCommissionDTO> data2 = DB.handle(ctx -> {
-                
-                LocalDate dateMin = null;
-                if(context.queryParamAsClass("dateMin",String.class).getOrDefault(null) != null)
-                {
-                    dateMin = LocalDate.parse(context.queryParamAsClass("dateMin",String.class).get());
-                }
-                
-                LocalDate dateMax = null; 
-                if(context.queryParamAsClass("dateMax",String.class).getOrDefault(null) != null)
-                {
-                    dateMax = LocalDate.parse(context.queryParamAsClass("dateMax",String.class).get());
-                }
-
-                return EngineerDTO.fetchCommissionByGender(ctx, dateMin, dateMax);
-            });
+            Map<String, Object> data = DB.handle(ctx -> Map.of(
+                "data", EngineerDTO.fetchByDate(ctx, dateMin, dateMax),
+                "data2", EngineerDTO.fetchCommissionByGender(ctx, dateMin, dateMax),
+                "active", "/staff/engineer"
+            ));
             
             Renderer.usingDefault()
                 .render("/staff/engineer/index")
-                .with(context, 
-                    Map.of(
-                        "data",data,
-                        "data2",data2
-                    ));
+                .with(context, data);
         }
 }

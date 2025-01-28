@@ -18,7 +18,7 @@
 <div th:fragment="input(name, value, type, label)">
     <div class="mb-4">
         <label th:for="${name}" th:text="${label}"></label>
-        <input th:type="${type}" class="form-control" th:value="${value}" th:id="${name}" th:name="${name}" />
+        <input step="1" th:type="${type}" class="form-control" th:value="${value}" th:id="${name}" th:name="${name}" />
         <div class="invalid-feedback"></div>
     </div>
 </div>

@@ -64,63 +64,38 @@ INSERT INTO model (id, serial_number, id_model_category, id_brand, description) 
 (9,  'M12353', 9, 9, 'Printer Model I from Microsoft'),
 (10, 'M12354', 10, 10, 'Camera Model J from LG');
 
+-- engineer
+
+-- Insertion de techniciens
+INSERT INTO engineer (id, name, telephone, email, address, id_gender) VALUES
+(1, 'Alice Dupont', '+33123456789', 'alice.dupont@example.com', '123 Rue de Paris, 75001 Paris, France', 2),
+(2, 'Bob Martin', '+441234567890', 'bob.martin@example.co.uk', '456 Oxford Street, London, UK', 1),
+(3, 'Charlie Nguyen', '+4915123456789', 'charlie.nguyen@example.de', '789 Berliner Str., Berlin, Germany', 2),
+(4, 'Dana Lee', '+8613912345678', 'dana.lee@example.cn', '101 Zhongguancun, Beijing, China', 1),
+(5, 'Ethan Brown', '+18191234567', 'ethan.brown@example.com', '202 Elm Street, New York, USA', 1);
+
+
 -- reparation
-INSERT INTO reparation (id, date, price, id_model, id_engineer) VALUES
-(1,  '2024-01-01', 25000.00, 1, 1),
-(2,  '2024-01-02', 275000.00, 2, 2),
-(3,  '2024-01-03', 30000.00, 3, 3),
-(4,  '2024-01-04', 350000.00, 4, 4),
-(5,  '2024-01-05', 400000.00, 5, 5),
-(6,  '2024-01-06', 45000.00, 1, 1),
-(7,  '2024-01-07', 500000.00, 2, 2),
-(8,  '2024-01-08', 55000.00, 3, 3),
-(9,  '2024-01-09', 600000.00, 4, 4),
-(10, '2024-01-10', 650000.00, 5, 5),
-(11, '2024-01-11', 22500.00, 1, 1),
-(12, '2024-01-12', 260000.00, 2, 2),
-(13, '2024-01-13', 29000.00, 3, 3),
-(14, '2024-01-14', 320000.00, 4, 4),
-(15, '2024-01-15', 38000.00, 5, 5),
-(16, '2024-01-16', 420000.00, 1, 1),
-(17, '2024-01-17', 47000.00, 2, 2),
-(18, '2024-01-18', 520000.00, 3, 3),
-(19, '2024-01-19', 57000.00, 4, 4),
-(20, '2024-01-20', 620000.00, 5, 5),
-(21, '2024-01-21', 24000.00, 1, 1),
-(22, '2024-01-22', 280000.00, 2, 2),
-(23, '2024-01-23', 310000.00, 3, 3),
-(24, '2024-01-24', 34000.00, 4, 4),
-(25, '2024-01-25', 390000.00, 5, 5);
+INSERT INTO ticket (id, id_engineer, price_reparation, id_customer, id_model, diagnostic, id_ticket_state, date_start, date_end)
+    VALUES 
+(1, 1, 250.00, 1, 1, 'Processor overheating, requires cooling', 1, '2025-01-01 10:00:00', '2025-01-03 15:00:00'),
+(2, 2, 150.00, 2, 2, 'BIOS issue, motherboard replacement', 2, '2025-01-05 11:00:00', NULL),
+(3, 3, 75.00, 3, 3, 'Memory module diagnostics', 3, '2025-01-10 14:30:00', NULL),
+(4, 4, 500.00, 4, 4, 'GPU rendering artifacts, repair needed', 5, '2025-01-15 09:00:00', '2025-01-20 18:00:00');
 
+INSERT INTO mvt_ticket_state(id, id_ticket, id_ticket_state, datetime)
+    VALUES
+(1, 1, 5, '2025-01-03 15:00:00'),
+(2, 4, 5, '2025-01-20 18:00:00');
 
--- reparation_detail
-INSERT INTO reparation_detail (id, id_reparation, id_component_category) VALUES 
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 3),
-(4, 4, 4),
-(5, 5, 5),
-(6, 6, 6),
-(7, 7, 7),
-(8, 8, 8),
-(9, 9, 9),
-(10, 10, 10),
-(11, 11, 1),
-(12, 12, 2),
-(13, 13, 3),
-(14, 14, 4),
-(15, 15, 5),
-(16, 16, 6),
-(17, 17, 7),
-(18, 18, 8),
-(19, 19, 9),
-(20, 20, 10),
-(21, 21, 1),
-(22, 22, 2),
-(23, 23, 3),
-(24, 24, 4),
-(25, 25, 5);
-
+INSERT INTO ticket_component (id, id_ticket, id_component, quantity, cost_total)
+VALUES 
+    (1, 1, 1, 1.00, 250.00),
+    (2, 2, 2, 1.00, 150.00),
+    (3, 3, 3, 2.00, 75.00),
+    (4, 4, 4, 1.00, 500.00),
+    (5, 4, 5, 1.00, 1000.00),
+    (6, 2, 5, 2.00, 2000.00);
 
 -- Insertion de données dans la table `recommendation_component`
 INSERT INTO recommendation_component (id_component, date_start, date_end) VALUES 
@@ -145,38 +120,3 @@ INSERT INTO customer (id, name, telephone, email, address)
 VALUES
 (6, 'François Leclerc', NULL, 'francois.leclerc@example.fr', '789 Boulevard Saint-Michel, Paris'),
 (7, 'Gina Rossi', '+390612345678', NULL, 'Via Roma 32, Rome');
-
-
--- Insertion de données dans la table reparation_feedback
-INSERT INTO reparation_feedback (id, date, id_customer, id_reparation) VALUES
-(1, '2024-02-01', 1, 1),
-(2, '2024-02-02', 2, 2),
-(3, '2024-02-03', 3, 3),
-(4, '2024-02-04', 4, 4),
-(5, '2024-02-05', 5, 5),
-(6, '2024-02-06', 1, 6),
-(7, '2024-02-07', 2, 7),
-(8, '2024-02-08', 3, 8),
-(9, '2024-02-09', 4, 9),
-(10, '2024-02-10', 5, 10),
-(11, '2024-02-11', 1, 11),
-(12, '2024-02-12', 2, 12),
-(13, '2024-02-13', 3, 13),
-(14, '2024-02-14', 4, 14),
-(15, '2024-02-15', 5, 15);
-
-
--- Insertion de genre
-INSERT INTO gender (id, gender) VALUES 
-(1, 'Homme'),
-(2, 'Femme');
-
-
-
--- Insertion de techniciens
-INSERT INTO engineer (id, name, telephone, email, address, id_gender) VALUES
-(1, 'Alice Dupont', '+33123456789', 'alice.dupont@example.com', '123 Rue de Paris, 75001 Paris, France', 2),
-(2, 'Bob Martin', '+441234567890', 'bob.martin@example.co.uk', '456 Oxford Street, London, UK', 1),
-(3, 'Charlie Nguyen', '+4915123456789', 'charlie.nguyen@example.de', '789 Berliner Str., Berlin, Germany', 2),
-(4, 'Dana Lee', '+8613912345678', 'dana.lee@example.cn', '101 Zhongguancun, Beijing, China', 1),
-(5, 'Ethan Brown', '+18191234567', 'ethan.brown@example.com', '202 Elm Street, New York, USA', 1);

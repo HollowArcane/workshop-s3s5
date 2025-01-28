@@ -1,7 +1,6 @@
 package model.dto.staff;
 
 import static model.Tables.GENDER;
-import static model.Tables.REPARATION_FEEDBACK;
 import static model.Tables.V_ENGINEER_COMMISSION;
 
 import java.time.LocalDate;
@@ -13,6 +12,7 @@ import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 
 import model.Tables;
 import model.tables.records.EngineerRecord;
@@ -112,7 +112,7 @@ public class EngineerDTO {
                         V_ENGINEER_COMMISSION.ADDRESS,
                         V_ENGINEER_COMMISSION.EMAIL,
                         V_ENGINEER_COMMISSION.GENDER,
-                        DSL.max(V_ENGINEER_COMMISSION.DATE).as("date"),
+                        DSL.max(V_ENGINEER_COMMISSION.DATE_END).as("date"),
                         DSL.sum(V_ENGINEER_COMMISSION.COMMISSION).as("commission")
                     )
                     .from(V_ENGINEER_COMMISSION)
@@ -120,11 +120,11 @@ public class EngineerDTO {
         
         if(dateMin!=null)
         {
-            data.and(Tables.V_ENGINEER_COMMISSION.DATE.greaterOrEqual(dateMin));
+            data.and(DSL.cast(Tables.V_ENGINEER_COMMISSION.DATE_END, SQLDataType.LOCALDATE).greaterOrEqual(dateMin));
         }
         if(dateMax!=null)
         {
-            data.and(Tables.V_ENGINEER_COMMISSION.DATE.lessThan(dateMax));
+            data.and(DSL.cast(Tables.V_ENGINEER_COMMISSION.DATE_END, SQLDataType.LOCALDATE).lessThan(dateMax));
         }
         return data
             .groupBy(
@@ -150,11 +150,11 @@ public class EngineerDTO {
             
             if(dateMin!=null)
             {
-                data.and(Tables.V_ENGINEER_COMMISSION.DATE.greaterOrEqual(dateMin));
+                data.and(DSL.cast(Tables.V_ENGINEER_COMMISSION.DATE_END, SQLDataType.LOCALDATE).greaterOrEqual(dateMin));
             }
             if(dateMax!=null)
             {
-                data.and(Tables.V_ENGINEER_COMMISSION.DATE.lessThan(dateMax));
+                data.and(DSL.cast(Tables.V_ENGINEER_COMMISSION.DATE_END, SQLDataType.LOCALDATE).lessThan(dateMax));
             }
             return data
                 .groupBy(

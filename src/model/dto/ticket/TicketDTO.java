@@ -2,8 +2,16 @@ package model.dto.ticket;
 
 import java.math.*;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
+import org.jooq.Record3;
+import org.jooq.Result;
+import org.jooq.impl.DSL;
+
 import model.Tables;
+import model.tables.records.ModelRecord;
 import model.tables.records.TicketRecord;
 
 public class TicketDTO 
@@ -13,10 +21,11 @@ public class TicketDTO
 	private Integer idCustomer;
 	private Integer idModel;
 	private String diagnostic;
+	private Integer idEngineer;
 	private Integer idTicketState;
 	private LocalDateTime dateStart;
 	private LocalDateTime dateEnd;
-	
+
 	public TicketDTO() 
 	{
 	}
@@ -31,6 +40,7 @@ public class TicketDTO
 		this.idTicketState = record.getIdTicketState();
 		this.dateStart = record.getDateStart();
 		this.dateEnd = record.getDateEnd();
+		this.idEngineer = record.getIdEngineer();
 	}
 	
 	public TicketRecord toRecord(DSLContext context)  
@@ -49,6 +59,7 @@ public class TicketDTO
 		newRecord.setIdModel(getIdModel());
 		newRecord.setDiagnostic(getDiagnostic());
 		newRecord.setDateStart(getDateStart());
+		newRecord.setIdEngineer(getIdEngineer());
 		return newRecord;
 	}
 	
@@ -91,7 +102,15 @@ public class TicketDTO
 	{
 		this.dateEnd = dateEnd;
 	}
-	
+
+	public void setIdEngineer(Integer idEngineer) {
+		this.idEngineer = idEngineer;
+	}
+
+	public Integer getIdEngineer() {
+		return idEngineer;
+	}
+
 	public Integer getId()  
 	{
 		return this.id;
@@ -131,5 +150,48 @@ public class TicketDTO
 	{
 		return this.dateEnd;
 	}
+
 	
+	public static List<VLabelTicketDTO> fetchByComponentCategory(DSLContext context, Integer idComponentCategory)
+	{    
+		var result = context.select(
+				Tables.V_LABEL_TICKET,
+				DSL.listAgg(Tables.V_LABEL_COMPONENT.COMPONENT_CATEGORY, ", ").withinGroupOrderBy(Tables.V_LABEL_COMPONENT.COMPONENT_CATEGORY)
+			)
+			.from(Tables.V_LABEL_TICKET)
+			.leftJoin(Tables.TICKET_COMPONENT)
+				.on(Tables.V_LABEL_TICKET.ID.eq(Tables.TICKET_COMPONENT.ID_TICKET))
+			.join(Tables.V_LABEL_COMPONENT)
+				.on(Tables.TICKET_COMPONENT.ID_COMPONENT.eq(Tables.V_LABEL_COMPONENT.ID));
+
+		if( idComponentCategory != null )
+		{ result.and(Tables.V_LABEL_COMPONENT.ID_COMPONENT_CATEGORY.eq(idComponentCategory));  }
+
+		return result.groupBy(Tables.V_LABEL_TICKET)
+				.fetch(VLabelTicketDTO::new);
+	}
+
+	
+	public static List<VLabelTicketDTO> fetchByIdModelCategoryAndReparationDetail(DSLContext context, Integer idModelCategory, Integer idComponentCategory)
+	{
+		var result = context.select(
+                Tables.V_LABEL_TICKET,
+                DSL.listAgg(Tables.V_LABEL_COMPONENT.COMPONENT_CATEGORY, ", ").withinGroupOrderBy(Tables.V_LABEL_COMPONENT.COMPONENT_CATEGORY)
+            )
+            .from(Tables.V_LABEL_TICKET)
+            .leftJoin(Tables.TICKET_COMPONENT)
+                .on(Tables.V_LABEL_TICKET.ID.eq(Tables.TICKET_COMPONENT.ID_TICKET))
+			.join(Tables.V_LABEL_COMPONENT)
+				.on(Tables.TICKET_COMPONENT.ID_COMPONENT.eq(Tables.V_LABEL_COMPONENT.ID))
+			.where(Tables.V_LABEL_TICKET.DATE_END.isNotNull());
+
+		if (idModelCategory != null)
+		{ result.and(Tables.V_LABEL_TICKET.ID_MODEL_CATEGORY.eq(idModelCategory)); }
+
+        if (idComponentCategory != null)
+		{ result.and(Tables.V_LABEL_COMPONENT.ID_COMPONENT_CATEGORY.eq(idComponentCategory)); }
+
+        return result.groupBy(Tables.V_LABEL_TICKET)
+        		.fetch(VLabelTicketDTO::new);
+    }
 }

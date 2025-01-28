@@ -38,7 +38,6 @@ public class TicketComponentDTO
 		{
 			newRecord = context.fetchOne(Tables.TICKET_COMPONENT, Tables.TICKET_COMPONENT.ID.eq(id));
 		}
-		newRecord.setId(getId());
 		newRecord.setIdTicket(getIdTicket());
 		newRecord.setIdComponent(getIdComponent());
 		newRecord.setQuantity(getQuantity());

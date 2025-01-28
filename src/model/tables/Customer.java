@@ -10,7 +10,6 @@ import java.util.List;
 
 import model.Keys;
 import model.Public;
-import model.tables.ReparationFeedback.ReparationFeedbackPath;
 import model.tables.Ticket.TicketPath;
 import model.tables.records.CustomerRecord;
 
@@ -165,19 +164,6 @@ public class Customer extends TableImpl<CustomerRecord> {
     @Override
     public List<UniqueKey<CustomerRecord>> getUniqueKeys() {
         return Arrays.asList(Keys.CUSTOMER_NAME_KEY);
-    }
-
-    private transient ReparationFeedbackPath _reparationFeedback;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.reparation_feedback</code> table
-     */
-    public ReparationFeedbackPath reparationFeedback() {
-        if (_reparationFeedback == null)
-            _reparationFeedback = new ReparationFeedbackPath(this, null, Keys.REPARATION_FEEDBACK__REPARATION_FEEDBACK_ID_CUSTOMER_FKEY.getInverseKey());
-
-        return _reparationFeedback;
     }
 
     private transient TicketPath _ticket;

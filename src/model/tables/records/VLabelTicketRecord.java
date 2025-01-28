@@ -286,6 +286,34 @@ public class VLabelTicketRecord extends TableRecordImpl<VLabelTicketRecord> {
         return (LocalDateTime) get(18);
     }
 
+    /**
+     * Setter for <code>public.v_label_ticket.engineer</code>.
+     */
+    public void setEngineer(String value) {
+        set(19, value);
+    }
+
+    /**
+     * Getter for <code>public.v_label_ticket.engineer</code>.
+     */
+    public String getEngineer() {
+        return (String) get(19);
+    }
+
+    /**
+     * Setter for <code>public.v_label_ticket.id_engineer</code>.
+     */
+    public void setIdEngineer(Integer value) {
+        set(20, value);
+    }
+
+    /**
+     * Getter for <code>public.v_label_ticket.id_engineer</code>.
+     */
+    public Integer getIdEngineer() {
+        return (Integer) get(20);
+    }
+
     // -------------------------------------------------------------------------
     // Constructors
     // -------------------------------------------------------------------------
@@ -300,7 +328,7 @@ public class VLabelTicketRecord extends TableRecordImpl<VLabelTicketRecord> {
     /**
      * Create a detached, initialised VLabelTicketRecord
      */
-    public VLabelTicketRecord(Integer id, BigDecimal priceReparation, Integer idCustomer, String name, String telephone, String email, String address, Integer idModel, String serialNumber, Integer idModelCategory, String modelCategory, Integer idBrand, String brand, String description, String diagnostic, Integer idTicketState, String ticketState, LocalDateTime dateStart, LocalDateTime dateEnd) {
+    public VLabelTicketRecord(Integer id, BigDecimal priceReparation, Integer idCustomer, String name, String telephone, String email, String address, Integer idModel, String serialNumber, Integer idModelCategory, String modelCategory, Integer idBrand, String brand, String description, String diagnostic, Integer idTicketState, String ticketState, LocalDateTime dateStart, LocalDateTime dateEnd, String engineer, Integer idEngineer) {
         super(VLabelTicket.V_LABEL_TICKET);
 
         setId(id);
@@ -322,6 +350,8 @@ public class VLabelTicketRecord extends TableRecordImpl<VLabelTicketRecord> {
         setTicketState(ticketState);
         setDateStart(dateStart);
         setDateEnd(dateEnd);
+        setEngineer(engineer);
+        setIdEngineer(idEngineer);
         resetChangedOnNotNull();
     }
 }

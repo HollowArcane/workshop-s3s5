@@ -1,11 +1,12 @@
 package controller.ticket;
 
-import static model.Tables.TICKET;
+import static model.Tables.COMPONENT;
 import static model.Tables.TICKET_COMPONENT;
+import static model.Tables.V_LABEL_COMPONENT;
 import static model.Tables.V_LABEL_TICKET;
+import static model.Tables.V_LABEL_TICKET_COMPONENT;
 
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -14,19 +15,30 @@ import org.json.JSONObject;
 import database.DB;
 import io.javalin.http.Context;
 import util.APIResponse;
+import util.Data;
 import util.Renderer;
 import model.dto.ticket.TicketComponentDTO;
-import model.dto.ticket.TicketDTO;
-import model.dto.ticket.VLabelTicketDTO;
+import model.dto.ticket.VLabelTicketComponentDTO;
+import model.tables.records.ComponentRecord;
+import model.tables.records.VLabelComponentRecord;
+import model.tables.records.VLabelTicketRecord;
 import toolkit.util.Pagination;
 
 public class TicketComponentController
 {
     public static void page(Context context)
+        throws ClassNotFoundException,
+                SQLException
     {
+        Map<String, Object> data = DB.handle(ctx -> Map.of(
+            "active", "/ticket/ticket-component",
+            "tickets", Data.asMap(ctx.fetch(V_LABEL_TICKET), VLabelTicketRecord::getId, t -> t.getDateStart() + " " + t.getSerialNumber() + " " + t.getModelCategory()),
+            "components", Data.asMap(ctx.fetch(V_LABEL_COMPONENT), VLabelComponentRecord::getId, t -> t.getSerialNumber() + " " + t.getComponentCategory())
+        ));
+
         Renderer.usingDefault()
             .render("ticket/ticket-component/index")
-            .with(context, Map.of("active", "/ticket/ticket-component"));
+            .with(context, data);
     }
 
     public static void index(Context context)
@@ -35,8 +47,8 @@ public class TicketComponentController
     {
         Integer page = context.queryParamAsClass("page", Integer.class).getOrDefault(1);
 
-        List<TicketComponentDTO> data = DB.handle(ctx -> {
-            return ctx.fetch(TICKET_COMPONENT).map(TicketComponentDTO::new);
+        List<VLabelTicketComponentDTO> data = DB.handle(ctx -> {
+            return ctx.fetch(V_LABEL_TICKET_COMPONENT).map(VLabelTicketComponentDTO::new);
         });
 
         APIResponse.success(context, 200, new Pagination<>(data, 10).set(page));
@@ -65,7 +77,7 @@ public class TicketComponentController
             ticketComponent.setCostTotal(object.getBigDecimal("costTotal"));
             ticketComponent.setQuantity(object.getBigDecimal("quantity"));
             ticketComponent.setIdComponent(object.getInt("idComponent"));
-            ticketComponent.setIdTicket(object.getInt("idTiquet"));
+            ticketComponent.setIdTicket(object.getInt("idTicket"));
             
             DB.handle(ctx -> {
                 return ticketComponent.toRecord(ctx).store();
@@ -93,7 +105,7 @@ public class TicketComponentController
             ticketComponent.setCostTotal(object.getBigDecimal("costTotal"));
             ticketComponent.setQuantity(object.getBigDecimal("quantity"));
             ticketComponent.setIdComponent(object.getInt("idComponent"));
-            ticketComponent.setIdTicket(object.getInt("idTiquet"));
+            ticketComponent.setIdTicket(object.getInt("idTicket"));
             
             ticketComponent.setId(id);
 

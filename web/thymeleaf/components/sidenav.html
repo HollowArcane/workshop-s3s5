@@ -18,12 +18,13 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#" class="pf__navbar-item"> <i class="fas fa-tools"></i> Réparation </a>
+                    <a href="#" class="pf__navbar-item"> <i class="fas fa-tools"></i> Tiquet </a>
                     <div>
                         <ul class="pf__navbar-list">
-                            <div th:replace="~{:: link(${active}, '/reparation/reparation', 'Réparation')}"></div>
-                            <div th:replace="~{:: link(${active}, '/reparation/feedback', 'Retour de réparation')}"></div>
-                            <div th:replace="~{:: link(${active}, '/reparation/customer', 'Clients')}"></div>
+                            <div th:replace="~{:: link(${active}, '/ticket/ticket', 'Tiquet')}"></div>
+                            <div th:replace="~{:: link(${active}, '/ticket/ticket-component', 'Pièces à réparer')}"></div>
+                            <div th:replace="~{:: link(${active}, '/ticket/mvt-ticket-state', 'État de tiquet')}"></div>
+                            <div th:replace="~{:: link(${active}, '/ticket/customer', 'Clients')}"></div>
                         </ul>
                     </div>
                 </li>

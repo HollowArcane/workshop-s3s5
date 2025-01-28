@@ -12,10 +12,10 @@ import model.Keys;
 import model.Public;
 import model.tables.Brand.BrandPath;
 import model.tables.ModelCategory.ModelCategoryPath;
-import model.tables.Reparation.ReparationPath;
 import model.tables.Ticket.TicketPath;
 import model.tables.records.ModelRecord;
 
+import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -35,6 +35,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
@@ -192,19 +193,6 @@ public class Model extends TableImpl<ModelRecord> {
         return _modelCategory;
     }
 
-    private transient ReparationPath _reparation;
-
-    /**
-     * Get the implicit to-many join path to the <code>public.reparation</code>
-     * table
-     */
-    public ReparationPath reparation() {
-        if (_reparation == null)
-            _reparation = new ReparationPath(this, null, Keys.REPARATION__REPARATION_ID_MODEL_FKEY.getInverseKey());
-
-        return _reparation;
-    }
-
     private transient TicketPath _ticket;
 
     /**
@@ -216,6 +204,13 @@ public class Model extends TableImpl<ModelRecord> {
             _ticket = new TicketPath(this, null, Keys.TICKET__TICKET_ID_MODEL_FKEY.getInverseKey());
 
         return _ticket;
+    }
+
+    @Override
+    public List<Check<ModelRecord>> getChecks() {
+        return Arrays.asList(
+            Internal.createCheck(this, DSL.name("model_serial_number_check"), "(((serial_number)::text ~ '^[A-Za-z0-9][A-Za-z0-9 -'']*[A-Za-z0-9]$'::text))", true)
+        );
     }
 
     @Override

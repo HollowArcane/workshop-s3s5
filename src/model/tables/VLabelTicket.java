@@ -144,6 +144,16 @@ public class VLabelTicket extends TableImpl<VLabelTicketRecord> {
      */
     public final TableField<VLabelTicketRecord, LocalDateTime> DATE_END = createField(DSL.name("date_end"), SQLDataType.LOCALDATETIME(6), this, "");
 
+    /**
+     * The column <code>public.v_label_ticket.engineer</code>.
+     */
+    public final TableField<VLabelTicketRecord, String> ENGINEER = createField(DSL.name("engineer"), SQLDataType.VARCHAR(255), this, "");
+
+    /**
+     * The column <code>public.v_label_ticket.id_engineer</code>.
+     */
+    public final TableField<VLabelTicketRecord, Integer> ID_ENGINEER = createField(DSL.name("id_engineer"), SQLDataType.INTEGER, this, "");
+
     private VLabelTicket(Name alias, Table<VLabelTicketRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }
@@ -168,9 +178,12 @@ public class VLabelTicket extends TableImpl<VLabelTicketRecord> {
          t.id_ticket_state,
          ts.label AS ticket_state,
          t.date_start,
-         t.date_end
-        FROM (((((ticket t
+         t.date_end,
+         e.name AS engineer,
+         e.id AS id_engineer
+        FROM ((((((ticket t
           JOIN customer c ON ((t.id_customer = c.id)))
+          JOIN engineer e ON ((t.id_engineer = e.id)))
           JOIN model m ON ((t.id_model = m.id)))
           JOIN model_category mc ON ((m.id_model_category = mc.id)))
           JOIN brand b ON ((m.id_brand = b.id)))

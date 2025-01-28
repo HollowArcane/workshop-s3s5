@@ -36,7 +36,7 @@ class Page extends CRUDPage
                 tag('td', {}, [text(data.componentCategories[row.idComponentCategory])]),
                 tag('td', {}, [text(data.modelCategories[row.idModelCategory])]),
                 tag('td', {}, [text(data.brands[row.idBrand])]),
-                tag('td', {}, [text(data.description)]),
+                tag('td', {}, [text(row.description)]),
             ]));
         }
         

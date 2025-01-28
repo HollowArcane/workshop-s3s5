@@ -1,42 +1,42 @@
-<div th:fragment="content" class="container">
-    <form action="" class="card mb-5 mt-5" method="get">
-        <div class="card-body p-5">
-            <h3> Recherche </h3>
-            <div class="mb-3">
-                <label for="idComponentCategory">Catégorie de pièce</label>
-                <select class="form-select" name="idComponentCategory" id="idComponentCategory">
-                    <option value="">Tous</option>
-                    <option th:each="value : ${selectValues}" th:value="${value.id}" th:text="${value.label}"></option>
-                </select>
-            </div>
-            <input type="submit" class="btn btn-primary" value="Valider">
-        </div>
-    </form>
-
-    <h1>Liste des réparations</h1>
+<div th:fragment="content" class="container mt-5">
+    <h1 class="d-flex gap-1 align-items-center mb-3">
+        <button id="btn-add" type="button" class="btn btn-primary" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#modal">
+            <i class="fa fa-add"></i>
+        </button>
+        Liste des Pièces à Réparer
+    </h1>
     
+    <div th:replace="~{/components/modal :: modal(name='modal', title='', body=~{:: modalBody})}">
+        <div th:fragment="modalBody">
+            <form id="form">
+                <h1 th:text="${formTitle}"></h1>
+                
+                <div th:replace="~{/components/form :: select('idTicket', '', ${tickets}, 'Tiquet')}"></div>
+                <div th:replace="~{/components/form :: select('idComponent', '', ${components}, 'Pièce')}"></div>
+                
+                <div th:replace="~{/components/form :: input('quantity', '', 'number', 'Quantité')}"></div>
+                <div th:replace="~{/components/form :: input('costTotal', '', 'number', 'Coût Total')}"></div>
+
+                <button class="btn btn-primary"> Valider </button>
+            </form>
+        </div>
+    </div>
+
     <table id="table" class="table table-striped fx__table">
         <thead>
-            <th> Date de réparation </th>
+            <th> </th>
             <th> Modèle </th>
-            <th> Prix </th>
-            <th> Composant Réparés </th>
+            <th> Nº de Série </th>
+            <th> Date de Dépôt </th>
+            <th> Composant </th>
+            <th> Quantité </th>
+            <th> Coût Total </th>
         </thead>
         <tbody>
-            <tr th:each="reparation : ${data}">
-                <td th:text="${reparation.value1().date}"></td>
-                <td th:text="${reparation.value2().serialNumber}"></td>
-                <td th:text="${reparation.value1().price}" align="right"></td>
-                <td th:text="${reparation.value3()}"></td>
-            </tr>
+            <!-- rendered using js -->
         </tbody>
     </table>
 
-    <div th:insert="/components/pagination::pagination(body=~{::paginationBody})">
-        <th:block th:fragment="paginationBody">
-            <li class="page-item" th:each="spread : ${pagination}">
-                <a th:href="'?page='+${spread}" th:class="'page-link '+(${spread == '...'} ? 'disabled': '')+(${spread == paginationPage} ? 'active': '')" th:text="${spread}"></a>
-            </li>
-        </th:block>
-    </div>
+    <div th:replace="~{/components/pagination :: pagination}"></div>
+    <script defer type="text/javascript" src="/assets/src/js/ticket/ticket-component/index.js"></script>
 </div>

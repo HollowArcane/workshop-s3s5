@@ -11,6 +11,7 @@ import java.util.List;
 import model.Keys;
 import model.Public;
 import model.tables.Gender.GenderPath;
+import model.tables.Ticket.TicketPath;
 import model.tables.records.EngineerRecord;
 
 import org.jooq.Check;
@@ -186,6 +187,19 @@ public class Engineer extends TableImpl<EngineerRecord> {
             _gender = new GenderPath(this, Keys.ENGINEER__ENGINEER_ID_GENDER_FKEY, null);
 
         return _gender;
+    }
+
+    private transient TicketPath _ticket;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.ticket</code>
+     * table
+     */
+    public TicketPath ticket() {
+        if (_ticket == null)
+            _ticket = new TicketPath(this, null, Keys.TICKET__TICKET_ID_ENGINEER_FKEY.getInverseKey());
+
+        return _ticket;
     }
 
     @Override

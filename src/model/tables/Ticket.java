@@ -14,10 +14,13 @@ import model.Keys;
 import model.Public;
 import model.tables.Component.ComponentPath;
 import model.tables.Customer.CustomerPath;
+import model.tables.Engineer.EngineerPath;
+import model.tables.EntryComponent.EntryComponentPath;
 import model.tables.Model.ModelPath;
 import model.tables.MvtTicketState.MvtTicketStatePath;
 import model.tables.TicketComponent.TicketComponentPath;
 import model.tables.TicketState.TicketStatePath;
+import model.tables.TicketStockWithdraw.TicketStockWithdrawPath;
 import model.tables.records.TicketRecord;
 
 import org.jooq.Check;
@@ -85,6 +88,11 @@ public class Ticket extends TableImpl<TicketRecord> {
      * The column <code>public.ticket.id_model</code>.
      */
     public final TableField<TicketRecord, Integer> ID_MODEL = createField(DSL.name("id_model"), SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>public.ticket.id_engineer</code>.
+     */
+    public final TableField<TicketRecord, Integer> ID_ENGINEER = createField(DSL.name("id_engineer"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.ticket.diagnostic</code>.
@@ -185,7 +193,7 @@ public class Ticket extends TableImpl<TicketRecord> {
 
     @Override
     public List<ForeignKey<TicketRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.TICKET__TICKET_ID_CUSTOMER_FKEY, Keys.TICKET__TICKET_ID_MODEL_FKEY, Keys.TICKET__TICKET_ID_TICKET_STATE_FKEY);
+        return Arrays.asList(Keys.TICKET__TICKET_ID_CUSTOMER_FKEY, Keys.TICKET__TICKET_ID_ENGINEER_FKEY, Keys.TICKET__TICKET_ID_MODEL_FKEY, Keys.TICKET__TICKET_ID_TICKET_STATE_FKEY);
     }
 
     private transient CustomerPath _customer;
@@ -198,6 +206,18 @@ public class Ticket extends TableImpl<TicketRecord> {
             _customer = new CustomerPath(this, Keys.TICKET__TICKET_ID_CUSTOMER_FKEY, null);
 
         return _customer;
+    }
+
+    private transient EngineerPath _engineer;
+
+    /**
+     * Get the implicit join path to the <code>public.engineer</code> table.
+     */
+    public EngineerPath engineer() {
+        if (_engineer == null)
+            _engineer = new EngineerPath(this, Keys.TICKET__TICKET_ID_ENGINEER_FKEY, null);
+
+        return _engineer;
     }
 
     private transient ModelPath _model;
@@ -250,12 +270,33 @@ public class Ticket extends TableImpl<TicketRecord> {
         return _ticketComponent;
     }
 
+    private transient TicketStockWithdrawPath _ticketStockWithdraw;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.ticket_stock_withdraw</code> table
+     */
+    public TicketStockWithdrawPath ticketStockWithdraw() {
+        if (_ticketStockWithdraw == null)
+            _ticketStockWithdraw = new TicketStockWithdrawPath(this, null, Keys.TICKET_STOCK_WITHDRAW__TICKET_STOCK_WITHDRAW_ID_TICKET_FKEY.getInverseKey());
+
+        return _ticketStockWithdraw;
+    }
+
     /**
      * Get the implicit many-to-many join path to the
      * <code>public.component</code> table
      */
     public ComponentPath component() {
         return ticketComponent().component();
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the
+     * <code>public.entry_component</code> table
+     */
+    public EntryComponentPath entryComponent() {
+        return ticketStockWithdraw().entryComponent();
     }
 
     @Override

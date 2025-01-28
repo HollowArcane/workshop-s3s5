@@ -4,7 +4,8 @@
 package model.tables;
 
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 import model.Public;
@@ -79,9 +80,9 @@ public class VEngineerCommission extends TableImpl<VEngineerCommissionRecord> {
     public final TableField<VEngineerCommissionRecord, Integer> ID_GENDER = createField(DSL.name("id_gender"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>public.v_engineer_commission.date</code>.
+     * The column <code>public.v_engineer_commission.date_end</code>.
      */
-    public final TableField<VEngineerCommissionRecord, LocalDate> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATE, this, "");
+    public final TableField<VEngineerCommissionRecord, LocalDateTime> DATE_END = createField(DSL.name("date_end"), SQLDataType.LOCALDATETIME(6), this, "");
 
     /**
      * The column <code>public.v_engineer_commission.gender</code>.
@@ -91,7 +92,7 @@ public class VEngineerCommission extends TableImpl<VEngineerCommissionRecord> {
     /**
      * The column <code>public.v_engineer_commission.commission</code>.
      */
-    public final TableField<VEngineerCommissionRecord, Double> COMMISSION = createField(DSL.name("commission"), SQLDataType.DOUBLE, this, "");
+    public final TableField<VEngineerCommissionRecord, BigDecimal> COMMISSION = createField(DSL.name("commission"), SQLDataType.NUMERIC, this, "");
 
     private VEngineerCommission(Name alias, Table<VEngineerCommissionRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -105,12 +106,14 @@ public class VEngineerCommission extends TableImpl<VEngineerCommissionRecord> {
          eng.email,
          eng.address,
          eng.id_gender,
-         fb.date,
+         tic.date_end,
          gd.gender,
-         ((rep.price * (5)::double precision) / (100)::double precision) AS commission
-        FROM (((engineer eng
-          JOIN reparation rep ON ((rep.id_engineer = eng.id)))
-          JOIN reparation_feedback fb ON ((fb.id_reparation = rep.id)))
+             CASE
+                 WHEN (tic.price_reparation >= (200000)::numeric) THEN ((tic.price_reparation * (5)::numeric) / (100)::numeric)
+                 ELSE (0)::numeric
+             END AS commission
+        FROM ((engineer eng
+          JOIN ticket tic ON ((tic.id_engineer = eng.id)))
           JOIN gender gd ON ((gd.id = eng.id_gender)));
         """), where);
     }

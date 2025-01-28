@@ -78,59 +78,73 @@ public class TicketRecord extends UpdatableRecordImpl<TicketRecord> {
     }
 
     /**
+     * Setter for <code>public.ticket.id_engineer</code>.
+     */
+    public void setIdEngineer(Integer value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>public.ticket.id_engineer</code>.
+     */
+    public Integer getIdEngineer() {
+        return (Integer) get(4);
+    }
+
+    /**
      * Setter for <code>public.ticket.diagnostic</code>.
      */
     public void setDiagnostic(String value) {
-        set(4, value);
+        set(5, value);
     }
 
     /**
      * Getter for <code>public.ticket.diagnostic</code>.
      */
     public String getDiagnostic() {
-        return (String) get(4);
+        return (String) get(5);
     }
 
     /**
      * Setter for <code>public.ticket.id_ticket_state</code>.
      */
     public void setIdTicketState(Integer value) {
-        set(5, value);
+        set(6, value);
     }
 
     /**
      * Getter for <code>public.ticket.id_ticket_state</code>.
      */
     public Integer getIdTicketState() {
-        return (Integer) get(5);
+        return (Integer) get(6);
     }
 
     /**
      * Setter for <code>public.ticket.date_start</code>.
      */
     public void setDateStart(LocalDateTime value) {
-        set(6, value);
+        set(7, value);
     }
 
     /**
      * Getter for <code>public.ticket.date_start</code>.
      */
     public LocalDateTime getDateStart() {
-        return (LocalDateTime) get(6);
+        return (LocalDateTime) get(7);
     }
 
     /**
      * Setter for <code>public.ticket.date_end</code>.
      */
     public void setDateEnd(LocalDateTime value) {
-        set(7, value);
+        set(8, value);
     }
 
     /**
      * Getter for <code>public.ticket.date_end</code>.
      */
     public LocalDateTime getDateEnd() {
-        return (LocalDateTime) get(7);
+        return (LocalDateTime) get(8);
     }
 
     // -------------------------------------------------------------------------
@@ -156,13 +170,14 @@ public class TicketRecord extends UpdatableRecordImpl<TicketRecord> {
     /**
      * Create a detached, initialised TicketRecord
      */
-    public TicketRecord(Integer id, BigDecimal priceReparation, Integer idCustomer, Integer idModel, String diagnostic, Integer idTicketState, LocalDateTime dateStart, LocalDateTime dateEnd) {
+    public TicketRecord(Integer id, BigDecimal priceReparation, Integer idCustomer, Integer idModel, Integer idEngineer, String diagnostic, Integer idTicketState, LocalDateTime dateStart, LocalDateTime dateEnd) {
         super(Ticket.TICKET);
 
         setId(id);
         setPriceReparation(priceReparation);
         setIdCustomer(idCustomer);
         setIdModel(idModel);
+        setIdEngineer(idEngineer);
         setDiagnostic(diagnostic);
         setIdTicketState(idTicketState);
         setDateStart(dateStart);

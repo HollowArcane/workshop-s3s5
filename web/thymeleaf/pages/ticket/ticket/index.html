@@ -1,4 +1,13 @@
 <div th:fragment="content" class="container mt-5">
+    <form id="form-filter" class="card mb-5 mt-5">
+        <div class="card-body p-5">
+            <h3> Recherche </h3>
+            <div th:replace="~{/components/form :: select('idComponentCategory', '', ${componentCategories}, 'Catégorie de Pièce')}"></div>
+            
+            <button class="btn btn-primary"> Valider </button>
+        </div>
+    </form>
+
     <h1 class="d-flex gap-1 align-items-center mb-3">
         <button id="btn-add" type="button" class="btn btn-primary" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#modal">
             <i class="fa fa-add"></i>
@@ -13,6 +22,7 @@
                 
                 <div th:replace="~{/components/form :: select('idCustomer', '', ${customers}, 'Client')}"></div>
                 <div th:replace="~{/components/form :: select('idModel', '', ${models}, 'Modèle')}"></div>
+                <div th:replace="~{/components/form :: select('idEngineer', '', ${engineers}, 'Technicien')}"></div>
                 
                 <div th:replace="~{/components/form :: input('dateStart', '', 'datetime-local', 'Date de Dépôt')}"></div>
                 <div th:replace="~{/components/form :: input('diagnostic', '', 'text', 'Diagnostic')}"></div>
@@ -29,7 +39,8 @@
             <th> Modèle </th>
             <th> Nº de Série </th>
             <th> Marque </th>
-            <th> Diagnostic </th>
+            <th> Composants </th>
+            <th> État </th>
             <th> Prix </th>
             <th> Date de Dépôt </th>
             <th> Date de Retour </th>

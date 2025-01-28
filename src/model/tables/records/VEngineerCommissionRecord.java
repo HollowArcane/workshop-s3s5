@@ -4,7 +4,8 @@
 package model.tables.records;
 
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import model.tables.VEngineerCommission;
 
@@ -104,17 +105,17 @@ public class VEngineerCommissionRecord extends TableRecordImpl<VEngineerCommissi
     }
 
     /**
-     * Setter for <code>public.v_engineer_commission.date</code>.
+     * Setter for <code>public.v_engineer_commission.date_end</code>.
      */
-    public void setDate(LocalDate value) {
+    public void setDateEnd(LocalDateTime value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>public.v_engineer_commission.date</code>.
+     * Getter for <code>public.v_engineer_commission.date_end</code>.
      */
-    public LocalDate getDate() {
-        return (LocalDate) get(6);
+    public LocalDateTime getDateEnd() {
+        return (LocalDateTime) get(6);
     }
 
     /**
@@ -134,15 +135,15 @@ public class VEngineerCommissionRecord extends TableRecordImpl<VEngineerCommissi
     /**
      * Setter for <code>public.v_engineer_commission.commission</code>.
      */
-    public void setCommission(Double value) {
+    public void setCommission(BigDecimal value) {
         set(8, value);
     }
 
     /**
      * Getter for <code>public.v_engineer_commission.commission</code>.
      */
-    public Double getCommission() {
-        return (Double) get(8);
+    public BigDecimal getCommission() {
+        return (BigDecimal) get(8);
     }
 
     // -------------------------------------------------------------------------
@@ -159,7 +160,7 @@ public class VEngineerCommissionRecord extends TableRecordImpl<VEngineerCommissi
     /**
      * Create a detached, initialised VEngineerCommissionRecord
      */
-    public VEngineerCommissionRecord(Integer id, String name, String telephone, String email, String address, Integer idGender, LocalDate date, String gender, Double commission) {
+    public VEngineerCommissionRecord(Integer id, String name, String telephone, String email, String address, Integer idGender, LocalDateTime dateEnd, String gender, BigDecimal commission) {
         super(VEngineerCommission.V_ENGINEER_COMMISSION);
 
         setId(id);
@@ -168,7 +169,7 @@ public class VEngineerCommissionRecord extends TableRecordImpl<VEngineerCommissi
         setEmail(email);
         setAddress(address);
         setIdGender(idGender);
-        setDate(date);
+        setDateEnd(dateEnd);
         setGender(gender);
         setCommission(commission);
         resetChangedOnNotNull();

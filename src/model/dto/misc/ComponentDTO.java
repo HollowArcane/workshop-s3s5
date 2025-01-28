@@ -1,13 +1,23 @@
 package model.dto.misc;
 
 import static model.Tables.COMPONENT;
+import static model.Tables.V_LABEL_COMPONENT;
+import static model.Tables.V_LABEL_TICKET_COMPONENT;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
+import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
+import org.jooq.meta.firebird.rdb.tables.Rdb.refConstraints;
 
+import model.Tables;
+import model.dto.ticket.VLabelTicketComponentDTO;
 import model.tables.records.ComponentRecord;
 
-public class ComponentDTO
-{
+public class ComponentDTO {
     private Integer id;
     private String serialNumber;
     private Integer idComponentCategory;
@@ -15,10 +25,10 @@ public class ComponentDTO
     private Integer idBrand;
     private String description;
 
-    public ComponentDTO() {}
+    public ComponentDTO() {
+    }
 
-    public ComponentDTO(ComponentRecord record)
-    {
+    public ComponentDTO(ComponentRecord record) {
         id = record.getId();
         serialNumber = record.getSerialNumber();
         idComponentCategory = record.getIdComponentCategory();
@@ -27,9 +37,9 @@ public class ComponentDTO
         description = record.getDescription();
     }
 
-    public ComponentRecord toRecord(DSLContext context)
-    {
-        ComponentRecord newRecord = id == null ? context.newRecord(COMPONENT): context.fetchOne(COMPONENT, COMPONENT.ID.eq(id));
+    public ComponentRecord toRecord(DSLContext context) {
+        ComponentRecord newRecord = id == null ? context.newRecord(COMPONENT)
+                : context.fetchOne(COMPONENT, COMPONENT.ID.eq(id));
         newRecord.setSerialNumber(getSerialNumber());
         newRecord.setIdComponentCategory(getIdComponentCategory());
         newRecord.setIdModelCategory(getIdModelCategory());
@@ -85,5 +95,20 @@ public class ComponentDTO
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public static List<VLabelTicketComponentDTO> fetchPriceMovement(DSLContext context, LocalDate dateMin, LocalDate dateMax)
+    {
+        var result = context.selectFrom(Tables.V_LABEL_TICKET_COMPONENT)
+                            .where("1=1");
+        if(dateMin!=null)
+        {
+            result.and(DSL.cast(Tables.V_LABEL_TICKET_COMPONENT.DATE_START, SQLDataType.LOCALDATE).greaterOrEqual(dateMin));
+        }
+        if(dateMax!=null)
+        {
+            result.and(DSL.cast(Tables.V_LABEL_TICKET_COMPONENT.DATE_END, SQLDataType.LOCALDATE).lessThan(dateMax));
+        }
+        return result.fetch(VLabelTicketComponentDTO::new);
     }
 }

@@ -21,6 +21,7 @@ import static model.Tables.*;
 import static util.Validation.*;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -160,5 +161,24 @@ public class ComponentController
                .delete()
         );
         APIResponse.success(context, 201, Map.of("message", "Composant supprimée avec succès"));
+    }
+
+    public static void history(Context context)
+        throws ClassNotFoundException,
+        SQLException
+    {
+        
+        var data = DB.handle(ctx -> 
+            {
+                LocalDate dateMin = context.queryParamAsClass("dateMin",LocalDate.class).getOrDefault(null);
+                LocalDate dateMax = context.queryParamAsClass("dateMax",LocalDate.class).getOrDefault(null);
+                return ComponentDTO.fetchPriceMovement(ctx, dateMin, dateMax);
+            }
+        );
+
+        Renderer.usingDefault()
+            .render("/misc/component/history")
+            .with(context,Map.of("data", data));
+
     }
 }

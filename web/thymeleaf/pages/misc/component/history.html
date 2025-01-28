@@ -1,0 +1,36 @@
+<div th:fragment="content" class="container mt-5">
+    <h1 class="d-flex gap-1 align-items-center mb-3">
+        Mouvement de prix de pièces
+    </h1>
+    
+
+    <form id="form">
+        <h1>Filtre</h1>
+        
+        <div th:replace="~{/components/form :: input('dateMin', '', 'date', 'Nº de Série')}"></div>
+        <div th:replace="~{/components/form :: input('dateMax', '', 'date', 'Description')}"></div>
+
+        <button class="btn btn-primary"> Valider </button>
+    </form>
+
+    <table id="table" class="table table-striped fx__table">
+        <thead>
+            <tr>
+                <th> Nº de Série </th>
+                <th> Catégorie de Composant </th> 
+                <th> Date </th>
+                <th> Prix unitaire </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="row : ${data}">
+               <td th:text="${row.serialNumber}"></td>
+               <td th:text="${row.componentCategory}"></td>
+               <td th:text="${row.dateStart}"></td>
+               <td th:text="${row.costTotal/row.quantity}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

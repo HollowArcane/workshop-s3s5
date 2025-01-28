@@ -106,7 +106,7 @@ public class ComponentDTO {
         }
         if(dateMax!=null)
         {
-            result.and(DSL.cast(Tables.V_LABEL_TICKET_COMPONENT.DATE_END, SQLDataType.LOCALDATE).lessThan(dateMax));
+            result.and(DSL.cast(Tables.V_LABEL_TICKET_COMPONENT.DATE_START, SQLDataType.LOCALDATE).lessThan(dateMax));
         }
         return result.fetch(VLabelTicketComponentDTO::new);
     }

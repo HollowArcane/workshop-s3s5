@@ -7,8 +7,8 @@
     <form id="form">
         <h1>Filtre</h1>
         
-        <div th:replace="~{/components/form :: input('dateMin', '', 'date', 'Nº de Série')}"></div>
-        <div th:replace="~{/components/form :: input('dateMax', '', 'date', 'Description')}"></div>
+        <div th:replace="~{/components/form :: input('dateMin', '', 'date', 'Date début')}"></div>
+        <div th:replace="~{/components/form :: input('dateMax', '', 'date', 'Date fin')}"></div>
 
         <button class="btn btn-primary"> Valider </button>
     </form>
